@@ -1,0 +1,124 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "experience": "Experience",
+    "projects": "Selected Works",
+    "certificates": "Certificates",
+    "blog": "Blog & Articles",
+    "contact": "Contact Me",
+    "faq": "FAQ"
+  },
+  "hero": {
+    "available": "Available for new projects",
+    "hire_me": "Hire Me",
+    "title_1": "Building the future of",
+    "title_2": "the digital world.",
+    "description": "I am Ilham Hatta Manggala. I focus on designing and developing elegant, efficient, and high-impact software.",
+    "view_work": "View Work",
+    "quote": "\"The quality of code is not only seen by whether it works, but by how it can withstand the test of time and needs.\""
+  },
+  "about": {
+    "title_1": "About",
+    "title_2": "Me.",
+    "subtitle": "A combination of technical logic and visual design that prioritizes user comfort.",
+    "vision_title": "Vision & Philosophy",
+    "vision_desc_1_start": "I am a ",
+    "vision_desc_1_highlight": "Web & Flutter Developer",
+    "vision_desc_1_end": " with a passion for creating impactful digital products. I believe that good code should be beautiful both inside and out.",
+    "vision_desc_2_start": "Equipped with expertise in ",
+    "vision_desc_2_highlight": "Full-stack Development",
+    "vision_desc_2_end": ", I design scalable and maintainable systems without ever sacrificing visual aesthetics.",
+    "years_exp": "Years of Web Development Experience",
+    "core_tech": "Core Technologies",
+    "projects_completed": "Projects Completed",
+    "remote": "Available Remotely",
+    "timezone": "Jakarta Time (WIB)"
+  },
+  "experience": {
+    "tag": "Career Journey",
+    "title_1": "Professional",
+    "title_2": "Experience."
+  },
+  "project": {
+    "tag": "Portfolio Showcase",
+    "title_1": "Selected",
+    "title_2": "Works.",
+    "filter_all": "All"
+  },
+  "gallery": {
+    "tag": "Credentials",
+    "title_1": "Certifications",
+    "title_2": "& Licenses.",
+    "official_cert": "Official certificate from",
+    "obtained_on": "Obtained on",
+    "validation": ", validating technical skills and deep understanding related to the field of study.",
+    "close_view": "Close View"
+  },
+  "testimonials": {
+    "tag": "Testimonials",
+    "title_1": "Client",
+    "title_2": "Voices.",
+    "write_btn": "Write Testimonial",
+    "modal_title": "Share Your Experience",
+    "modal_subtitle": "Your feedback helps me grow and build trust.",
+    "name_pl": "Your Name",
+    "role_pl": "Role / Company",
+    "msg_pl": "What was it like working with me?",
+    "submit": "Submit",
+    "submitting": "Submitting...",
+    "success": "Thank you! Awaiting approval.",
+    "error": "Failed to submit.",
+    "no_testimonials": "No testimonials yet.",
+    "be_first": "Be the first to share your experience working with me!",
+    "name_lbl": "Name",
+    "company_lbl": "Company",
+    "company_pl": "Company Name",
+    "role_lbl": "Designation",
+    "profile_lbl": "Profile (Optional)",
+    "msg_lbl": "Message"
+  },
+  "blog": {
+    "tag": "Journal & Articles",
+    "title_1": "Insights &",
+    "title_2": "Thoughts.",
+    "subtitle": "Sharing experiences, tutorials, and thoughts about web development technologies.",
+    "search_placeholder": "Search articles...",
+    "no_articles": "No articles found.",
+    "read_article": "Read Article",
+    "view_all": "View All Articles",
+    "back_home": "Back to Home",
+    "reading_time": "{{count}} min read",
+    "views_count": "{{count}} views"
+  },
+  "faq": {
+    "tag": "Frequently Asked Questions",
+    "title_1": "Frequently",
+    "title_2": "Asked Questions.",
+    "subtitle": "Find answers to common questions about my services and workflow.",
+    "q1": "What technologies do you use most often?",
+    "a1": "I frequently work with React.js, Next.js, TypeScript, and Tailwind CSS for Frontend. For Backend, I am accustomed to using Node.js, Python (Flask), and PHP (Laravel). I am also proficient in Mobile development using Flutter.",
+    "q2": "Do you accept freelance projects?",
+    "a2": "Yes, I am open to freelance projects or long-term collaborations. Please feel free to contact me via the contact form on the main page or through email.",
+    "q3": "How long does it take to build a website?",
+    "a3": "The timeline depends highly on the complexity of the features. A simple profile website usually takes 1-2 weeks, while a more complex web application can take a month or more.",
+    "q4": "Where are you currently located?",
+    "a4": "I am currently based in Tegal, Central Java, Indonesia. However, I am accustomed to working remotely with clients from anywhere."
+  },
+  "contact": {
+    "title_1": "Let's Build",
+    "title_2": "Something Great",
+    "subtitle": "Got an interesting idea? Let's discuss and bring your digital vision to life with the latest technologies.",
+    "placeholder_name": "Enter your name...",
+    "placeholder_email": "email@domain.com",
+    "placeholder_message": "How can I help you?",
+    "executing": "Executing...",
+    "success": "Message sent successfully!",
+    "error": "Failed to send message."
+  },
+  "footer": {
+    "description": "Building the digital future with clean code and meaningful design. Focused on innovation, performance, and uncompromising quality.",
+    "nav_title": "Navigation",
+    "links_title": "Other Links"
+  }
+}

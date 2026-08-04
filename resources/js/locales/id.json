@@ -1,0 +1,124 @@
+{
+  "nav": {
+    "home": "Beranda",
+    "about": "Tentang Saya",
+    "experience": "Pengalaman",
+    "projects": "Karya Terpilih",
+    "certificates": "Sertifikasi",
+    "blog": "Blog & Artikel",
+    "contact": "Hubungi Saya",
+    "faq": "FAQ"
+  },
+  "hero": {
+    "available": "Tersedia untuk proyek baru",
+    "hire_me": "Hire Me",
+    "title_1": "Membangun masa depan",
+    "title_2": "dunia digital.",
+    "description": "Saya Ilham Hatta Manggala. Saya berfokus pada perancangan dan pengembangan perangkat lunak yang elegan, efisien, dan berdampak tinggi.",
+    "view_work": "Lihat Karya",
+    "quote": "\"Kualitas dari sebuah kode tidak hanya dilihat dari apakah itu berfungsi, tetapi dari bagaimana ia dapat bertahan terhadap perubahan waktu dan kebutuhan.\""
+  },
+  "about": {
+    "title_1": "Tentang",
+    "title_2": "Saya.",
+    "subtitle": "Kombinasi antara logika teknis dan desain visual yang mengutamakan kenyamanan pengguna.",
+    "vision_title": "Visi & Filosofi",
+    "vision_desc_1_start": "Saya adalah seorang ",
+    "vision_desc_1_highlight": "Web & Flutter Developer",
+    "vision_desc_1_end": " yang memiliki gairah dalam menciptakan produk digital yang berdampak nyata. Saya percaya bahwa kode yang baik harus indah baik di dalam maupun di luar.",
+    "vision_desc_2_start": "Berbekal keahlian dalam ",
+    "vision_desc_2_highlight": "Pengembangan Full-stack",
+    "vision_desc_2_end": ", saya merancang sistem yang dapat diskalakan dan mudah dipelihara, tanpa pernah mengorbankan estetika visual.",
+    "years_exp": "Tahun Pengalaman Pengembangan Web",
+    "core_tech": "Teknologi Inti",
+    "projects_completed": "Proyek Diselesaikan",
+    "remote": "Tersedia Secara Remote",
+    "timezone": "Jakarta Time (WIB)"
+  },
+  "experience": {
+    "tag": "Perjalanan Karier",
+    "title_1": "Pengalaman",
+    "title_2": "Profesional."
+  },
+  "project": {
+    "tag": "Showcase Portofolio",
+    "title_1": "Karya",
+    "title_2": "Terpilih.",
+    "filter_all": "Semua"
+  },
+  "gallery": {
+    "tag": "Kredensial",
+    "title_1": "Sertifikasi",
+    "title_2": "& Lisensi.",
+    "official_cert": "Sertifikat resmi dari",
+    "obtained_on": "Diperoleh pada",
+    "validation": ", memvalidasi kemampuan teknis dan pemahaman mendalam terkait bidang studi.",
+    "close_view": "Tutup Tampilan"
+  },
+  "testimonials": {
+    "tag": "Testimonial",
+    "title_1": "Suara",
+    "title_2": "Klien.",
+    "write_btn": "Tulis Testimoni",
+    "modal_title": "Bagikan Pengalaman Anda",
+    "modal_subtitle": "Masukan Anda membantu saya berkembang dan membangun kepercayaan.",
+    "name_pl": "Nama Anda",
+    "role_pl": "Jabatan / Perusahaan",
+    "msg_pl": "Bagaimana pengalaman Anda bekerja sama dengan saya?",
+    "submit": "Kirim",
+    "submitting": "Mengirim...",
+    "success": "Terima kasih! Menunggu persetujuan.",
+    "error": "Gagal mengirim testimoni.",
+    "no_testimonials": "Belum ada testimoni saat ini.",
+    "be_first": "Jadilah yang pertama untuk membagikan pengalaman bekerja bersama saya!",
+    "name_lbl": "Nama",
+    "company_lbl": "Perusahaan",
+    "company_pl": "Nama Perusahaan",
+    "role_lbl": "Jabatan",
+    "profile_lbl": "Profil (Opsional)",
+    "msg_lbl": "Pesan"
+  },
+  "blog": {
+    "tag": "Jurnal & Artikel",
+    "title_1": "Wawasan &",
+    "title_2": "Pemikiran.",
+    "subtitle": "Berbagi pengalaman, tutorial, dan pemikiran seputar teknologi pengembangan web.",
+    "search_placeholder": "Cari artikel...",
+    "no_articles": "Tidak ada artikel yang ditemukan.",
+    "read_article": "Baca Artikel",
+    "view_all": "Lihat Semua Artikel",
+    "back_home": "Kembali ke Beranda",
+    "reading_time": "{{count}} menit baca",
+    "views_count": "{{count}} kali dilihat"
+  },
+  "faq": {
+    "tag": "Pertanyaan Sering Diajukan",
+    "title_1": "Pertanyaan",
+    "title_2": "Sering Diajukan.",
+    "subtitle": "Temukan jawaban atas pertanyaan umum seputar layanan dan cara kerja saya.",
+    "q1": "Teknologi apa saja yang sering kamu gunakan?",
+    "a1": "Saya sering bekerja menggunakan React.js, Next.js, TypeScript, dan Tailwind CSS untuk Frontend. Untuk Backend, saya terbiasa menggunakan Node.js, Python (Flask), dan PHP (Laravel). Saya juga mahir dalam pengembangan Mobile menggunakan Flutter.",
+    "q2": "Apakah kamu menerima proyek Freelance?",
+    "a2": "Ya, saya terbuka untuk proyek freelance atau kolaborasi jangka panjang. Silakan hubungi saya melalui form kontak di halaman utama atau melalui email.",
+    "q3": "Berapa lama waktu yang dibutuhkan untuk membangun sebuah website?",
+    "a3": "Waktu pengerjaan sangat bergantung pada kompleksitas fitur. Untuk website profil sederhana biasanya memakan waktu 1-2 minggu, sedangkan aplikasi web yang lebih kompleks bisa memakan waktu 1 bulan atau lebih.",
+    "q4": "Dimana lokasi kamu saat ini?",
+    "a4": "Saat ini saya berdomisili di Tegal, Jawa Tengah, Indonesia. Namun, saya terbiasa bekerja secara remote dengan klien dari mana saja."
+  },
+  "contact": {
+    "title_1": "Mari Bangun",
+    "title_2": "Sesuatu yang Hebat",
+    "subtitle": "Punya ide menarik? Mari berdiskusi dan wujudkan visi digital Anda dengan teknologi terkini.",
+    "placeholder_name": "Masukkan nama Anda...",
+    "placeholder_email": "email@domain.com",
+    "placeholder_message": "Apa yang bisa saya bantu?",
+    "executing": "Executing...",
+    "success": "Pesan berhasil dikirim!",
+    "error": "Gagal mengirim pesan."
+  },
+  "footer": {
+    "description": "Membangun masa depan digital dengan kode yang bersih dan desain yang bermakna. Berfokus pada inovasi, performa, dan kualitas tanpa kompromi.",
+    "nav_title": "Navigasi",
+    "links_title": "Tautan Lainnya"
+  }
+}
