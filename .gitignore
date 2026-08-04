@@ -25,3 +25,7 @@ yarn-error.log
 /.vscode
 /.zed
 PROMPT.txt
+
+# Shared Hosting Optimization: Explicitly allow compiled assets in public/build
+!/public/build
+!/public/build/**
