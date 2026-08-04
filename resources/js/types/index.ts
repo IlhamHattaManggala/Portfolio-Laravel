@@ -11,6 +11,15 @@ export interface TProject {
   video?: string | null;
 }
 
+export interface TPackage {
+  name: string;
+  description: string;
+  url: string;
+  repository: string;
+  downloads: number;
+  favers: number;
+}
+
 export interface TTechnology {
   id?: number;
   name: string;

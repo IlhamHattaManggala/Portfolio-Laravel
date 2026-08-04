@@ -24,6 +24,7 @@ const Navbar = ({ resumePath = "#" }: NavbarProps) => {
     { name: t("nav.about"), href: "/#about" },
     { name: t("nav.experience"), href: "/#experience" },
     { name: t("nav.projects"), href: "/#project" },
+    { name: t("nav.packages"), href: "/#packages" },
     { name: t("nav.certificates"), href: "/#certificate" },
     { name: t("nav.blog"), href: "/#blog" },
     { name: t("nav.contact"), href: "/#contact" },

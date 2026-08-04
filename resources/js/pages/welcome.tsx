@@ -5,12 +5,13 @@ import AboutSection from "@/components/sections/AboutSection";
 import ExperienceSection from "@/components/sections/ExperienceSection";
 import ProjectSection from "@/components/sections/ProjectSection";
 import GallerySection from "@/components/sections/GallerySection";
+import PackagesSection from "@/components/sections/PackagesSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import BlogSection from "@/components/sections/BlogSection";
 import ContactSection from "@/components/sections/ContactSection";
 import Preloader from "@/components/Preloader";
 import { Head } from '@inertiajs/react';
-import { TProject, TTechnology, TExperience, TCertificate, TTestimonial, TArticle } from "@/types";
+import { TProject, TTechnology, TExperience, TCertificate, TPackage, TTestimonial, TArticle } from "@/types";
 
 interface WelcomeProps {
     data: {
@@ -18,6 +19,7 @@ interface WelcomeProps {
         skills: TTechnology[];
         experiences: TExperience[];
         certificates: TCertificate[];
+        packages?: TPackage[];
         testimonials: TTestimonial[];
         blogs: TArticle[];
         resumePath: string;
@@ -71,6 +73,8 @@ export default function Welcome({ data }: WelcomeProps) {
                     {data.certificates && data.certificates.length > 0 && (
                         <GallerySection certificates={data.certificates} />
                     )}
+
+                    <PackagesSection packages={data.packages} />
                     
                     {data.testimonials && (
                         <TestimonialsSection testimonials={data.testimonials} />

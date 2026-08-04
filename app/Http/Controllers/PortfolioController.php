@@ -10,18 +10,57 @@ use App\Models\Setting;
 use App\Models\Skill;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 
 class PortfolioController extends Controller
 {
     public function index()
     {
+        $packages = Cache::remember('packagist_manggala_packages', 3600, function () {
+            try {
+                $response = Http::timeout(5)->get('https://packagist.org/search.json?q=manggala');
+                if ($response->successful()) {
+                    $results = $response->json('results', []);
+                    $filtered = array_values(array_filter($results, function ($item) {
+                        return str_starts_with($item['name'], 'manggala/');
+                    }));
+                    if (!empty($filtered)) {
+                        return $filtered;
+                    }
+                }
+            } catch (\Throwable $e) {
+                // Fallback to static defaults if offline or request fails
+            }
+
+            return [
+                [
+                    'name' => 'manggala/laravel-dashboard-builder',
+                    'description' => 'Production-ready open-source dashboard builder package for Laravel applications.',
+                    'url' => 'https://packagist.org/packages/manggala/laravel-dashboard-builder',
+                    'repository' => 'https://github.com/IlhamHattaManggala/laravel-dashboard-builder',
+                    'downloads' => 5,
+                    'favers' => 1
+                ],
+                [
+                    'name' => 'manggala/laravel-manifest',
+                    'description' => 'Production-ready, schema-driven, UI-agnostic configuration platform for Laravel applications.',
+                    'url' => 'https://packagist.org/packages/manggala/laravel-manifest',
+                    'repository' => 'https://github.com/IlhamHattaManggala/laravel-settings',
+                    'downloads' => 1,
+                    'favers' => 1
+                ]
+            ];
+        });
+
         return Inertia::render('welcome', [
             'data' => [
                 'skills' => Skill::all(),
                 'projects' => Project::all(),
                 'experiences' => Experience::all(),
                 'certificates' => Certificate::all(),
+                'packages' => $packages,
                 'testimonials' => Testimonial::where('is_approved', true)->get(),
                 'blogs' => Blog::where('is_published', true)->orderBy('published_at', 'desc')->take(3)->get(),
                 'resumePath' => Setting::where('key', 'resume_path')->first()?->value ?? '#',
