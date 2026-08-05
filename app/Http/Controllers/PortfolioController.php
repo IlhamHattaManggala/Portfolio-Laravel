@@ -138,6 +138,14 @@ class PortfolioController extends Controller
                 $info['repository'] = $repoUrl;
             }
 
+            $info['readme_id'] = '';
+
+            // Check local Indonesian docs fallback first
+            $localIdDoc = resource_path("docs/{$vendor}/{$package}/id.md");
+            if (file_exists($localIdDoc)) {
+                $info['readme_id'] = file_get_contents($localIdDoc);
+            }
+
             if ($repoUrl) {
                 $parsedUrl = parse_url($repoUrl);
                 $path = trim($parsedUrl['path'] ?? '', '/');
@@ -156,6 +164,19 @@ class PortfolioController extends Controller
                         }
                     } catch (\Throwable $e) {
                         // Ignore README fetch error
+                    }
+
+                    // Also try fetching README.id.md from GitHub if available
+                    if (empty($info['readme_id'])) {
+                        try {
+                            $rawIdUrl = "https://raw.githubusercontent.com/{$path}/main/README.id.md";
+                            $readmeIdResp = Http::timeout(5)->get($rawIdUrl);
+                            if ($readmeIdResp->successful()) {
+                                $info['readme_id'] = $readmeIdResp->body();
+                            }
+                        } catch (\Throwable $e) {
+                            // Ignore
+                        }
                     }
                 }
             }

@@ -9,13 +9,16 @@ import { TPackage } from "@/types";
 import { useTranslation } from "react-i18next";
 
 interface PackageShowProps {
-  package: TPackage & { readme?: string };
+  package: TPackage & { readme?: string; readme_id?: string };
   resumePath?: string;
 }
 
 export default function Show({ package: pkg, resumePath }: PackageShowProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [copied, setCopied] = useState(false);
+
+  const isIndonesian = i18n.language?.startsWith('id');
+  const activeReadme = isIndonesian ? (pkg.readme_id || pkg.readme) : (pkg.readme || pkg.readme_id);
 
   const installCmd = `composer require ${pkg.name}`;
 
@@ -157,7 +160,7 @@ export default function Show({ package: pkg, resumePath }: PackageShowProps) {
               <span>{t("packages.readme_title", "README.md Documentation")}</span>
             </h2>
 
-            {pkg.readme ? (
+            {activeReadme ? (
               <div className="max-w-none text-gray-300">
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
@@ -231,7 +234,7 @@ export default function Show({ package: pkg, resumePath }: PackageShowProps) {
                     ),
                   }}
                 >
-                  {pkg.readme}
+                  {activeReadme}
                 </ReactMarkdown>
               </div>
             ) : (
