@@ -155,10 +155,34 @@ export default function Show({ package: pkg, resumePath }: PackageShowProps) {
 
           {/* Documentation Container */}
           <div className="bg-[#090909] border border-white/10 rounded-3xl p-6 md:p-12 shadow-2xl">
-            <h2 className="text-xl font-mono text-gray-400 mb-8 border-b border-white/10 pb-4 flex items-center gap-3">
-              <Terminal size={20} className="text-primary" />
-              <span>{t("packages.readme_title", "README.md Documentation")}</span>
-            </h2>
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-8 border-b border-white/10 pb-4">
+              <h2 className="text-xl font-mono text-gray-400 flex items-center gap-3">
+                <Terminal size={20} className="text-primary" />
+                <span>{t("packages.readme_title", "README.md Documentation")}</span>
+              </h2>
+
+              {/* Language Selector for Docs */}
+              <div className="flex items-center gap-2 bg-white/5 border border-white/10 p-1 rounded-xl text-xs font-mono">
+                <button
+                  onClick={() => i18n.changeLanguage('id')}
+                  className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all ${
+                    isIndonesian ? 'bg-primary text-white font-bold shadow-md' : 'text-gray-400 hover:text-white'
+                  }`}
+                >
+                  <img src="https://flagcdn.com/w20/id.png" width="16" alt="ID" className="rounded-[2px]" />
+                  <span>Bahasa Indonesia</span>
+                </button>
+                <button
+                  onClick={() => i18n.changeLanguage('en')}
+                  className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all ${
+                    !isIndonesian ? 'bg-primary text-white font-bold shadow-md' : 'text-gray-400 hover:text-white'
+                  }`}
+                >
+                  <img src="https://flagcdn.com/w20/gb.png" width="16" alt="EN" className="rounded-[2px]" />
+                  <span>English</span>
+                </button>
+              </div>
+            </div>
 
             {activeReadme ? (
               <div className="max-w-none text-gray-300">
