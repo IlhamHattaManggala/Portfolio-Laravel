@@ -1,84 +1,108 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Console\Commands;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use Illuminate\Console\Command;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
-class UploadController extends Controller
+class CompressPublicImages extends Command
 {
-    public function upload(Request $request)
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'images:compress-public {--max=130 : Maximum file size in KB}';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Compress all existing images in the public folder to maximum specified size in KB (default 130KB) keeping filenames intact.';
+
+    /**
+     * Execute the console command.
+     */
+    public function handle()
     {
-        $request->validate([
-            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:10240', // Allow initial upload up to 10MB
-            'folder' => 'nullable|string'
-        ]);
+        ini_set('memory_limit', '512M');
+        $maxKb = (int) $this->option('max');
+        $publicDir = public_path();
 
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $folder = $request->input('folder', 'uploads');
+        $this->info("Scanning images in {$publicDir} to compress down to max {$maxKb} KB...");
 
-            // Sanitize filename
-            $sanitizedName = preg_replace('/[^a-zA-Z0-9_\.-]/', '_', $file->getClientOriginalName());
-            $filename = time() . '_' . $sanitizedName;
-
-            $targetDir = public_path($folder);
-            if (!file_exists($targetDir)) {
-                mkdir($targetDir, 0755, true);
-            }
-
-            $targetPath = $targetDir . DIRECTORY_SEPARATOR . $filename;
-
-            // Move uploaded file
-            $file->move($targetDir, $filename);
-
-            // Compress image down to maximum 130 KB automatically
-            $initialSizeKb = round(filesize($targetPath) / 1024, 2);
-            $this->compressToMaxKb($targetPath, 130);
-            $finalSizeKb = round(filesize($targetPath) / 1024, 2);
-
-            $url = "/" . trim($folder, '/') . "/" . $filename;
-
-            return response()->json([
-                'success' => true,
-                'path' => $url,
-                'initial_size_kb' => $initialSizeKb,
-                'compressed_size_kb' => $finalSizeKb
-            ]);
+        if (!extension_loaded('gd')) {
+            $this->error('PHP GD extension is not enabled. Cannot process images.');
+            return 1;
         }
 
-        return response()->json([
-            'success' => false,
-            'error' => 'No file uploaded'
-        ], 400);
+        $dirIterator = new RecursiveDirectoryIterator($publicDir);
+        $iterator = new RecursiveIteratorIterator($dirIterator);
+
+        $processedCount = 0;
+        $compressedCount = 0;
+        $savedBytes = 0;
+
+        foreach ($iterator as $file) {
+            if (!$file->isFile()) {
+                continue;
+            }
+
+            $path = $file->getPathname();
+
+            // Skip build directory assets if needed
+            if (str_contains($path, DIRECTORY_SEPARATOR . 'build' . DIRECTORY_SEPARATOR)) {
+                continue;
+            }
+
+            $extension = strtolower($file->getExtension());
+            if (!in_array($extension, ['jpg', 'jpeg', 'png', 'webp'])) {
+                continue;
+            }
+
+            $processedCount++;
+            clearstatcache();
+            $initialSize = filesize($path);
+            $initialSizeKb = round($initialSize / 1024, 2);
+
+            if ($initialSizeKb <= $maxKb) {
+                continue;
+            }
+
+            $this->compressSingleImage($path, $maxKb);
+
+            clearstatcache();
+            $finalSize = filesize($path);
+            $finalSizeKb = round($finalSize / 1024, 2);
+
+            $diffKb = round($initialSizeKb - $finalSizeKb, 2);
+            $savedBytes += ($initialSize - $finalSize);
+
+            $relativePath = str_replace($publicDir, '', $path);
+            $this->line("<info>Compressed:</info> {$relativePath} | <comment>{$initialSizeKb} KB</comment> -> <fg=green>{$finalSizeKb} KB</fg=green> (Saved {$diffKb} KB)");
+            $compressedCount++;
+        }
+
+        $savedMb = round($savedBytes / (1024 * 1024), 2);
+        $this->newLine();
+        $this->info("Done! Processed {$processedCount} images. Successfully compressed {$compressedCount} images (Saved total {$savedMb} MB).");
+
+        return 0;
     }
 
     /**
-     * Compress an image file to a target maximum size in KB (default: 130 KB).
+     * Compress a single image in place.
      */
-    private function compressToMaxKb(string $filePath, int $maxKb = 130): void
+    private function compressSingleImage(string $filePath, int $maxKb): void
     {
-        if (!extension_loaded('gd')) {
-            return;
-        }
-
-        clearstatcache();
-        $fileSizeKb = filesize($filePath) / 1024;
-        if ($fileSizeKb <= $maxKb) {
-            return;
-        }
-
         $imageInfo = @getimagesize($filePath);
         if (!$imageInfo) {
             return;
         }
 
         $mime = $imageInfo['mime'];
-        // SVG & GIF skip binary compression
-        if ($mime === 'image/svg+xml' || $mime === 'image/gif') {
-            return;
-        }
-
         $srcImage = match ($mime) {
             'image/jpeg' => @imagecreatefromjpeg($filePath),
             'image/png'  => @imagecreatefrompng($filePath),
@@ -134,7 +158,7 @@ class UploadController extends Controller
             $quality -= 5;
         } while ($currentSizeKb > $maxKb && $quality >= 10);
 
-        // Step 3: If PNG remains > maxKb, scale and encode as WebP payload under same filename
+        // Step 3: If PNG remains > maxKb (due to PNG lossless nature), scale and encode as WebP payload under same filename
         if (filesize($filePath) / 1024 > $maxKb) {
             $curWidth = imagesx($srcImage);
             $curHeight = imagesy($srcImage);
