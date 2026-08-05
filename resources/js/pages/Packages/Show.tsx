@@ -70,21 +70,21 @@ export default function Show({ package: pkg, resumePath }: PackageShowProps) {
             <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-gray-300">
                 <Package size={14} className="text-primary" />
-                <span>Open Source Package</span>
+                <span>{t("packages.open_source_badge", "Open Source Package")}</span>
               </div>
 
               <div className="flex items-center gap-6 text-sm font-mono text-gray-300">
                 <div className="flex items-center gap-2" title="Total Downloads">
                   <Download size={16} className="text-gray-400" />
-                  <span>{pkg.downloads ?? 0} downloads</span>
+                  <span>{t("packages.downloads_count", "{{count}} downloads", { count: pkg.downloads ?? 0 })}</span>
                 </div>
                 <div className="flex items-center gap-2" title="Favorites">
                   <Star size={16} className="text-amber-400 fill-amber-400/20" />
-                  <span>{pkg.favers ?? 0} stars</span>
+                  <span>{t("packages.stars_count", "{{count}} stars", { count: pkg.favers ?? 0 })}</span>
                 </div>
                 <div className="flex items-center gap-2 text-emerald-400">
                   <ShieldCheck size={16} />
-                  <span>MIT License</span>
+                  <span>{t("packages.mit_license", "MIT License")}</span>
                 </div>
               </div>
             </div>
@@ -111,12 +111,12 @@ export default function Show({ package: pkg, resumePath }: PackageShowProps) {
                 {copied ? (
                   <>
                     <Check size={16} className="text-emerald-400" />
-                    <span className="text-emerald-400">Copied to Clipboard!</span>
+                    <span className="text-emerald-400">{t("packages.copied_cmd", "Copied to Clipboard!")}</span>
                   </>
                 ) : (
                   <>
                     <Copy size={16} />
-                    <span>Copy Command</span>
+                    <span>{t("packages.copy_cmd", "Copy Command")}</span>
                   </>
                 )}
               </button>
@@ -132,7 +132,7 @@ export default function Show({ package: pkg, resumePath }: PackageShowProps) {
                   className="py-3 px-6 rounded-xl bg-white text-black font-bold text-xs md:text-sm flex items-center gap-2 hover:bg-gray-200 transition-colors shadow-lg"
                 >
                   <ExternalLink size={16} />
-                  View on Packagist
+                  {t("packages.view_packagist", "View on Packagist")}
                 </a>
               )}
 
@@ -144,7 +144,7 @@ export default function Show({ package: pkg, resumePath }: PackageShowProps) {
                   className="py-3 px-6 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-xs md:text-sm flex items-center gap-2 hover:bg-white/10 transition-colors"
                 >
                   <Github size={16} />
-                  GitHub Repository
+                  {t("packages.github_repo", "GitHub Repository")}
                 </a>
               )}
             </div>
@@ -154,7 +154,7 @@ export default function Show({ package: pkg, resumePath }: PackageShowProps) {
           <div className="bg-[#090909] border border-white/10 rounded-3xl p-6 md:p-12 shadow-2xl">
             <h2 className="text-xl font-mono text-gray-400 mb-8 border-b border-white/10 pb-4 flex items-center gap-3">
               <Terminal size={20} className="text-primary" />
-              <span>README.md Documentation</span>
+              <span>{t("packages.readme_title", "README.md Documentation")}</span>
             </h2>
 
             {pkg.readme ? (
