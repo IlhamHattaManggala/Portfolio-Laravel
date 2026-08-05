@@ -52,7 +52,7 @@ export default function Show({ package: pkg, resumePath }: PackageShowProps) {
       <Navbar resumePath={resumePath} />
 
       <main className="flex-grow pt-32 pb-24">
-        <div className="max-w-5xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6 md:px-8">
           {/* Back Button */}
           <Link
             href="/#packages"
