@@ -47,6 +47,16 @@
     "title_2": "Terpilih.",
     "filter_all": "Semua"
   },
+  "packages": {
+    "tag": "Paket Open Source",
+    "title_1": "PHP / Laravel",
+    "title_2": "Packages.",
+    "subtitle": "Paket PHP & Laravel terbuka (open-source) yang dapat digunakan kembali, dipublikasikan di Packagist.",
+    "view_docs": "Lihat Dokumentasi →",
+    "back_home": "Kembali ke Packages",
+    "no_desc": "Tidak ada deskripsi.",
+    "no_readme": "Dokumentasi README.md saat ini tidak tersedia untuk package ini."
+  },
   "gallery": {
     "tag": "Kredensial",
     "title_1": "Sertifikasi",

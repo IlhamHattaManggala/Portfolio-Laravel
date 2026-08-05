@@ -47,6 +47,16 @@
     "title_2": "Works.",
     "filter_all": "All"
   },
+  "packages": {
+    "tag": "Open Source Packages",
+    "title_1": "PHP / Laravel",
+    "title_2": "Packages.",
+    "subtitle": "Reusable open-source PHP & Laravel packages published on Packagist.",
+    "view_docs": "View Documentation →",
+    "back_home": "Back to Packages",
+    "no_desc": "No description provided.",
+    "no_readme": "Documentation README.md is currently unavailable for this package."
+  },
   "gallery": {
     "tag": "Credentials",
     "title_1": "Certifications",

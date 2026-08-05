@@ -97,6 +97,78 @@ class PortfolioController extends Controller
         ]);
     }
 
+    public function showPackage(string $vendor, string $package)
+    {
+        $fullName = "{$vendor}/{$package}";
+        $cacheKey = "packagist_pkg_detail_" . md5($fullName);
+
+        $packageDetails = Cache::remember($cacheKey, 3600, function () use ($vendor, $package, $fullName) {
+            $packagistUrl = "https://packagist.org/packages/{$fullName}.json";
+            $info = [
+                'name' => $fullName,
+                'description' => '',
+                'repository' => '',
+                'url' => "https://packagist.org/packages/{$fullName}",
+                'downloads' => 0,
+                'favers' => 0,
+                'readme' => '',
+            ];
+
+            try {
+                $response = Http::timeout(5)->get($packagistUrl);
+                if ($response->successful()) {
+                    $pkgData = $response->json('package', []);
+                    $info['description'] = $pkgData['description'] ?? '';
+                    $info['repository'] = $pkgData['repository'] ?? '';
+                    $info['downloads'] = $pkgData['downloads']['total'] ?? 0;
+                    $info['favers'] = $pkgData['favers'] ?? 0;
+                }
+            } catch (\Throwable $e) {
+                // Ignore API failures
+            }
+
+            // Fallback repositories if needed
+            $repoUrl = $info['repository'];
+            if (empty($repoUrl)) {
+                if ($package === 'laravel-dashboard-builder') {
+                    $repoUrl = 'https://github.com/IlhamHattaManggala/laravel-dashboard-builder';
+                } else if ($package === 'laravel-manifest') {
+                    $repoUrl = 'https://github.com/IlhamHattaManggala/laravel-settings';
+                }
+                $info['repository'] = $repoUrl;
+            }
+
+            if ($repoUrl) {
+                $parsedUrl = parse_url($repoUrl);
+                $path = trim($parsedUrl['path'] ?? '', '/');
+                if (!empty($path)) {
+                    $rawUrl = "https://raw.githubusercontent.com/{$path}/main/README.md";
+                    try {
+                        $readmeResponse = Http::timeout(5)->get($rawUrl);
+                        if ($readmeResponse->successful()) {
+                            $info['readme'] = $readmeResponse->body();
+                        } else {
+                            $rawMasterUrl = "https://raw.githubusercontent.com/{$path}/master/README.md";
+                            $readmeMasterResponse = Http::timeout(5)->get($rawMasterUrl);
+                            if ($readmeMasterResponse->successful()) {
+                                $info['readme'] = $readmeMasterResponse->body();
+                            }
+                        }
+                    } catch (\Throwable $e) {
+                        // Ignore README fetch error
+                    }
+                }
+            }
+
+            return $info;
+        });
+
+        return Inertia::render('Packages/Show', [
+            'package' => $packageDetails,
+            'resumePath' => Setting::where('key', 'resume_path')->first()?->value ?? '#',
+        ]);
+    }
+
     public function storeMessage(Request $request)
     {
         $validated = $request->validate([

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Package, ExternalLink, Github, Download, Star, Check, Copy, Terminal } from "lucide-react";
+import { Link } from "@inertiajs/react";
+import { Package, ExternalLink, Github, Download, Star, Check, Copy, Terminal, BookOpen } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { TPackage } from "@/types";
 
@@ -150,13 +151,21 @@ const PackagesSection = ({ packages = defaultPackages }: PackagesSectionProps) =
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <Link
+                      href={`/packages/${pkg.name}`}
+                      className="w-full py-3 px-4 rounded-xl bg-primary text-white font-bold text-xs flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors shadow-lg"
+                    >
+                      <BookOpen size={14} />
+                      {t("packages.view_docs", "View Documentation →")}
+                    </Link>
+
                     {pkg.url && (
                       <a
                         href={pkg.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 py-2.5 px-4 rounded-xl bg-white text-black font-semibold text-xs flex items-center justify-center gap-2 hover:bg-gray-200 transition-colors"
+                        className="flex-1 py-2.5 px-4 rounded-xl bg-white/5 border border-white/10 text-gray-300 hover:text-white font-semibold text-xs flex items-center justify-center gap-2 hover:bg-white/10 transition-colors"
                       >
                         <ExternalLink size={14} />
                         Packagist
@@ -168,10 +177,10 @@ const PackagesSection = ({ packages = defaultPackages }: PackagesSectionProps) =
                         href={pkg.repository}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 py-2.5 px-4 rounded-xl bg-white/5 border border-white/10 text-white font-semibold text-xs flex items-center justify-center gap-2 hover:bg-white/10 transition-colors"
+                        className="flex-1 py-2.5 px-4 rounded-xl bg-white/5 border border-white/10 text-gray-300 hover:text-white font-semibold text-xs flex items-center justify-center gap-2 hover:bg-white/10 transition-colors"
                       >
                         <Github size={14} />
-                        GitHub Repo
+                        GitHub
                       </a>
                     )}
                   </div>

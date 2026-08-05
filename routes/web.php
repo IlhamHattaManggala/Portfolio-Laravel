@@ -16,6 +16,7 @@ use App\Http\Controllers\PortfolioController;
 Route::get('/', [PortfolioController::class, 'index'])->name('home');
 Route::get('/blog', [PortfolioController::class, 'indexBlog'])->name('blog.index');
 Route::get('/blog/{blog:slug}', [PortfolioController::class, 'showBlog'])->name('blog.show');
+Route::get('/packages/{vendor}/{package}', [PortfolioController::class, 'showPackage'])->name('packages.show');
 Route::post('/contact', [PortfolioController::class, 'storeMessage'])->name('contact.store');
 Route::post('/testimonials', [PortfolioController::class, 'storeTestimonial'])->name('testimonials.store');
 Route::get('/api/terminal-data', [PortfolioController::class, 'terminalData'])->name('api.terminal-data');
