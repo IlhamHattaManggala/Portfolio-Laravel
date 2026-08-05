@@ -186,14 +186,25 @@ export default function Show({ package: pkg, resumePath }: PackageShowProps) {
                     strong: ({ ...props }) => (
                       <strong className="text-white font-bold" {...props} />
                     ),
-                    code: ({ inline, ...props }: any) =>
-                      inline ? (
-                        <code className="bg-white/10 px-2 py-0.5 rounded text-sm text-primary font-mono border border-white/10" {...props} />
-                      ) : (
-                        <code className="block bg-[#0A0A0A] border border-white/10 rounded-2xl p-5 my-6 overflow-x-auto text-sm text-gray-200 font-mono leading-relaxed shadow-2xl" {...props} />
-                      ),
-                    pre: ({ ...props }) => (
-                      <pre className="bg-[#0A0A0A] border border-white/10 rounded-2xl p-5 my-6 overflow-x-auto text-sm text-gray-200 font-mono leading-relaxed shadow-2xl" {...props} />
+                    code: ({ className, children, ...props }: any) => {
+                      const isLanguage = className && className.includes('language-');
+                      if (isLanguage) {
+                        return (
+                          <code className={`${className} font-mono text-sm`} {...props}>
+                            {children}
+                          </code>
+                        );
+                      }
+                      return (
+                        <code className="bg-white/10 px-1.5 py-0.5 rounded text-sm text-primary font-mono border border-white/10 font-semibold inline-block my-0.5" {...props}>
+                          {children}
+                        </code>
+                      );
+                    },
+                    pre: ({ children, ...props }: any) => (
+                      <pre className="bg-[#0A0A0A] border border-white/10 rounded-2xl p-5 my-6 overflow-x-auto text-sm text-gray-200 font-mono leading-relaxed shadow-2xl" {...props}>
+                        {children}
+                      </pre>
                     ),
                     blockquote: ({ ...props }) => (
                       <blockquote className="border-l-4 border-primary bg-white/5 px-6 py-4 rounded-r-2xl italic my-6 text-gray-300 text-lg" {...props} />
