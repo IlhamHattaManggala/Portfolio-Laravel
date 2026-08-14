@@ -287,7 +287,7 @@ class PortfolioSeeder extends Seeder
             ],
             [
                 'name' => 'Ilham Hatta Manggala',
-                'password' => Hash::make('IlhamHattaManggala311202'),
+                'password' => Hash::make('password'),
             ]
         );
     }
