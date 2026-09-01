@@ -80,7 +80,7 @@ const ProjectCard = ({ project }: { project: TProject }) => {
           {getLocalized(project.name)}
         </h3>
         
-        <p className="text-zinc-200 text-sm leading-relaxed line-clamp-2 mb-6">
+        <p className="text-gray-100 text-sm leading-relaxed line-clamp-2 mb-6">
           {getLocalized(project.descriptions)}
         </p>
 
@@ -89,13 +89,13 @@ const ProjectCard = ({ project }: { project: TProject }) => {
           {project.library.slice(0, 4).map((lib) => (
             <span
               key={lib}
-              className="text-xs font-semibold px-3 py-1.5 bg-white/15 border border-white/20 text-white rounded-full"
+              className="text-xs font-semibold px-3 py-1.5 bg-white/10 border border-white/20 text-white rounded-full"
             >
               {lib}
             </span>
           ))}
           {project.library.length > 4 && (
-             <span className="text-xs font-semibold px-3 py-1.5 bg-white/10 text-zinc-200 rounded-full">
+             <span className="text-xs font-semibold px-3 py-1.5 bg-white/10 border border-white/20 text-white rounded-full">
                +{project.library.length - 4}
              </span>
           )}
