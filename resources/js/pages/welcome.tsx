@@ -25,36 +25,50 @@ interface WelcomeProps {
         resumePath: string;
         contactEmail: string;
         location: string;
+        seo?: {
+            title?: string;
+            description?: string;
+            keywords?: string;
+            author?: string;
+            ogImage?: string | null;
+        };
     };
 }
 
 export default function Welcome({ data }: WelcomeProps) {
     const siteUrl = typeof window !== 'undefined' ? window.location.origin : 'https://ilhamhatta.my.id';
     const canonicalUrl = typeof window !== 'undefined' ? window.location.href : 'https://ilhamhatta.my.id';
-    const profileImageUrl = `${siteUrl}/images/profile.webp`;
+    
+    const seoTitle = data.seo?.title || "Ilham Hatta Manggala | Portofolio & Personal Website";
+    const seoDescription = data.seo?.description || "Portofolio profesional Ilham Hatta Manggala - Full Stack Web & Mobile Developer. Temukan proyek unggulan, riwayat pengalaman kerja, sertifikasi, dan blog artikel teknologi terbaru.";
+    const seoKeywords = data.seo?.keywords || "Ilham Hatta Manggala, IHM, Portofolio Ilham Hatta Manggala, Full Stack Developer, Flutter Developer, Laravel Developer, Web Developer, Mobile Developer, Indonesia";
+    const seoAuthor = data.seo?.author || "Ilham Hatta Manggala";
+    const ogImageUrl = data.seo?.ogImage 
+        ? (data.seo.ogImage.startsWith('http') ? data.seo.ogImage : `${siteUrl}${data.seo.ogImage}`) 
+        : `${siteUrl}/images/profile.webp`;
 
     return (
         <>
-            <Head title="Ilham Hatta Manggala | Portofolio & Personal Website">
-                <meta name="description" content="Portofolio profesional Ilham Hatta Manggala - Full Stack Web & Mobile Developer. Temukan proyek unggulan, riwayat pengalaman kerja, sertifikasi, dan blog artikel teknologi terbaru." />
-                <meta name="keywords" content="Ilham Hatta Manggala, IHM, Portofolio Ilham Hatta Manggala, Full Stack Developer, Flutter Developer, Laravel Developer, Web Developer, Mobile Developer, Indonesia" />
-                <meta name="author" content="Ilham Hatta Manggala" />
+            <Head title={seoTitle}>
+                <meta name="description" content={seoDescription} />
+                <meta name="keywords" content={seoKeywords} />
+                <meta name="author" content={seoAuthor} />
                 <meta name="robots" content="index, follow" />
                 <link rel="canonical" href={canonicalUrl} />
 
                 {/* Open Graph / Facebook */}
                 <meta property="og:type" content="website" />
                 <meta property="og:url" content={canonicalUrl} />
-                <meta property="og:title" content="Ilham Hatta Manggala | Portofolio & Personal Website" />
-                <meta property="og:description" content="Portofolio profesional Ilham Hatta Manggala - Full Stack Web & Mobile Developer. Temukan proyek unggulan, riwayat pengalaman kerja, sertifikasi, dan blog artikel teknologi terbaru." />
-                <meta property="og:image" content={profileImageUrl} />
+                <meta property="og:title" content={seoTitle} />
+                <meta property="og:description" content={seoDescription} />
+                <meta property="og:image" content={ogImageUrl} />
 
                 {/* Twitter */}
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:url" content={canonicalUrl} />
-                <meta name="twitter:title" content="Ilham Hatta Manggala | Portofolio & Personal Website" />
-                <meta name="twitter:description" content="Portofolio profesional Ilham Hatta Manggala - Full Stack Web & Mobile Developer. Temukan proyek unggulan, riwayat pengalaman kerja, sertifikasi, dan blog artikel teknologi terbaru." />
-                <meta name="twitter:image" content={profileImageUrl} />
+                <meta name="twitter:title" content={seoTitle} />
+                <meta name="twitter:description" content={seoDescription} />
+                <meta name="twitter:image" content={ogImageUrl} />
             </Head>
             <div className="flex flex-col min-h-screen">
                 <Preloader />

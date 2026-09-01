@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
+use App\Services\ImageService;
+
 class SettingController extends Controller
 {
     public function index()
@@ -59,4 +61,29 @@ class SettingController extends Controller
 
         return response()->json(['success' => false, 'error' => 'No file uploaded'], 400);
     }
+
+    public function uploadOgImage(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|image|mimes:jpeg,jpg,png,webp,gif|max:5120',
+        ]);
+
+        if ($request->hasFile('file')) {
+            $result = ImageService::processAndSaveWebp($request->file('file'), 'storage/seo', quality: 85, maxWidth: 1200);
+
+            Setting::updateOrCreate(
+                ['key' => 'og_image'],
+                ['value' => $result['path']]
+            );
+
+            return response()->json([
+                'success' => true,
+                'path' => $result['path']
+            ]);
+        }
+
+        return response()->json(['success' => false, 'error' => 'No file uploaded'], 400);
+    }
 }
+
+

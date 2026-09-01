@@ -54,6 +54,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
         Route::post('settings', [SettingController::class, 'update'])->name('settings.update');
         Route::post('settings/upload-resume', [SettingController::class, 'uploadResume'])->name('settings.upload-resume');
+        Route::post('settings/upload-og-image', [SettingController::class, 'uploadOgImage'])->name('settings.upload-og-image');
         // Other admin routes will go here
     });
     

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use App\Models\Certificate;
 use App\Models\Experience;
+use App\Models\Message;
 use App\Models\Project;
 use App\Models\Setting;
 use App\Models\Skill;
@@ -13,6 +14,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
+
+use App\Services\ImageService;
 
 class PortfolioController extends Controller
 {
@@ -66,6 +69,13 @@ class PortfolioController extends Controller
                 'resumePath' => Setting::where('key', 'resume_path')->first()?->value ?? '#',
                 'contactEmail' => Setting::where('key', 'contact_email')->first()?->value ?? 'hello@ilhamhatta.com',
                 'location' => Setting::where('key', 'location')->first()?->value ?? 'Jakarta, Indonesia',
+                'seo' => [
+                    'title' => Setting::where('key', 'meta_title')->first()?->value ?? 'Ilham Hatta Manggala | Portofolio & Personal Website',
+                    'description' => Setting::where('key', 'meta_description')->first()?->value ?? 'Portofolio profesional Ilham Hatta Manggala - Full Stack Web & Mobile Developer. Temukan proyek unggulan, riwayat pengalaman kerja, sertifikasi, dan blog artikel teknologi terbaru.',
+                    'keywords' => Setting::where('key', 'meta_keywords')->first()?->value ?? 'Ilham Hatta Manggala, IHM, Portofolio Ilham Hatta Manggala, Full Stack Developer, Flutter Developer, Laravel Developer, Web Developer, Mobile Developer, Indonesia',
+                    'author' => Setting::where('key', 'meta_author')->first()?->value ?? 'Ilham Hatta Manggala',
+                    'ogImage' => Setting::where('key', 'og_image')->first()?->value ?? null,
+                ],
             ]
         ]);
     }
@@ -198,7 +208,7 @@ class PortfolioController extends Controller
             'message' => 'required|string',
         ]);
 
-        \App\Models\Message::create($validated);
+        Message::create($validated);
 
         return response()->json(['message' => 'Success']);
     }
@@ -215,12 +225,11 @@ class PortfolioController extends Controller
 
         $imagePath = null;
         if ($request->hasFile('image')) {
-            // Using standard Laravel upload to public storage.
-            $path = $request->file('image')->store('testimonials', 'public');
-            $imagePath = '/storage/' . $path;
+            $result = ImageService::processAndSaveWebp($request->file('image'), 'uploads/testimonials', quality: 85, maxWidth: 800);
+            $imagePath = $result['path'];
         }
 
-        \App\Models\Testimonial::create([
+        Testimonial::create([
             'name' => $validated['name'],
             'company' => ['id' => $validated['company'], 'en' => ''],
             'designation' => ['id' => $validated['designation'], 'en' => ''],

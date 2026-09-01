@@ -281,14 +281,20 @@ class PortfolioSeeder extends Seeder
         }
 
         // Admin User
+        $adminEmail = env('ADMIN_EMAIL', 'admin@example.com');
+        $adminPassword = env('ADMIN_PASSWORD', 'password');
+        $adminName = env('ADMIN_NAME', 'Admin User');
+
         \App\Models\User::updateOrCreate(
             [
-                'email' => 'ilhamhattamanggala123@gmail.com',
+                'email' => $adminEmail,
             ],
             [
-                'name' => 'Ilham Hatta Manggala',
-                'password' => Hash::make('password'),
+                'name' => $adminName,
+                'password' => Hash::make($adminPassword),
             ]
         );
     }
 }
+
+
