@@ -55,6 +55,7 @@ const FloatingTerminal: React.FC<FloatingTerminalProps> = ({ data: initialData }
                         <div className="absolute top-2 right-4 z-50 flex gap-2">
                             <button 
                                 onClick={() => setIsMinimized(true)}
+                                aria-label="Minimize terminal"
                                 className="p-1 hover:bg-white/10 rounded-full transition-colors text-gray-400 hover:text-white"
                                 title="Minimize"
                             >
@@ -62,6 +63,7 @@ const FloatingTerminal: React.FC<FloatingTerminalProps> = ({ data: initialData }
                             </button>
                             <button 
                                 onClick={() => setIsOpen(false)}
+                                aria-label="Close terminal"
                                 className="p-1 hover:bg-red-500/20 rounded-full transition-colors text-gray-400 hover:text-red-500"
                                 title="Close"
                             >
@@ -82,6 +84,7 @@ const FloatingTerminal: React.FC<FloatingTerminalProps> = ({ data: initialData }
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: 20 }}
                             onClick={() => setIsMinimized(false)}
+                            aria-label="Restore terminal window"
                             className="bg-primary/20 backdrop-blur-md border border-primary/30 text-primary px-4 py-2 rounded-full text-xs font-bold hover:bg-primary/30 transition-all flex items-center gap-2"
                         >
                             <Maximize2 size={14} />
@@ -100,6 +103,7 @@ const FloatingTerminal: React.FC<FloatingTerminalProps> = ({ data: initialData }
                             setIsOpen(!isOpen);
                         }
                     }}
+                    aria-label="Toggle terminal"
                     className={`p-4 rounded-full shadow-lg transition-all duration-300 ${
                         isOpen 
                         ? 'bg-red-500 hover:bg-red-600 text-white' 

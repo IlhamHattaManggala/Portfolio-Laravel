@@ -26,16 +26,17 @@ const Footer = () => {
             </p>
             <div className="flex gap-4">
               {[
-                { icon: FaGithub, href: "https://github.com/IlhamHattaManggala" },
-                { icon: FaLinkedin, href: "https://www.linkedin.com/in/ilham-hatta-manggala" },
-                { icon: FaInstagram, href: "https://www.instagram.com/runtahhhh__/" },
-                { icon: FaTwitter, href: "#" }
+                { icon: FaGithub, href: "https://github.com/IlhamHattaManggala", label: "GitHub Profile" },
+                { icon: FaLinkedin, href: "https://www.linkedin.com/in/ilham-hatta-manggala", label: "LinkedIn Profile" },
+                { icon: FaInstagram, href: "https://www.instagram.com/runtahhhh__/", label: "Instagram Profile" },
+                { icon: FaTwitter, href: "#", label: "Twitter Profile" }
               ].map((social, i) => (
                 <a 
                   key={i}
                   href={social.href} 
                   target="_blank" 
                   rel="noopener noreferrer" 
+                  aria-label={social.label}
                   className="w-10 h-10 bg-white/[0.03] flex items-center justify-center rounded-full hover:bg-white hover:text-black transition-all duration-300 border border-white/5"
                 >
                   <social.icon size={16} />

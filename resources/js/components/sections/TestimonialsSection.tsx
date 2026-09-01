@@ -183,6 +183,7 @@ const TestimonialsSection = ({ testimonials: initialTestimonials }: Testimonials
             >
               <button
                 onClick={() => setIsModalOpen(false)}
+                aria-label="Close modal"
                 className="absolute top-6 right-6 text-gray-400 hover:text-white transition-colors"
               >
                 <X size={24} />

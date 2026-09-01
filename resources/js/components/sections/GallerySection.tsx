@@ -85,6 +85,7 @@ const GallerySection = ({ certificates: initialCertificates }: GallerySectionPro
                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center backdrop-blur-sm z-20">
                       <button 
                         onClick={() => setSelectedCert(cert)}
+                        aria-label={`View certificate: ${getLocalized(cert.title)}`}
                         className="w-14 h-14 bg-white text-black rounded-full flex items-center justify-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 shadow-[0_0_30px_rgba(255,255,255,0.3)] hover:scale-110"
                       >
                         <Eye size={24} />
@@ -133,6 +134,7 @@ const GallerySection = ({ certificates: initialCertificates }: GallerySectionPro
             >
               <button
                 onClick={() => setSelectedCert(null)}
+                aria-label="Close certificate lightbox"
                 className="absolute top-6 right-6 z-10 w-10 h-10 flex items-center justify-center bg-white/5 hover:bg-white/10 text-white rounded-full transition-colors backdrop-blur-md"
               >
                 <X size={20} />

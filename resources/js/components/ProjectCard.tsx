@@ -46,6 +46,7 @@ const ProjectCard = ({ project }: { project: TProject }) => {
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={`View live demo of ${getLocalized(project.name)}`}
                 className="w-12 h-12 flex items-center justify-center bg-white text-black rounded-full hover:scale-110 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.3)]"
               >
                 <ExternalLink size={20} />
@@ -56,6 +57,7 @@ const ProjectCard = ({ project }: { project: TProject }) => {
                 href={project.video}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={`Watch video preview of ${getLocalized(project.name)}`}
                 className="w-12 h-12 flex items-center justify-center bg-white/[0.05] border border-white/20 text-white rounded-full hover:bg-white/10 transition-colors backdrop-blur-md"
               >
                 <Play size={20} fill="currentColor" />

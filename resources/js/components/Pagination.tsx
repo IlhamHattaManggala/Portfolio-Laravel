@@ -17,6 +17,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
       <button
         onClick={() => onPageChange(Math.max(1, currentPage - 1))}
         disabled={currentPage === 1}
+        aria-label="Previous page"
         className="p-2 rounded-full border border-border disabled:opacity-30 disabled:cursor-not-allowed hover:border-blue-600 transition-colors"
       >
         <ChevronLeft size={20} />
@@ -26,6 +27,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
         <button
           key={page}
           onClick={() => onPageChange(page)}
+          aria-label={`Page ${page}`}
           className={`w-10 h-10 rounded-full text-sm font-bold transition-all ${
             currentPage === page
               ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20"
@@ -39,6 +41,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
       <button
         onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
         disabled={currentPage === totalPages}
+        aria-label="Next page"
         className="p-2 rounded-full border border-border disabled:opacity-30 disabled:cursor-not-allowed hover:border-blue-600 transition-colors"
       >
         <ChevronRight size={20} />

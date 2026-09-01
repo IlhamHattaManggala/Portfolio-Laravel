@@ -81,7 +81,7 @@ const Navbar = ({ resumePath = "#" }: NavbarProps) => {
         <div className="hidden md:flex items-center gap-2">
           <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
-              <button className="w-10 h-10 rounded-full bg-white/5 text-gray-300 hover:text-white hover:bg-white/10 transition border border-white/10 flex items-center justify-center">
+              <button aria-label={t("nav.select_language", "Select Language")} className="w-10 h-10 rounded-full bg-white/5 text-gray-300 hover:text-white hover:bg-white/10 transition border border-white/10 flex items-center justify-center">
                 <img 
                   src={i18n.language?.startsWith('id') ? "https://flagcdn.com/w20/id.png" : "https://flagcdn.com/w20/gb.png"} 
                   srcSet={i18n.language?.startsWith('id') ? "https://flagcdn.com/w40/id.png 2x" : "https://flagcdn.com/w40/gb.png 2x"}
@@ -117,7 +117,7 @@ const Navbar = ({ resumePath = "#" }: NavbarProps) => {
         <div className="md:hidden flex items-center gap-2">
           <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
-              <button className="w-10 h-10 flex items-center justify-center bg-white/5 text-gray-300 rounded-full border border-white/10">
+              <button aria-label={t("nav.select_language", "Select Language")} className="w-10 h-10 flex items-center justify-center bg-white/5 text-gray-300 rounded-full border border-white/10">
                 <img 
                   src={i18n.language?.startsWith('id') ? "https://flagcdn.com/w20/id.png" : "https://flagcdn.com/w20/gb.png"} 
                   srcSet={i18n.language?.startsWith('id') ? "https://flagcdn.com/w40/id.png 2x" : "https://flagcdn.com/w40/gb.png 2x"}
@@ -141,6 +141,7 @@ const Navbar = ({ resumePath = "#" }: NavbarProps) => {
 
           <button
             onClick={() => setIsOpen(!isOpen)}
+            aria-label={t("nav.toggle_menu", "Toggle navigation menu")}
             className="w-10 h-10 flex items-center justify-center bg-white/5 rounded-full border border-white/10"
           >
             {isOpen ? <X size={20} /> : <Menu size={20} />}
