@@ -21,7 +21,7 @@ const Footer = () => {
                 IHM.
               </span>
             </div>
-            <p className="text-gray-400 text-sm max-w-sm mb-8 leading-relaxed">
+            <p className="text-gray-300 text-sm max-w-sm mb-8 leading-relaxed">
               {t('footer.description')}
             </p>
             <div className="flex gap-4">
@@ -55,7 +55,7 @@ const Footer = () => {
                 { name: t('nav.projects'), href: "#project" }
               ].map((link) => (
                 <li key={link.name}>
-                  <a href={toUrl(link.href)} className="text-gray-400 hover:text-white transition-colors">
+                  <a href={toUrl(link.href)} className="text-gray-300 hover:text-white transition-colors">
                     {link.name}
                   </a>
                 </li>
@@ -73,7 +73,7 @@ const Footer = () => {
                 { name: t('nav.faq'), href: "/faq" }
               ].map((link) => (
                 <li key={link.name}>
-                  <a href={toUrl(link.href)} className="text-gray-400 hover:text-white transition-colors">
+                  <a href={toUrl(link.href)} className="text-gray-300 hover:text-white transition-colors">
                     {link.name}
                   </a>
                 </li>
@@ -83,12 +83,12 @@ const Footer = () => {
         </div>
 
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-sm text-gray-500 tracking-wide flex items-center gap-2">
+          <p className="text-sm text-gray-300 tracking-wide flex items-center gap-2">
             © {currentYear} Ilham Hatta Manggala. All rights reserved.
           </p>
-          <div className="flex gap-8 text-sm text-gray-500">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+          <div className="flex gap-8 text-sm">
+            <a href="#" className="text-gray-300 hover:text-white transition-colors">Privacy Policy</a>
+            <a href="#" className="text-gray-300 hover:text-white transition-colors">Terms of Service</a>
           </div>
         </div>
       </div>
