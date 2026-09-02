@@ -13,9 +13,10 @@ import {
 
 interface NavbarProps {
   resumePath?: string;
+  onOpenResume?: () => void;
 }
 
-const Navbar = ({ resumePath = "#" }: NavbarProps) => {
+const Navbar = ({ resumePath = "#", onOpenResume }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { t, i18n } = useTranslation();
@@ -103,14 +104,15 @@ const Navbar = ({ resumePath = "#" }: NavbarProps) => {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <a
-            href={resumePath}
-            download
-            className="px-6 py-2.5 bg-white text-black hover:bg-gray-200 transition-colors text-xs font-bold rounded-full flex items-center gap-2"
+          <button
+            type="button"
+            onClick={onOpenResume || (() => window.open(resumePath, '_blank'))}
+            aria-label={t("nav.view_cv", "View CV Resume")}
+            className="px-6 py-2.5 bg-white text-black hover:bg-gray-200 transition-colors text-xs font-bold rounded-full flex items-center gap-2 cursor-pointer shadow-md"
           >
             <Download size={14} />
             CV
-          </a>
+          </button>
         </div>
 
         {/* Mobile Toggle */}

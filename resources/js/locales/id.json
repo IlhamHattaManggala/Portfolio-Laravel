@@ -140,5 +140,22 @@
     "description": "Membangun masa depan digital dengan kode yang bersih dan desain yang bermakna. Berfokus pada inovasi, performa, dan kualitas tanpa kompromi.",
     "nav_title": "Navigasi",
     "links_title": "Tautan Lainnya"
+  },
+  "github": {
+    "tag": "Ekosistem GitHub",
+    "title_1": "Kontribusi &",
+    "title_2": "Aktivitas Ngoding.",
+    "subtitle": "Gambaran langsung komit harian, aktivitas open-source, dan kontribusi kode saya.",
+    "matrix_title": "Kalender Kontribusi",
+    "view_profile": "Lihat Profil",
+    "stats_title": "Ringkasan Statistik",
+    "langs_title": "Bahasa Terbanyak",
+    "streak_title": "Rentetan Komit"
+  },
+  "resume": {
+    "modal_title": "Curriculum Vitae — Ilham Hatta Manggala",
+    "modal_subtitle": "Pratinjau & Unduh Dokumen PDF",
+    "download_cv": "Unduh CV PDF",
+    "open_new_tab": "Buka CV PDF di tab baru"
   }
 }

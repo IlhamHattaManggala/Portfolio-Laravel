@@ -140,5 +140,22 @@
     "description": "Building the digital future with clean code and meaningful design. Focused on innovation, performance, and uncompromising quality.",
     "nav_title": "Navigation",
     "links_title": "Other Links"
+  },
+  "github": {
+    "tag": "GitHub Ecosystem",
+    "title_1": "Contribution &",
+    "title_2": "Coding Activity.",
+    "subtitle": "Real-time snapshot of my daily commits, open-source activity, and code contributions.",
+    "matrix_title": "Contribution Calendar",
+    "view_profile": "View Profile",
+    "stats_title": "Overview Stats",
+    "langs_title": "Most Used Languages",
+    "streak_title": "Commit Streak"
+  },
+  "resume": {
+    "modal_title": "Curriculum Vitae — Ilham Hatta Manggala",
+    "modal_subtitle": "Preview & Download PDF Document",
+    "download_cv": "Download CV PDF",
+    "open_new_tab": "Open CV PDF in new tab"
   }
 }

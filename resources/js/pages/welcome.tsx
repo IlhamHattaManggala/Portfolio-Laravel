@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import HeroSection from "@/components/sections/HeroSection";
@@ -6,10 +7,12 @@ import ExperienceSection from "@/components/sections/ExperienceSection";
 import ProjectSection from "@/components/sections/ProjectSection";
 import GallerySection from "@/components/sections/GallerySection";
 import PackagesSection from "@/components/sections/PackagesSection";
+import GithubSection from "@/components/sections/GithubSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import BlogSection from "@/components/sections/BlogSection";
 import ContactSection from "@/components/sections/ContactSection";
 import Preloader from "@/components/Preloader";
+import ResumeModal from "@/components/ResumeModal";
 import { Head } from '@inertiajs/react';
 import { TProject, TTechnology, TExperience, TCertificate, TPackage, TTestimonial, TArticle } from "@/types";
 
@@ -36,6 +39,7 @@ interface WelcomeProps {
 }
 
 export default function Welcome({ data }: WelcomeProps) {
+    const [isResumeOpen, setIsResumeOpen] = useState(false);
     const siteUrl = typeof window !== 'undefined' ? window.location.origin : 'https://ilhamhatta.my.id';
     const canonicalUrl = typeof window !== 'undefined' ? window.location.href : 'https://ilhamhatta.my.id';
     
@@ -72,7 +76,10 @@ export default function Welcome({ data }: WelcomeProps) {
             </Head>
             <div className="flex flex-col min-h-screen">
                 <Preloader />
-                <Navbar resumePath={data.resumePath} />
+                <Navbar 
+                    resumePath={data.resumePath} 
+                    onOpenResume={() => setIsResumeOpen(true)} 
+                />
 
                 <main className="flex-grow">
                     <HeroSection />
@@ -89,6 +96,8 @@ export default function Welcome({ data }: WelcomeProps) {
                     )}
 
                     <PackagesSection packages={data.packages} />
+
+                    <GithubSection />
                     
                     {data.testimonials && (
                         <TestimonialsSection testimonials={data.testimonials} />
@@ -102,6 +111,11 @@ export default function Welcome({ data }: WelcomeProps) {
                 </main>
                 <Footer />
                 
+                <ResumeModal 
+                    isOpen={isResumeOpen}
+                    onClose={() => setIsResumeOpen(false)}
+                    resumePath={data.resumePath}
+                />
             </div>
         </>
     );
