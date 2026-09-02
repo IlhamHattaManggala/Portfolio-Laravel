@@ -51,10 +51,10 @@ export default function SkillForm({ skill }: FormProps) {
                 </div>
                 <div className="space-y-2">
                     <ImageUpload 
-                        label="Icon (SVG/PNG)"
+                        label="Icon Skill (WebP, Max 2MB)"
                         value={data.icon || ""}
                         onChange={(val) => setData('icon', val)}
-                        folder="skills"
+                        folder="assets/skills"
                     />
                     {errors.icon && <p className="text-red-500 text-xs mt-1">{errors.icon}</p>}
                 </div>

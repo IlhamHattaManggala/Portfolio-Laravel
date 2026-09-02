@@ -103,10 +103,10 @@ export default function BlogForm({ blog }: FormProps) {
 
                 <div className="space-y-2">
                     <ImageUpload 
-                        label="Featured Image"
+                        label="Gambar Sampul Artikel (WebP, Max 3MB)"
                         value={data.featured_image || ""}
                         onChange={(val) => setData('featured_image', val)}
-                        folder="blogs"
+                        folder="assets/blogs"
                     />
                     {errors.featured_image && <p className="text-red-500 text-xs mt-1">{errors.featured_image}</p>}
                 </div>

@@ -101,10 +101,10 @@ export default function CertificateForm({ certificate }: FormProps) {
                 </div>
                 <div className="space-y-2 md:col-span-2">
                     <ImageUpload 
-                        label="Scan Sertifikat / Gambar"
+                        label="Gambar Sertifikat (WebP, Max 3MB)"
                         value={data.image || ""}
                         onChange={(val) => setData('image', val)}
-                        folder="certificates"
+                        folder="assets/certificates"
                     />
                     {errors.image && <p className="text-red-500 text-xs mt-1">{errors.image}</p>}
                 </div>

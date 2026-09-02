@@ -167,7 +167,7 @@ export default function ProjectForm({ project }: FormProps) {
                         label="Gambar Proyek"
                         value={data.image || ""}
                         onChange={(val) => setData('image', val)}
-                        folder="projects"
+                        folder="assets/projects"
                     />
                     {errors.image && <p className="text-red-500 text-xs mt-1">{errors.image}</p>}
                 </div>

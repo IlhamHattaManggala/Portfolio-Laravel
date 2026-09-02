@@ -150,7 +150,7 @@ export default function ExperienceForm({ experience }: FormProps) {
                         label="Logo Perusahaan / Icon"
                         value={data.icon || ""}
                         onChange={(val) => setData('icon', val)}
-                        folder="experience"
+                        folder="assets/experience"
                     />
                     {errors.icon && <p className="text-red-500 text-xs mt-1">{errors.icon}</p>}
                 </div>
