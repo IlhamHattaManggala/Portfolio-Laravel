@@ -80,7 +80,7 @@ const ProjectCard = ({ project }: { project: TProject }) => {
           {getLocalized(project.name)}
         </h3>
         
-        <p className="text-gray-100 text-sm leading-relaxed line-clamp-2 mb-6">
+        <p className="text-white text-sm font-medium leading-relaxed line-clamp-2 mb-6">
           {getLocalized(project.descriptions)}
         </p>
 
