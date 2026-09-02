@@ -14,7 +14,7 @@ import ContactSection from "@/components/sections/ContactSection";
 import Preloader from "@/components/Preloader";
 import ResumeModal from "@/components/ResumeModal";
 import { Head } from '@inertiajs/react';
-import { TProject, TTechnology, TExperience, TCertificate, TPackage, TTestimonial, TArticle } from "@/types";
+import { TProject, TTechnology, TExperience, TCertificate, TPackage, TTestimonial, TArticle, TGithubStats } from "@/types";
 
 interface WelcomeProps {
     data: {
@@ -23,6 +23,7 @@ interface WelcomeProps {
         experiences: TExperience[];
         certificates: TCertificate[];
         packages?: TPackage[];
+        githubStats?: TGithubStats;
         testimonials: TTestimonial[];
         blogs: TArticle[];
         resumePath: string;
@@ -97,7 +98,7 @@ export default function Welcome({ data }: WelcomeProps) {
 
                     <PackagesSection packages={data.packages} />
 
-                    <GithubSection />
+                    <GithubSection stats={data.githubStats} />
                     
                     {data.testimonials && (
                         <TestimonialsSection testimonials={data.testimonials} />

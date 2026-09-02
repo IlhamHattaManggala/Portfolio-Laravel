@@ -21,6 +21,13 @@ export interface TPackage {
   type?: 'composer' | 'npm';
 }
 
+export interface TGithubStats {
+  public_repos: number;
+  followers: number;
+  total_stars: number;
+  top_languages: { name: string; percentage: number; color: string }[];
+}
+
 export interface TTechnology {
   id?: number;
   name: string;

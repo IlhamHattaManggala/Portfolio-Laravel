@@ -1,11 +1,29 @@
 import { motion } from "framer-motion";
 import { FaGithub } from "react-icons/fa";
-import { GitCommit, Star, GitPullRequest, Flame, ExternalLink, Code2 } from "lucide-react";
+import { GitCommit, Star, ExternalLink, Code2, FolderGit2, Users } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { TGithubStats } from "@/types";
 
-const GithubSection = () => {
+interface GithubSectionProps {
+  stats?: TGithubStats;
+}
+
+const defaultStats: TGithubStats = {
+  public_repos: 25,
+  followers: 12,
+  total_stars: 8,
+  top_languages: [
+    { name: "TypeScript", percentage: 45, color: "#3178c6" },
+    { name: "PHP", percentage: 30, color: "#4F5D95" },
+    { name: "Dart", percentage: 15, color: "#00B4AB" },
+    { name: "JavaScript", percentage: 10, color: "#f1e05a" },
+  ],
+};
+
+const GithubSection = ({ stats = defaultStats }: GithubSectionProps) => {
   const { t } = useTranslation();
   const githubUsername = "IlhamHattaManggala";
+  const displayStats = stats || defaultStats;
 
   return (
     <section className="py-24 relative overflow-hidden" id="github">
@@ -81,7 +99,7 @@ const GithubSection = () => {
             </a>
           </div>
 
-          {/* Interactive Contribution Matrix SVG */}
+          {/* Contribution Matrix Graphic */}
           <div className="w-full overflow-x-auto py-2 flex justify-center bg-black/40 rounded-2xl border border-white/5 p-4">
             <img
               src={`https://ghchart.rshah.org/4682B4/${githubUsername}`}
@@ -92,9 +110,9 @@ const GithubSection = () => {
           </div>
         </motion.div>
 
-        {/* GitHub Stats Cards Grid */}
+        {/* GitHub Stats Native Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* GitHub Stats Card */}
+          {/* Card 1: Overview Stats */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -102,21 +120,39 @@ const GithubSection = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="bg-[#0D0D0D] border border-white/10 rounded-3xl p-6 hover:border-white/20 transition-all flex flex-col justify-between"
           >
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-6">
               <span className="text-xs font-mono text-gray-400 uppercase tracking-wider">{t("github.stats_title", "Overview Stats")}</span>
-              <Star size={16} className="text-amber-400" />
+              <FolderGit2 size={16} className="text-primary" />
             </div>
-            <div className="flex justify-center items-center py-2">
-              <img
-                src={`https://github-readme-stats.vercel.app/api?username=${githubUsername}&show_icons=true&theme=dark&hide_border=true&bg_color=00000000&text_color=999999&title_color=ffffff&icon_color=4682B4`}
-                alt="GitHub Overview Stats"
-                className="w-full object-contain max-h-[170px]"
-                loading="lazy"
-              />
+
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-3 rounded-2xl bg-white/[0.02] border border-white/5">
+                <div className="flex items-center gap-2.5 text-xs text-gray-300">
+                  <FolderGit2 size={14} className="text-primary" />
+                  <span>Public Repositories</span>
+                </div>
+                <span className="text-base font-bold font-mono text-white">{displayStats.public_repos}</span>
+              </div>
+
+              <div className="flex items-center justify-between p-3 rounded-2xl bg-white/[0.02] border border-white/5">
+                <div className="flex items-center gap-2.5 text-xs text-gray-300">
+                  <Star size={14} className="text-amber-400 fill-amber-400/20" />
+                  <span>Total Stars Earned</span>
+                </div>
+                <span className="text-base font-bold font-mono text-amber-400">{displayStats.total_stars}</span>
+              </div>
+
+              <div className="flex items-center justify-between p-3 rounded-2xl bg-white/[0.02] border border-white/5">
+                <div className="flex items-center gap-2.5 text-xs text-gray-300">
+                  <Users size={14} className="text-emerald-400" />
+                  <span>Followers</span>
+                </div>
+                <span className="text-base font-bold font-mono text-emerald-400">{displayStats.followers}</span>
+              </div>
             </div>
           </motion.div>
 
-          {/* Top Languages Card */}
+          {/* Card 2: Top Languages Progress */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -124,40 +160,73 @@ const GithubSection = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="bg-[#0D0D0D] border border-white/10 rounded-3xl p-6 hover:border-white/20 transition-all flex flex-col justify-between"
           >
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-6">
               <span className="text-xs font-mono text-gray-400 uppercase tracking-wider">{t("github.langs_title", "Most Used Languages")}</span>
               <Code2 size={16} className="text-emerald-400" />
             </div>
-            <div className="flex justify-center items-center py-2">
-              <img
-                src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${githubUsername}&layout=compact&theme=dark&hide_border=true&bg_color=00000000&text_color=999999&title_color=ffffff`}
-                alt="GitHub Top Languages"
-                className="w-full object-contain max-h-[170px]"
-                loading="lazy"
-              />
+
+            <div className="space-y-3.5">
+              {displayStats.top_languages.map((lang) => (
+                <div key={lang.name} className="space-y-1.5">
+                  <div className="flex justify-between items-center text-xs font-mono">
+                    <span className="text-gray-300 flex items-center gap-2">
+                      <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: lang.color }} />
+                      {lang.name}
+                    </span>
+                    <span className="text-gray-400 font-bold">{lang.percentage}%</span>
+                  </div>
+                  <div className="w-full h-2 rounded-full bg-white/5 overflow-hidden">
+                    <div
+                      className="h-full rounded-full transition-all duration-1000"
+                      style={{
+                        width: `${lang.percentage}%`,
+                        backgroundColor: lang.color,
+                      }}
+                    />
+                  </div>
+                </div>
+              ))}
             </div>
           </motion.div>
 
-          {/* Streak Stats Card */}
+          {/* Card 3: Developer Profile Badge */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="bg-[#0D0D0D] border border-white/10 rounded-3xl p-6 hover:border-white/20 transition-all flex flex-col justify-between"
+            className="bg-gradient-to-br from-primary/10 via-[#0D0D0D] to-transparent border border-primary/20 rounded-3xl p-6 hover:border-primary/40 transition-all flex flex-col justify-between relative overflow-hidden"
           >
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-xs font-mono text-gray-400 uppercase tracking-wider">{t("github.streak_title", "Commit Streak")}</span>
-              <Flame size={16} className="text-orange-500" />
+            <div className="flex items-center justify-between mb-6">
+              <span className="text-xs font-mono text-gray-300 uppercase tracking-wider">GitHub Developer</span>
+              <FaGithub size={20} className="text-white" />
             </div>
-            <div className="flex justify-center items-center py-2">
-              <img
-                src={`https://github-readme-streak-stats.herokuapp.com/?user=${githubUsername}&theme=dark&hide_border=true&background=00000000&stroke=ffffff20&ring=4682B4&fire=FF4500&currStreakLabel=ffffff`}
-                alt="GitHub Commit Streak Stats"
-                className="w-full object-contain max-h-[170px]"
-                loading="lazy"
-              />
+
+            <div className="space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs font-medium text-emerald-400">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                Active Developer
+              </div>
+
+              <h4 className="text-2xl font-bold text-white tracking-tight">
+                Ilham Hatta Manggala
+              </h4>
+
+              <p className="text-gray-400 text-xs leading-relaxed">
+                Full-Stack Web & Mobile Developer actively contributing to open-source software and modern web applications.
+              </p>
             </div>
+
+            <a
+              href={`https://github.com/${githubUsername}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit GitHub Profile Page"
+              className="mt-6 w-full py-3 px-4 rounded-xl bg-white text-black font-bold text-xs flex items-center justify-center gap-2 hover:bg-gray-200 transition-colors shadow-lg"
+            >
+              <FaGithub size={16} />
+              Visit GitHub Profile →
+            </a>
           </motion.div>
         </div>
       </div>

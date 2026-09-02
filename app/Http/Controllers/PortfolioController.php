@@ -158,6 +158,77 @@ class PortfolioController extends Controller
             return $allPackages;
         });
 
+        $githubStats = Cache::remember('github_user_stats_v2', 3600, function () {
+            $stats = [
+                'public_repos' => 25,
+                'followers' => 12,
+                'total_stars' => 8,
+                'top_languages' => [
+                    ['name' => 'TypeScript', 'percentage' => 45, 'color' => '#3178c6'],
+                    ['name' => 'PHP', 'percentage' => 30, 'color' => '#4F5D95'],
+                    ['name' => 'Dart', 'percentage' => 15, 'color' => '#00B4AB'],
+                    ['name' => 'JavaScript', 'percentage' => 10, 'color' => '#f1e05a'],
+                ],
+            ];
+
+            try {
+                $userResp = Http::timeout(5)->withHeaders([
+                    'User-Agent' => 'PortfolioApp'
+                ])->get('https://api.github.com/users/IlhamHattaManggala');
+
+                if ($userResp->successful()) {
+                    $userData = $userResp->json();
+                    $stats['public_repos'] = $userData['public_repos'] ?? 25;
+                    $stats['followers'] = $userData['followers'] ?? 12;
+                }
+
+                $reposResp = Http::timeout(5)->withHeaders([
+                    'User-Agent' => 'PortfolioApp'
+                ])->get('https://api.github.com/users/IlhamHattaManggala/repos?per_page=100');
+
+                if ($reposResp->successful()) {
+                    $repos = $reposResp->json();
+                    $stars = 0;
+                    $langCounts = [];
+                    foreach ($repos as $repo) {
+                        $stars += $repo['stargazers_count'] ?? 0;
+                        $lang = $repo['language'] ?? null;
+                        if ($lang) {
+                            $langCounts[$lang] = ($langCounts[$lang] ?? 0) + 1;
+                        }
+                    }
+                    $stats['total_stars'] = $stars;
+
+                    if (!empty($langCounts)) {
+                        arsort($langCounts);
+                        $totalLangs = array_sum($langCounts);
+                        $colors = [
+                            'TypeScript' => '#3178c6',
+                            'PHP' => '#4F5D95',
+                            'Dart' => '#00B4AB',
+                            'JavaScript' => '#f1e05a',
+                            'Blade' => '#f7523f',
+                            'CSS' => '#563d7c',
+                            'HTML' => '#e34c26',
+                        ];
+                        $topLangs = [];
+                        foreach (array_slice($langCounts, 0, 4) as $lang => $count) {
+                            $topLangs[] = [
+                                'name' => $lang,
+                                'percentage' => round(($count / $totalLangs) * 100),
+                                'color' => $colors[$lang] ?? '#8b5cf6'
+                            ];
+                        }
+                        $stats['top_languages'] = $topLangs;
+                    }
+                }
+            } catch (\Throwable $e) {
+                // Ignore API failures
+            }
+
+            return $stats;
+        });
+
         return Inertia::render('welcome', [
             'data' => [
                 'skills' => Skill::all(),
@@ -165,6 +236,7 @@ class PortfolioController extends Controller
                 'experiences' => Experience::all(),
                 'certificates' => Certificate::all(),
                 'packages' => $packages,
+                'githubStats' => $githubStats,
                 'testimonials' => Testimonial::where('is_approved', true)->get(),
                 'blogs' => Blog::where('is_published', true)->orderBy('published_at', 'desc')->take(3)->get(),
                 'resumePath' => Setting::where('key', 'resume_path')->first()?->value ?? '#',
