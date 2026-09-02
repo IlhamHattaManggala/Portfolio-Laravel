@@ -5,7 +5,16 @@ interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
     sizes?: string;
 }
 
-const Image: React.FC<ImageProps> = ({ src, alt, className, fill, sizes, ...props }) => {
+const Image: React.FC<ImageProps> = ({ 
+    src, 
+    alt, 
+    className, 
+    fill, 
+    sizes, 
+    loading = "lazy", 
+    decoding = "async", 
+    ...props 
+}) => {
     const style: React.CSSProperties = fill ? {
         position: 'absolute',
         height: '100%',
@@ -22,6 +31,8 @@ const Image: React.FC<ImageProps> = ({ src, alt, className, fill, sizes, ...prop
             src={src}
             alt={alt}
             className={className}
+            loading={loading}
+            decoding={decoding}
             style={{ ...style, ...props.style }}
             {...props}
         />

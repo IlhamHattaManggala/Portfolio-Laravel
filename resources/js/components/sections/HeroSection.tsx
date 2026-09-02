@@ -1,15 +1,13 @@
 
 import { FaGithub } from "react-icons/fa";
 import Terminal from "../Terminal";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { Sparkles, ChevronRight } from "lucide-react";
 import Image from "@/components/Image";
 import { useTranslation } from "react-i18next";
 
 const HeroSection = () => {
   const { t } = useTranslation();
-  const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 500], [0, 150]);
 
   return (
     <section
@@ -18,10 +16,9 @@ const HeroSection = () => {
     >
       {/* Dynamic Background Elements */}
       <div className="absolute inset-0 z-0 overflow-hidden flex items-center justify-center pointer-events-none">
-        <motion.div 
-          style={{ y: y1 }}
-          className="absolute w-[800px] h-[400px] bg-gradient-to-r from-primary/30 to-secondary/30 rounded-full blur-[150px] opacity-50"
-        ></motion.div>
+        <div 
+          className="absolute w-[800px] h-[400px] bg-gradient-to-r from-primary/30 to-secondary/30 rounded-full blur-[120px] opacity-40 pointer-events-none"
+        ></div>
         <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20200%20200%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cfilter%20id%3D%22noiseFilter%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.65%22%20numOctaves%3D%223%22%20stitchTiles%3D%22stitch%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url(%23noiseFilter)%22%2F%3E%3C%2Fsvg%3E')] opacity-[0.03]"></div>
 
         {/* Subtle grid pattern */}
@@ -103,7 +100,7 @@ const HeroSection = () => {
                {/* Profile Info */}
                <div className="lg:col-span-2 p-8 md:p-10 flex flex-col items-center lg:items-start text-center lg:text-left gap-6 border-b lg:border-b-0 lg:border-r border-white/5">
                   <div className="w-28 h-28 md:w-32 md:h-32 relative rounded-full overflow-hidden border-4 border-white/10 shrink-0">
-                     <Image src="/images/profile.webp" alt="Ilham Hatta" fill sizes="(max-width: 768px) 112px, 128px" className="object-cover" />
+                     <Image src="/images/profile.webp" alt="Ilham Hatta" fill loading="eager" fetchPriority="high" sizes="(max-width: 768px) 112px, 128px" className="object-cover" />
 
                   </div>
                   <div className="space-y-4">
