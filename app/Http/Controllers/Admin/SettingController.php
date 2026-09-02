@@ -45,8 +45,18 @@ class SettingController extends Controller
         ]);
 
         if ($request->hasFile('file')) {
-            $path = $request->file('file')->store('public/resumes');
-            $publicPath = Storage::url($path);
+            $file = $request->file('file');
+            $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $sanitizedName = preg_replace('/[^a-zA-Z0-9_-]/', '_', $originalName);
+            $filename = time() . '_' . $sanitizedName . '.pdf';
+            
+            $targetDir = public_path('assets/resumes');
+            if (!file_exists($targetDir)) {
+                mkdir($targetDir, 0755, true);
+            }
+            
+            $file->move($targetDir, $filename);
+            $publicPath = '/assets/resumes/' . $filename;
 
             Setting::updateOrCreate(
                 ['key' => 'resume_path'],
@@ -69,7 +79,7 @@ class SettingController extends Controller
         ]);
 
         if ($request->hasFile('file')) {
-            $result = ImageService::processAndSaveWebp($request->file('file'), 'storage/seo', quality: 85, maxWidth: 1200);
+            $result = ImageService::processAndSaveWebp($request->file('file'), 'assets/seo', quality: 85, maxWidth: 1200);
 
             Setting::updateOrCreate(
                 ['key' => 'og_image'],
