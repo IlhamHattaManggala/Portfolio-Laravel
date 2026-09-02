@@ -49,9 +49,9 @@
   },
   "packages": {
     "tag": "Paket Open Source",
-    "title_1": "PHP / Laravel",
+    "title_1": "Open Source",
     "title_2": "Packages.",
-    "subtitle": "Paket PHP & Laravel terbuka (open-source) yang dapat digunakan kembali, dipublikasikan di Packagist.",
+    "subtitle": "Paket open-source (PHP/Laravel & NPM JavaScript) yang dapat digunakan kembali.",
     "view_docs": "Lihat Dokumentasi →",
     "back_home": "Kembali ke Packages",
     "open_source_badge": "Paket Open Source",

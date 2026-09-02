@@ -49,9 +49,9 @@
   },
   "packages": {
     "tag": "Open Source Packages",
-    "title_1": "PHP / Laravel",
+    "title_1": "Open Source",
     "title_2": "Packages.",
-    "subtitle": "Reusable open-source PHP & Laravel packages published on Packagist.",
+    "subtitle": "Reusable open-source PHP/Laravel & NPM JavaScript packages published for developers.",
     "view_docs": "View Documentation →",
     "back_home": "Back to Packages",
     "open_source_badge": "Open Source Package",
