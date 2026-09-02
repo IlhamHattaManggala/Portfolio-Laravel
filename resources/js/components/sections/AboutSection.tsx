@@ -86,7 +86,7 @@ const AboutSection = ({ technologies: initialTech, projects: initialProjects }: 
             >
               <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20200%20200%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cfilter%20id%3D%22noiseFilter%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.65%22%20numOctaves%3D%223%22%20stitchTiles%3D%22stitch%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url(%23noiseFilter)%22%2F%3E%3C%2Fsvg%3E')] opacity-[0.03] mix-blend-overlay"></div>
 
-              <h4 className="text-7xl font-bold text-white mb-2 tracking-tighter">2+</h4>
+              <div className="text-7xl font-bold text-white mb-2 tracking-tighter">2+</div>
               <p className="text-primary font-medium text-sm" dangerouslySetInnerHTML={{ __html: t('about.years_exp').replace(' ', '<br/>') }}></p>
             </motion.div>
 
@@ -129,7 +129,7 @@ const AboutSection = ({ technologies: initialTech, projects: initialProjects }: 
               <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-6">
                 <Code2 className="w-6 h-6 text-gray-300" />
               </div>
-              <h4 className="text-5xl font-bold text-white mb-2">{projectCount}+</h4>
+              <div className="text-5xl font-bold text-white mb-2">{projectCount}+</div>
 
               <p className="text-gray-500 font-medium text-sm" dangerouslySetInnerHTML={{ __html: t('about.projects_completed').replace(' ', '<br/>') }}></p>
             </motion.div>
@@ -150,7 +150,7 @@ const AboutSection = ({ technologies: initialTech, projects: initialProjects }: 
                   {t('about.remote')}
                 </div>
                 <div className="mt-8">
-                  <h4 className="text-2xl font-bold text-white">Indonesia</h4>
+                  <div className="text-2xl font-bold text-white">Indonesia</div>
                   <p className="text-gray-500 font-medium mt-1">{t('about.timezone')}</p>
                 </div>
               </div>

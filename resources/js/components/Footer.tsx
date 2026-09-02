@@ -46,7 +46,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-semibold text-white mb-8">{t('footer.nav_title')}</h4>
+            <h3 className="font-semibold text-white mb-8">{t('footer.nav_title')}</h3>
             <ul className="space-y-4 text-sm">
               {[
                 { name: t('nav.home'), href: "#hero" },
@@ -64,7 +64,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-semibold text-white mb-8">{t('footer.links_title')}</h4>
+            <h3 className="font-semibold text-white mb-8">{t('footer.links_title')}</h3>
             <ul className="space-y-4 text-sm">
               {[
                 { name: t('nav.contact'), href: "#contact" },
