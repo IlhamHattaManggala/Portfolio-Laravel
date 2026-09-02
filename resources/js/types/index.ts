@@ -18,6 +18,7 @@ export interface TPackage {
   repository: string;
   downloads: number;
   favers: number;
+  type?: 'composer' | 'npm';
 }
 
 export interface TTechnology {

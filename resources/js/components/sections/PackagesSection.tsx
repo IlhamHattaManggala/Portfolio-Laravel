@@ -35,24 +35,37 @@ const PackagesSection = ({ packages = defaultPackages }: PackagesSectionProps) =
   const { t } = useTranslation();
   const [copiedName, setCopiedName] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [activeFilter, setActiveFilter] = useState<'all' | 'composer' | 'npm'>('all');
 
   const displayPackages = packages && packages.length > 0 ? packages : defaultPackages;
 
-  const totalPages = Math.ceil(displayPackages.length / ITEMS_PER_PAGE);
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const paginatedPackages = displayPackages.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  const filteredPackages = displayPackages.filter((pkg) => {
+    const isNpm = pkg.type === 'npm' || pkg.name.startsWith('@');
+    if (activeFilter === 'composer') return !isNpm;
+    if (activeFilter === 'npm') return isNpm;
+    return true;
+  });
 
-  const handleCopy = (packageName: string) => {
-    const command = `composer require ${packageName}`;
+  const totalPages = Math.ceil(filteredPackages.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const paginatedPackages = filteredPackages.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
+  const handleCopy = (packageName: string, isNpm: boolean) => {
+    const command = isNpm ? `npm i ${packageName}` : `composer require ${packageName}`;
     navigator.clipboard.writeText(command);
     setCopiedName(packageName);
     setTimeout(() => setCopiedName(null), 2000);
   };
 
+  const handleFilterChange = (filter: 'all' | 'composer' | 'npm') => {
+    setActiveFilter(filter);
+    setCurrentPage(1);
+  };
+
   return (
     <section className="py-24 relative overflow-hidden" id="packages">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -70,7 +83,7 @@ const PackagesSection = ({ packages = defaultPackages }: PackagesSectionProps) =
             transition={{ delay: 0.1 }}
             className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4"
           >
-            {t("packages.title_1", "PHP / Laravel")} <span className="text-gray-500">{t("packages.title_2", "Packages.")}</span>
+            {t("packages.title_1", "Open Source")} <span className="text-gray-500">{t("packages.title_2", "Packages.")}</span>
           </motion.h2>
 
           <motion.p
@@ -78,16 +91,43 @@ const PackagesSection = ({ packages = defaultPackages }: PackagesSectionProps) =
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-gray-400 max-w-2xl mx-auto text-base"
+            className="text-gray-400 max-w-2xl mx-auto text-base mb-8"
           >
-            {t("packages.subtitle", "Reusable open-source PHP & Laravel packages published on Packagist for developers.")}
+            {t("packages.subtitle", "Reusable open-source PHP/Laravel & NPM JavaScript packages published for developers.")}
           </motion.p>
+
+          {/* Filter Tabs */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="flex flex-wrap items-center justify-center gap-3"
+          >
+            {[
+              { id: 'all', label: t("packages.filter_all", "Semua Package") },
+              { id: 'composer', label: "PHP / Laravel" },
+              { id: 'npm', label: "NPM / React" },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => handleFilterChange(tab.id as 'all' | 'composer' | 'npm')}
+                className={`px-5 py-2 rounded-full text-xs font-bold transition-all duration-300 border ${
+                  activeFilter === tab.id
+                    ? "bg-white text-black border-white shadow-lg"
+                    : "bg-white/5 text-white hover:bg-white/10 border-white/20"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </motion.div>
         </div>
 
         <div className="relative min-h-[400px]">
           <AnimatePresence mode="wait">
             <motion.div
-              key={currentPage}
+              key={`${activeFilter}-${currentPage}`}
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.98 }}
@@ -95,7 +135,8 @@ const PackagesSection = ({ packages = defaultPackages }: PackagesSectionProps) =
               className="grid grid-cols-1 md:grid-cols-2 gap-8"
             >
               {paginatedPackages.map((pkg, index) => {
-                const installCmd = `composer require ${pkg.name}`;
+                const isNpm = pkg.type === 'npm' || pkg.name.startsWith('@');
+                const installCmd = isNpm ? `npm i ${pkg.name}` : `composer require ${pkg.name}`;
                 const isCopied = copiedName === pkg.name;
 
                 return (
@@ -113,9 +154,13 @@ const PackagesSection = ({ packages = defaultPackages }: PackagesSectionProps) =
                     <div>
                       {/* Top Metadata & Stats */}
                       <div className="flex items-center justify-between gap-4 mb-6">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-gray-300">
-                          <Package size={12} className="text-primary" />
-                          <span>Packagist</span>
+                        <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-mono font-semibold ${
+                          isNpm 
+                            ? "bg-red-500/10 border-red-500/20 text-red-400"
+                            : "bg-blue-500/10 border-blue-500/20 text-blue-400"
+                        }`}>
+                          <Package size={12} className={isNpm ? "text-red-400" : "text-blue-400"} />
+                          <span>{isNpm ? "NPM Registry" : "Packagist"}</span>
                         </div>
 
                         <div className="flex items-center gap-4 text-xs font-mono text-gray-400">
@@ -123,10 +168,12 @@ const PackagesSection = ({ packages = defaultPackages }: PackagesSectionProps) =
                             <Download size={14} className="text-gray-500" />
                             <span>{pkg.downloads ?? 0}</span>
                           </div>
-                          <div className="flex items-center gap-1.5" title="Favorites">
-                            <Star size={14} className="text-amber-400 fill-amber-400/20" />
-                            <span>{pkg.favers ?? 0}</span>
-                          </div>
+                          {!isNpm && (
+                            <div className="flex items-center gap-1.5" title="Favorites">
+                              <Star size={14} className="text-amber-400 fill-amber-400/20" />
+                              <span>{pkg.favers ?? 0}</span>
+                            </div>
+                          )}
                         </div>
                       </div>
 
@@ -149,7 +196,7 @@ const PackagesSection = ({ packages = defaultPackages }: PackagesSectionProps) =
                         </div>
 
                         <button
-                          onClick={() => handleCopy(pkg.name)}
+                          onClick={() => handleCopy(pkg.name, isNpm)}
                           aria-label={`Copy install command for ${pkg.name}`}
                           className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-colors shrink-0 flex items-center gap-1.5 text-[11px]"
                           title="Copy install command"
@@ -186,7 +233,7 @@ const PackagesSection = ({ packages = defaultPackages }: PackagesSectionProps) =
                             className="flex-1 py-2.5 px-4 rounded-xl bg-white/5 border border-white/10 text-gray-300 hover:text-white font-semibold text-xs flex items-center justify-center gap-2 hover:bg-white/10 transition-colors"
                           >
                             <ExternalLink size={14} />
-                            Packagist
+                            {isNpm ? "NPM JS" : "Packagist"}
                           </a>
                         )}
 

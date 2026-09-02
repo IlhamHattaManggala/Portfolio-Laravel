@@ -21,40 +21,141 @@ class PortfolioController extends Controller
 {
     public function index()
     {
-        $packages = Cache::remember('packagist_manggala_packages', 3600, function () {
+        $packages = Cache::remember('all_public_packages', 3600, function () {
+            $allPackages = [];
+
+            // 1. Fetch Packagist packages (PHP / Laravel)
             try {
                 $response = Http::timeout(5)->get('https://packagist.org/search.json?q=manggala');
                 if ($response->successful()) {
                     $results = $response->json('results', []);
-                    $filtered = array_values(array_filter($results, function ($item) {
-                        return str_starts_with($item['name'], 'manggala/');
-                    }));
-                    if (!empty($filtered)) {
-                        return $filtered;
+                    foreach ($results as $item) {
+                        if (str_starts_with($item['name'], 'manggala/')) {
+                            $allPackages[] = [
+                                'name' => $item['name'],
+                                'description' => $item['description'] ?? '',
+                                'url' => $item['url'] ?? "https://packagist.org/packages/{$item['name']}",
+                                'repository' => $item['repository'] ?? '',
+                                'downloads' => $item['downloads'] ?? 0,
+                                'favers' => $item['favers'] ?? 0,
+                                'type' => 'composer',
+                            ];
+                        }
                     }
                 }
             } catch (\Throwable $e) {
-                // Fallback to static defaults if offline or request fails
+                // Ignore API failures
             }
 
-            return [
-                [
+            if (empty(array_filter($allPackages, fn($p) => ($p['type'] ?? '') === 'composer'))) {
+                $allPackages[] = [
                     'name' => 'manggala/laravel-dashboard-builder',
                     'description' => 'Production-ready open-source dashboard builder package for Laravel applications.',
                     'url' => 'https://packagist.org/packages/manggala/laravel-dashboard-builder',
                     'repository' => 'https://github.com/IlhamHattaManggala/laravel-dashboard-builder',
                     'downloads' => 5,
-                    'favers' => 1
-                ],
-                [
+                    'favers' => 1,
+                    'type' => 'composer',
+                ];
+                $allPackages[] = [
                     'name' => 'manggala/laravel-manifest',
                     'description' => 'Production-ready, schema-driven, UI-agnostic configuration platform for Laravel applications.',
                     'url' => 'https://packagist.org/packages/manggala/laravel-manifest',
                     'repository' => 'https://github.com/IlhamHattaManggala/laravel-settings',
                     'downloads' => 1,
-                    'favers' => 1
-                ]
+                    'favers' => 1,
+                    'type' => 'composer',
+                ];
+            }
+
+            // 2. Fetch NPM packages (@manggala31)
+            try {
+                $npmResponse = Http::timeout(5)->get('https://registry.npmjs.org/-/v1/search?text=%40manggala31&size=20');
+                if ($npmResponse->successful()) {
+                    $objects = $npmResponse->json('objects', []);
+                    foreach ($objects as $obj) {
+                        $pkg = $obj['package'] ?? [];
+                        if (!empty($pkg['name']) && str_starts_with($pkg['name'], '@manggala31/')) {
+                            $dlCount = 0;
+                            try {
+                                $dlResp = Http::timeout(3)->get("https://api.npmjs.org/downloads/point/last-month/" . rawurlencode($pkg['name']));
+                                if ($dlResp->successful()) {
+                                    $dlCount = $dlResp->json('downloads', 0);
+                                }
+                            } catch (\Throwable $dlErr) {}
+
+                            $allPackages[] = [
+                                'name' => $pkg['name'],
+                                'description' => $pkg['description'] ?? '',
+                                'url' => $pkg['links']['npm'] ?? "https://www.npmjs.com/package/{$pkg['name']}",
+                                'repository' => $pkg['links']['repository'] ?? "https://github.com/IlhamHattaManggala",
+                                'downloads' => $dlCount,
+                                'favers' => 0,
+                                'type' => 'npm',
+                            ];
+                        }
+                    }
+                }
+            } catch (\Throwable $e) {
+                // Ignore API failures
+            }
+
+            $npmFallbackNames = array_column(array_filter($allPackages, fn($p) => ($p['type'] ?? '') === 'npm'), 'name');
+            $defaultNpm = [
+                [
+                    'name' => '@manggala31/react-spotlight',
+                    'description' => 'Production-ready, keyboard-driven Command Palette (Cmd+K / Ctrl+K) React component with fuzzy search, group actions, and seamless customization.',
+                    'url' => 'https://www.npmjs.com/package/@manggala31/react-spotlight',
+                    'repository' => 'https://github.com/IlhamHattaManggala/react-spotlight',
+                    'downloads' => 12,
+                    'favers' => 0,
+                    'type' => 'npm',
+                ],
+                [
+                    'name' => '@manggala31/react-datatable',
+                    'description' => 'Production-ready, keyboard-navigable, server-driven Data Table package for React, Inertia.js, and Next.js applications.',
+                    'url' => 'https://www.npmjs.com/package/@manggala31/react-datatable',
+                    'repository' => 'https://github.com/IlhamHattaManggala/react-datatable',
+                    'downloads' => 8,
+                    'favers' => 0,
+                    'type' => 'npm',
+                ],
+                [
+                    'name' => '@manggala31/react-status-page',
+                    'description' => 'Production-ready, self-hosted application health diagnostics and status page package for React, Inertia.js, and Next.js applications.',
+                    'url' => 'https://www.npmjs.com/package/@manggala31/react-status-page',
+                    'repository' => 'https://github.com/IlhamHattaManggala/react-status-page',
+                    'downloads' => 5,
+                    'favers' => 0,
+                    'type' => 'npm',
+                ],
+                [
+                    'name' => '@manggala31/react-dashboard-grid',
+                    'description' => 'Production-ready, customizable drag-and-drop dashboard grid component for React, Inertia.js, and Next.js applications.',
+                    'url' => 'https://www.npmjs.com/package/@manggala31/react-dashboard-grid',
+                    'repository' => 'https://github.com/IlhamHattaManggala/react-dashboard-grid',
+                    'downloads' => 15,
+                    'favers' => 0,
+                    'type' => 'npm',
+                ],
+                [
+                    'name' => '@manggala31/schema-form-react',
+                    'description' => 'Production-ready, JSON Schema-driven dynamic form generator component for React, Inertia.js, and Next.js applications.',
+                    'url' => 'https://www.npmjs.com/package/@manggala31/schema-form-react',
+                    'repository' => 'https://github.com/IlhamHattaManggala/schema-form-react',
+                    'downloads' => 10,
+                    'favers' => 0,
+                    'type' => 'npm',
+                ],
             ];
+
+            foreach ($defaultNpm as $npmPkg) {
+                if (!in_array($npmPkg['name'], $npmFallbackNames)) {
+                    $allPackages[] = $npmPkg;
+                }
+            }
+
+            return $allPackages;
         });
 
         return Inertia::render('welcome', [
@@ -110,48 +211,68 @@ class PortfolioController extends Controller
     public function showPackage(string $vendor, string $package)
     {
         $fullName = "{$vendor}/{$package}";
-        $cacheKey = "packagist_pkg_detail_" . md5($fullName);
+        $isNpm = str_starts_with($vendor, '@') || str_starts_with($fullName, '@manggala31/');
+        $cacheKey = "package_detail_" . md5($fullName);
 
-        $packageDetails = Cache::remember($cacheKey, 3600, function () use ($vendor, $package, $fullName) {
-            $packagistUrl = "https://packagist.org/packages/{$fullName}.json";
+        $packageDetails = Cache::remember($cacheKey, 3600, function () use ($vendor, $package, $fullName, $isNpm) {
             $info = [
                 'name' => $fullName,
                 'description' => '',
                 'repository' => '',
-                'url' => "https://packagist.org/packages/{$fullName}",
+                'url' => $isNpm ? "https://www.npmjs.com/package/{$fullName}" : "https://packagist.org/packages/{$fullName}",
                 'downloads' => 0,
                 'favers' => 0,
                 'readme' => '',
+                'type' => $isNpm ? 'npm' : 'composer',
             ];
 
-            try {
-                $response = Http::timeout(5)->get($packagistUrl);
-                if ($response->successful()) {
-                    $pkgData = $response->json('package', []);
-                    $info['description'] = $pkgData['description'] ?? '';
-                    $info['repository'] = $pkgData['repository'] ?? '';
-                    $info['downloads'] = $pkgData['downloads']['total'] ?? 0;
-                    $info['favers'] = $pkgData['favers'] ?? 0;
-                }
-            } catch (\Throwable $e) {
-                // Ignore API failures
+            if ($isNpm) {
+                try {
+                    $npmUrl = "https://registry.npmjs.org/" . rawurlencode($fullName);
+                    $response = Http::timeout(5)->get($npmUrl);
+                    if ($response->successful()) {
+                        $pkgData = $response->json();
+                        $info['description'] = $pkgData['description'] ?? '';
+                        $repo = $pkgData['repository']['url'] ?? '';
+                        $repo = preg_replace('/^git\+/', '', $repo);
+                        $repo = preg_replace('/\.git$/', '', $repo);
+                        $info['repository'] = $repo;
+                    }
+                } catch (\Throwable $e) {}
+
+                try {
+                    $dlResp = Http::timeout(3)->get("https://api.npmjs.org/downloads/point/last-month/" . rawurlencode($fullName));
+                    if ($dlResp->successful()) {
+                        $info['downloads'] = $dlResp->json('downloads', 0);
+                    }
+                } catch (\Throwable $e) {}
+            } else {
+                $packagistUrl = "https://packagist.org/packages/{$fullName}.json";
+                try {
+                    $response = Http::timeout(5)->get($packagistUrl);
+                    if ($response->successful()) {
+                        $pkgData = $response->json('package', []);
+                        $info['description'] = $pkgData['description'] ?? '';
+                        $info['repository'] = $pkgData['repository'] ?? '';
+                        $info['downloads'] = $pkgData['downloads']['total'] ?? 0;
+                        $info['favers'] = $pkgData['favers'] ?? 0;
+                    }
+                } catch (\Throwable $e) {}
             }
 
             // Fallback repositories if needed
             $repoUrl = $info['repository'];
             if (empty($repoUrl)) {
-                if ($package === 'laravel-dashboard-builder') {
-                    $repoUrl = 'https://github.com/IlhamHattaManggala/laravel-dashboard-builder';
-                } else if ($package === 'laravel-manifest') {
-                    $repoUrl = 'https://github.com/IlhamHattaManggala/laravel-settings';
-                }
+                $cleanPkgName = str_replace('@manggala31/', '', $package);
+                $repoUrl = "https://github.com/IlhamHattaManggala/{$cleanPkgName}";
                 $info['repository'] = $repoUrl;
             }
 
             $info['readme_id'] = '';
 
             // Check local Indonesian docs fallback first
-            $localIdDoc = resource_path("docs/{$vendor}/{$package}/id.md");
+            $cleanVendor = ltrim($vendor, '@');
+            $localIdDoc = resource_path("docs/{$cleanVendor}/{$package}/id.md");
             if (file_exists($localIdDoc)) {
                 $info['readme_id'] = file_get_contents($localIdDoc);
             }
