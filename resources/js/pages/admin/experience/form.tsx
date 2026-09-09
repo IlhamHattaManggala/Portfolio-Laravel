@@ -10,16 +10,33 @@ interface FormProps {
     experience?: TExperience;
 }
 
+const parseMultilingualText = (val: string | { id: string; en: string } | undefined) => {
+    if (typeof val === 'object' && val !== null) {
+        return { id: val.id || '', en: val.en || '' };
+    }
+    return { id: val || '', en: val || '' };
+};
+
+const parseMultilingualPoints = (val: string[] | { id: string[]; en: string[] } | undefined) => {
+    if (typeof val === 'object' && val !== null && !Array.isArray(val)) {
+        return { id: val.id || [], en: val.en || [] };
+    }
+    if (Array.isArray(val)) {
+        return { id: val, en: val };
+    }
+    return { id: [], en: [] };
+};
+
 export default function ExperienceForm({ experience }: FormProps) {
     const isEditing = !!experience;
     
     const { data, setData, post, put, processing, errors } = useForm({
-        title: typeof experience?.title === 'object' && experience?.title ? experience.title : { id: experience?.title || "", en: experience?.title || "" },
-        company_name: typeof experience?.company_name === 'object' && experience?.company_name ? experience.company_name : { id: experience?.company_name || "", en: experience?.company_name || "" },
+        title: parseMultilingualText(experience?.title),
+        company_name: parseMultilingualText(experience?.company_name),
         icon: experience?.icon || "",
         icon_bg: experience?.icon_bg || "#f3f4f6",
-        date_range: typeof experience?.date_range === 'object' && experience?.date_range ? experience.date_range : { id: experience?.date_range || "", en: experience?.date_range || "" },
-        points: !Array.isArray(experience?.points) && experience?.points?.id ? experience.points : { id: experience?.points || [], en: experience?.points || [] },
+        date_range: parseMultilingualText(experience?.date_range),
+        points: parseMultilingualPoints(experience?.points),
     });
 
     const [pointInputId, setPointInputId] = useState("");

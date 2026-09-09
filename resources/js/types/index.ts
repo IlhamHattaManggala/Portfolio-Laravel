@@ -53,12 +53,12 @@ export interface TArticle {
 
 export interface TExperience {
   id?: number;
-  title: string;
-  company_name: string;
+  title: string | { id: string; en: string };
+  company_name: string | { id: string; en: string };
   icon: string;
   icon_bg: string;
-  date_range: string;
-  points: string[];
+  date_range: string | { id: string; en: string };
+  points: string[] | { id: string[]; en: string[] };
 }
 
 export interface TCertificate {

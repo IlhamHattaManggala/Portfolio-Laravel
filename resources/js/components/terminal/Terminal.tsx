@@ -197,20 +197,41 @@ const Terminal: React.FC<TerminalProps> = ({ data, className }) => {
             case 'exp':
                 output = (
                     <div className="mt-2 space-y-4">
-                        {data?.experiences.map((exp, i) => (
-                            <div key={i} className="border-l-2 border-primary/30 pl-4 py-1">
-                                <div className="text-white font-bold">{exp.title} @ <span className="text-primary">{exp.company_name}</span></div>
-                                <div className="text-gray-500 text-xs">{exp.date_range}</div>
-                                <ul className="mt-2 space-y-1">
-                                    {exp.points.map((point, idx) => (
-                                        <li key={idx} className="text-gray-400 text-sm flex gap-2">
-                                            <span className="text-primary">•</span>
-                                            {point}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        ))}
+                        {data?.experiences.map((exp, i) => {
+                            const getLocalizedStr = (field: any): string => {
+                                if (typeof field === 'object' && field !== null && !Array.isArray(field)) {
+                                    return field['id'] || field['en'] || '';
+                                }
+                                return typeof field === 'string' ? field : '';
+                            };
+                            const getLocalizedArray = (field: any): string[] => {
+                                if (typeof field === 'object' && field !== null && !Array.isArray(field)) {
+                                    const res = field['id'] || field['en'];
+                                    return Array.isArray(res) ? res : [];
+                                }
+                                return Array.isArray(field) ? field : [];
+                            };
+
+                            const title = getLocalizedStr(exp.title);
+                            const company = getLocalizedStr(exp.company_name);
+                            const dateRange = getLocalizedStr(exp.date_range);
+                            const points = getLocalizedArray(exp.points);
+
+                            return (
+                                <div key={i} className="border-l-2 border-primary/30 pl-4 py-1">
+                                    <div className="text-white font-bold">{title} @ <span className="text-primary">{company}</span></div>
+                                    <div className="text-gray-500 text-xs">{dateRange}</div>
+                                    <ul className="mt-2 space-y-1">
+                                        {points.map((point: string, idx: number) => (
+                                            <li key={idx} className="text-gray-400 text-sm flex gap-2">
+                                                <span className="text-primary">•</span>
+                                                {point}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            );
+                        })}
                     </div>
                 );
                 break;

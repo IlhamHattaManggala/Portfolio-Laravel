@@ -74,7 +74,6 @@ const mainNavItems: NavItem[] = [
         icon: Quote,
     },
     {
-        name: 'Pengaturan',
         title: 'Pengaturan',
         href: toUrl(settings.index()),
         icon: Settings,
