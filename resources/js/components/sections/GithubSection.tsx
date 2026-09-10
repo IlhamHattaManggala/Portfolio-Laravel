@@ -37,9 +37,9 @@ const GithubSection = ({ stats = defaultStats }: GithubSectionProps) => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] text-sm font-medium mb-6 text-gray-300"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] text-sm font-medium mb-6 text-gray-700 dark:text-gray-300"
           >
-            <FaGithub size={14} className="text-white" />
+            <FaGithub size={14} className="text-gray-900 dark:text-white" />
             <span>{t("github.tag", "GitHub Ecosystem")}</span>
           </motion.div>
 
@@ -48,9 +48,9 @@ const GithubSection = ({ stats = defaultStats }: GithubSectionProps) => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4"
+            className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white mb-4"
           >
-            {t("github.title_1", "Contribution &")} <span className="text-gray-500">{t("github.title_2", "Coding Activity.")}</span>
+            {t("github.title_1", "Contribution &")} <span className="text-gray-400 dark:text-gray-500">{t("github.title_2", "Coding Activity.")}</span>
           </motion.h2>
 
           <motion.p
@@ -58,7 +58,7 @@ const GithubSection = ({ stats = defaultStats }: GithubSectionProps) => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-gray-400 max-w-2xl mx-auto text-base"
+            className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-base"
           >
             {t("github.subtitle", "Real-time snapshot of my daily commits, open-source activity, and code contributions.")}
           </motion.p>
@@ -70,18 +70,18 @@ const GithubSection = ({ stats = defaultStats }: GithubSectionProps) => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="bg-[#0D0D0D] border border-white/10 rounded-3xl p-8 mb-8 hover:border-white/20 transition-colors shadow-2xl overflow-hidden relative"
+          className="bg-white dark:bg-[#0D0D0D] border border-black/10 dark:border-white/10 rounded-3xl p-8 mb-8 hover:border-black/20 dark:hover:border-white/20 transition-colors shadow-lg dark:shadow-2xl overflow-hidden relative"
         >
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white">
+              <div className="w-10 h-10 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center text-gray-900 dark:text-white">
                 <GitCommit size={20} className="text-primary" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-white font-mono">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white font-mono">
                   {t("github.matrix_title", "Contribution Calendar")}
                 </h3>
-                <p className="text-xs text-gray-400 font-mono">
+                <p className="text-xs text-gray-500 dark:text-gray-400 font-mono">
                   @{githubUsername} on GitHub
                 </p>
               </div>
@@ -92,7 +92,7 @@ const GithubSection = ({ stats = defaultStats }: GithubSectionProps) => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="View Ilham Hatta Manggala's GitHub Profile"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-xs font-semibold text-gray-300 hover:text-white hover:bg-white/10 transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs font-semibold text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
             >
               <span>{t("github.view_profile", "View Profile")}</span>
               <ExternalLink size={14} />
@@ -100,7 +100,7 @@ const GithubSection = ({ stats = defaultStats }: GithubSectionProps) => {
           </div>
 
           {/* Contribution Matrix Graphic */}
-          <div className="w-full overflow-x-auto py-2 flex justify-center bg-black/40 rounded-2xl border border-white/5 p-4">
+          <div className="w-full overflow-x-auto py-2 flex justify-center bg-gray-100 dark:bg-black/40 rounded-2xl border border-black/5 dark:border-white/5 p-4">
             <img
               src={`https://ghchart.rshah.org/4682B4/${githubUsername}`}
               alt={`${githubUsername}'s GitHub Contribution Chart`}
@@ -118,36 +118,36 @@ const GithubSection = ({ stats = defaultStats }: GithubSectionProps) => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="bg-[#0D0D0D] border border-white/10 rounded-3xl p-6 hover:border-white/20 transition-all flex flex-col justify-between"
+            className="bg-white dark:bg-[#0D0D0D] border border-black/10 dark:border-white/10 rounded-3xl p-6 hover:border-black/20 dark:hover:border-white/20 transition-all flex flex-col justify-between shadow-sm dark:shadow-none"
           >
             <div className="flex items-center justify-between mb-6">
-              <span className="text-xs font-mono text-gray-400 uppercase tracking-wider">{t("github.stats_title", "Overview Stats")}</span>
+              <span className="text-xs font-mono text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t("github.stats_title", "Overview Stats")}</span>
               <FolderGit2 size={16} className="text-primary" />
             </div>
 
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-3 rounded-2xl bg-white/[0.02] border border-white/5">
-                <div className="flex items-center gap-2.5 text-xs text-gray-300">
+              <div className="flex items-center justify-between p-3 rounded-2xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5">
+                <div className="flex items-center gap-2.5 text-xs text-gray-700 dark:text-gray-300">
                   <FolderGit2 size={14} className="text-primary" />
                   <span>Public Repositories</span>
                 </div>
-                <span className="text-base font-bold font-mono text-white">{displayStats.public_repos}</span>
+                <span className="text-base font-bold font-mono text-gray-900 dark:text-white">{displayStats.public_repos}</span>
               </div>
 
-              <div className="flex items-center justify-between p-3 rounded-2xl bg-white/[0.02] border border-white/5">
-                <div className="flex items-center gap-2.5 text-xs text-gray-300">
+              <div className="flex items-center justify-between p-3 rounded-2xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5">
+                <div className="flex items-center gap-2.5 text-xs text-gray-700 dark:text-gray-300">
                   <Star size={14} className="text-amber-400 fill-amber-400/20" />
                   <span>Total Stars Earned</span>
                 </div>
-                <span className="text-base font-bold font-mono text-amber-400">{displayStats.total_stars}</span>
+                <span className="text-base font-bold font-mono text-amber-500 dark:text-amber-400">{displayStats.total_stars}</span>
               </div>
 
-              <div className="flex items-center justify-between p-3 rounded-2xl bg-white/[0.02] border border-white/5">
-                <div className="flex items-center gap-2.5 text-xs text-gray-300">
-                  <Users size={14} className="text-emerald-400" />
+              <div className="flex items-center justify-between p-3 rounded-2xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5">
+                <div className="flex items-center gap-2.5 text-xs text-gray-700 dark:text-gray-300">
+                  <Users size={14} className="text-emerald-500 dark:text-emerald-400" />
                   <span>Followers</span>
                 </div>
-                <span className="text-base font-bold font-mono text-emerald-400">{displayStats.followers}</span>
+                <span className="text-base font-bold font-mono text-emerald-600 dark:text-emerald-400">{displayStats.followers}</span>
               </div>
             </div>
           </motion.div>
@@ -158,24 +158,24 @@ const GithubSection = ({ stats = defaultStats }: GithubSectionProps) => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-[#0D0D0D] border border-white/10 rounded-3xl p-6 hover:border-white/20 transition-all flex flex-col justify-between"
+            className="bg-white dark:bg-[#0D0D0D] border border-black/10 dark:border-white/10 rounded-3xl p-6 hover:border-black/20 dark:hover:border-white/20 transition-all flex flex-col justify-between shadow-sm dark:shadow-none"
           >
             <div className="flex items-center justify-between mb-6">
-              <span className="text-xs font-mono text-gray-400 uppercase tracking-wider">{t("github.langs_title", "Most Used Languages")}</span>
-              <Code2 size={16} className="text-emerald-400" />
+              <span className="text-xs font-mono text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t("github.langs_title", "Most Used Languages")}</span>
+              <Code2 size={16} className="text-emerald-500 dark:text-emerald-400" />
             </div>
 
             <div className="space-y-3.5">
               {displayStats.top_languages.map((lang) => (
                 <div key={lang.name} className="space-y-1.5">
                   <div className="flex justify-between items-center text-xs font-mono">
-                    <span className="text-gray-300 flex items-center gap-2">
+                    <span className="text-gray-700 dark:text-gray-300 flex items-center gap-2">
                       <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: lang.color }} />
                       {lang.name}
                     </span>
-                    <span className="text-gray-400 font-bold">{lang.percentage}%</span>
+                    <span className="text-gray-500 dark:text-gray-400 font-bold">{lang.percentage}%</span>
                   </div>
-                  <div className="w-full h-2 rounded-full bg-white/5 overflow-hidden">
+                  <div className="w-full h-2 rounded-full bg-black/5 dark:bg-white/5 overflow-hidden">
                     <div
                       className="h-full rounded-full transition-all duration-1000"
                       style={{
@@ -195,24 +195,24 @@ const GithubSection = ({ stats = defaultStats }: GithubSectionProps) => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="bg-gradient-to-br from-primary/10 via-[#0D0D0D] to-transparent border border-primary/20 rounded-3xl p-6 hover:border-primary/40 transition-all flex flex-col justify-between relative overflow-hidden"
+            className="bg-gradient-to-br from-primary/10 via-white dark:via-[#0D0D0D] to-transparent border border-primary/20 rounded-3xl p-6 hover:border-primary/40 transition-all flex flex-col justify-between relative overflow-hidden shadow-sm dark:shadow-none"
           >
             <div className="flex items-center justify-between mb-6">
-              <span className="text-xs font-mono text-gray-300 uppercase tracking-wider">GitHub Developer</span>
-              <FaGithub size={20} className="text-white" />
+              <span className="text-xs font-mono text-gray-700 dark:text-gray-300 uppercase tracking-wider">GitHub Developer</span>
+              <FaGithub size={20} className="text-gray-900 dark:text-white" />
             </div>
 
             <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs font-medium text-emerald-400">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs font-medium text-emerald-600 dark:text-emerald-400">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
                 Active Developer
               </div>
 
-              <h4 className="text-2xl font-bold text-white tracking-tight">
+              <h4 className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">
                 Ilham Hatta Manggala
               </h4>
 
-              <p className="text-gray-400 text-xs leading-relaxed">
+              <p className="text-gray-600 dark:text-gray-400 text-xs leading-relaxed">
                 Full-Stack Web & Mobile Developer actively contributing to open-source software and modern web applications.
               </p>
             </div>
@@ -222,7 +222,7 @@ const GithubSection = ({ stats = defaultStats }: GithubSectionProps) => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Visit GitHub Profile Page"
-              className="mt-6 w-full py-3 px-4 rounded-xl bg-white text-black font-bold text-xs flex items-center justify-center gap-2 hover:bg-gray-200 transition-colors shadow-lg"
+              className="mt-6 w-full py-3 px-4 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-black font-bold text-xs flex items-center justify-center gap-2 hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors shadow-lg"
             >
               <FaGithub size={16} />
               Visit GitHub Profile →

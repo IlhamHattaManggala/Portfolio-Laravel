@@ -77,7 +77,7 @@ const TestimonialsSection = ({ testimonials: initialTestimonials }: Testimonials
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] text-sm font-medium mb-6 text-gray-300"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] text-sm font-medium mb-6 text-gray-700 dark:text-gray-300"
           >
             <Star size={14} className="text-primary" />
             <span>{t('testimonials.tag')}</span>
@@ -87,9 +87,9 @@ const TestimonialsSection = ({ testimonials: initialTestimonials }: Testimonials
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-8"
+            className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white mb-8"
           >
-            {t('testimonials.title_1')} <span className="text-gray-500">{t('testimonials.title_2')}</span>
+            {t('testimonials.title_1')} <span className="text-gray-400 dark:text-gray-500">{t('testimonials.title_2')}</span>
           </motion.h2>
           
           <motion.button
@@ -98,7 +98,7 @@ const TestimonialsSection = ({ testimonials: initialTestimonials }: Testimonials
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
             onClick={() => setIsModalOpen(true)}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 rounded-xl font-semibold transition-all"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 rounded-xl font-semibold transition-all cursor-pointer"
           >
             <Plus size={18} />
             <span>{t('testimonials.write_btn')}</span>
@@ -110,12 +110,12 @@ const TestimonialsSection = ({ testimonials: initialTestimonials }: Testimonials
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="flex flex-col items-center justify-center p-12 text-center rounded-3xl bg-white/[0.02] border border-white/5 max-w-md mx-auto relative group hover:bg-white/[0.04] transition-all duration-300"
+            className="flex flex-col items-center justify-center p-12 text-center rounded-3xl bg-white dark:bg-white/[0.02] border border-black/10 dark:border-white/5 max-w-md mx-auto relative group hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 shadow-sm dark:shadow-none"
           >
             <div className="absolute -inset-1 bg-gradient-to-r from-primary/10 to-purple-500/10 rounded-[2rem] blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
             <div className="relative z-10 flex flex-col items-center">
-              <Quote className="w-12 h-12 text-white/10 group-hover:text-primary/20 transition-all duration-300 mb-6 rotate-180" />
-              <p className="text-gray-300 text-lg font-bold mb-2">{t('testimonials.no_testimonials')}</p>
+              <Quote className="w-12 h-12 text-black/10 dark:text-white/10 group-hover:text-primary/20 transition-all duration-300 mb-6 rotate-180" />
+              <p className="text-gray-900 dark:text-gray-300 text-lg font-bold mb-2">{t('testimonials.no_testimonials')}</p>
               <p className="text-sm text-gray-500 leading-relaxed max-w-xs">{t('testimonials.be_first')}</p>
             </div>
           </motion.div>
@@ -128,12 +128,12 @@ const TestimonialsSection = ({ testimonials: initialTestimonials }: Testimonials
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-white/[0.02] border border-white/5 rounded-3xl p-8 hover:bg-white/[0.04] transition-all duration-300 relative group"
+                className="bg-white dark:bg-white/[0.02] border border-black/10 dark:border-white/5 rounded-3xl p-8 hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 relative group shadow-sm dark:shadow-none"
               >
-                <Quote className="absolute top-8 right-8 w-12 h-12 text-white/5 group-hover:text-primary/10 transition-colors rotate-180" />
+                <Quote className="absolute top-8 right-8 w-12 h-12 text-black/5 dark:text-white/5 group-hover:text-primary/10 transition-colors rotate-180" />
                 
                 <div className="flex items-center gap-4 mb-8 relative z-10">
-                  <div className="w-14 h-14 relative rounded-full overflow-hidden border-2 border-white/10">
+                  <div className="w-14 h-14 relative rounded-full overflow-hidden border-2 border-black/10 dark:border-white/10">
                     <Image 
                       src={testimonial.image || "/assets/placeholder.png"} 
                       alt={testimonial.name} 
@@ -143,13 +143,13 @@ const TestimonialsSection = ({ testimonials: initialTestimonials }: Testimonials
                     />
                   </div>
                   <div>
-                    <h4 className="font-bold text-white text-lg">{testimonial.name}</h4>
+                    <h4 className="font-bold text-gray-900 dark:text-white text-lg">{testimonial.name}</h4>
                     <p className="text-sm text-gray-500 font-medium">{getLocalized(testimonial.designation)} di {getLocalized(testimonial.company)}</p>
                   </div>
                 </div>
                 
                 <div className="relative z-10">
-                  <p className="text-gray-400 text-base leading-relaxed">
+                  <p className="text-gray-700 dark:text-gray-400 text-base leading-relaxed">
                     &quot;{getLocalized(testimonial.testimonial)}&quot;
                   </p>
                 </div>
@@ -172,26 +172,26 @@ const TestimonialsSection = ({ testimonials: initialTestimonials }: Testimonials
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setIsModalOpen(false)}
-            className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+            className="fixed inset-0 z-[100] bg-black/70 dark:bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-[#121212] border border-white/10 w-full max-w-lg rounded-3xl p-8 relative shadow-2xl"
+              className="bg-white dark:bg-[#121212] border border-black/10 dark:border-white/10 w-full max-w-lg rounded-3xl p-8 relative shadow-2xl"
             >
               <button
                 onClick={() => setIsModalOpen(false)}
                 aria-label="Close modal"
-                className="absolute top-6 right-6 text-gray-400 hover:text-white transition-colors"
+                className="absolute top-6 right-6 text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
               >
                 <X size={24} />
               </button>
               
               <div className="mb-8">
-                <h3 className="text-2xl font-bold text-white mb-2">{t('testimonials.modal_title')}</h3>
-                <p className="text-gray-400 text-sm">{t('testimonials.modal_subtitle')}</p>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t('testimonials.modal_title')}</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">{t('testimonials.modal_subtitle')}</p>
               </div>
 
               {formState === "success" ? (
@@ -203,42 +203,42 @@ const TestimonialsSection = ({ testimonials: initialTestimonials }: Testimonials
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                      <label className="block text-sm font-medium text-gray-400 mb-2">{t('testimonials.name_lbl')}</label>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2">{t('testimonials.name_lbl')}</label>
                       <input
                         type="text"
                         required
                         value={formData.name}
                         onChange={(e) => setFormData({...formData, name: e.target.value})}
                         placeholder={t('testimonials.name_pl')}
-                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-primary/50 text-white placeholder-gray-600 transition-colors"
+                        className="w-full px-4 py-3 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl focus:outline-none focus:border-primary/50 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 transition-colors"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-400 mb-2">{t('testimonials.company_lbl')}</label>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2">{t('testimonials.company_lbl')}</label>
                       <input
                         type="text"
                         required
                         value={formData.company}
                         onChange={(e) => setFormData({...formData, company: e.target.value})}
                         placeholder={t('testimonials.company_pl')}
-                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-primary/50 text-white placeholder-gray-600 transition-colors"
+                        className="w-full px-4 py-3 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl focus:outline-none focus:border-primary/50 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 transition-colors"
                       />
                     </div>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                      <label className="block text-sm font-medium text-gray-400 mb-2">{t('testimonials.role_lbl')}</label>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2">{t('testimonials.role_lbl')}</label>
                       <input
                         type="text"
                         required
                         value={formData.designation}
                         onChange={(e) => setFormData({...formData, designation: e.target.value})}
                         placeholder={t('testimonials.role_pl')}
-                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-primary/50 text-white placeholder-gray-600 transition-colors"
+                        className="w-full px-4 py-3 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl focus:outline-none focus:border-primary/50 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 transition-colors"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-400 mb-2">{t('testimonials.profile_lbl')}</label>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2">{t('testimonials.profile_lbl')}</label>
                       <input
                         type="file"
                         accept="image/*"
@@ -247,19 +247,19 @@ const TestimonialsSection = ({ testimonials: initialTestimonials }: Testimonials
                             setFormData({...formData, image: e.target.files[0]})
                           }
                         }}
-                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-primary/50 transition-colors file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 cursor-pointer"
+                        className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl px-4 py-2.5 text-gray-900 dark:text-white focus:outline-none focus:border-primary/50 transition-colors file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 cursor-pointer"
                       />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">{t('testimonials.msg_lbl')}</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2">{t('testimonials.msg_lbl')}</label>
                     <textarea
                       required
                       rows={4}
                       value={formData.testimonial}
                       onChange={(e) => setFormData({...formData, testimonial: e.target.value})}
                       placeholder={t('testimonials.msg_pl')}
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-primary/50 text-white placeholder-gray-600 resize-none transition-colors"
+                      className="w-full px-4 py-3 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl focus:outline-none focus:border-primary/50 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 resize-none transition-colors"
                     ></textarea>
                   </div>
                   
@@ -273,11 +273,11 @@ const TestimonialsSection = ({ testimonials: initialTestimonials }: Testimonials
                   <button
                     type="submit"
                     disabled={formState === "loading"}
-                    className="w-full py-4 bg-white text-black font-semibold rounded-xl hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                    className="w-full py-4 bg-gray-900 dark:bg-white text-white dark:text-black font-semibold rounded-xl hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer shadow-md"
                   >
                     {formState === "loading" ? (
                       <>
-                        <div className="w-5 h-5 border-2 border-black/30 border-t-black rounded-full animate-spin"></div>
+                        <div className="w-5 h-5 border-2 border-white/30 dark:border-black/30 border-t-white dark:border-t-black rounded-full animate-spin"></div>
                         {t('testimonials.submitting')}
                       </>
                     ) : (

@@ -75,7 +75,7 @@ export default function Welcome({ data }: WelcomeProps) {
                 <meta name="twitter:description" content={seoDescription} />
                 <meta name="twitter:image" content={ogImageUrl} />
             </Head>
-            <div className="flex flex-col min-h-screen">
+            <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-[#050505] text-slate-900 dark:text-slate-100">
                 <Preloader />
                 <Navbar 
                     resumePath={data.resumePath} 

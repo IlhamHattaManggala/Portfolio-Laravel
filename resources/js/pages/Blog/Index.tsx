@@ -68,7 +68,7 @@ export default function Index({ blogs, filters }: BlogIndexProps) {
     const defaultShareImage = `${siteUrl}/images/profile.webp`;
 
     return (
-        <div className="flex flex-col min-h-screen bg-[#0a0a0a] text-white">
+        <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-[#0a0a0a] text-slate-900 dark:text-white">
             <Head title="Blog & Artikel Teknologi | Ilham Hatta Manggala">
                 <meta name="description" content="Kumpulan artikel teknologi, pemrograman web dan mobile, tutorial coding, tips software engineering, serta wawasan tech terupdate dari Ilham Hatta Manggala." />
                 <meta name="keywords" content="Tech Blog, Blog Programmer Indonesia, Tutorial Flutter, Tips Laravel, React JS, Coding, Software Engineer Indonesia, Ilham Hatta Manggala" />
@@ -99,7 +99,7 @@ export default function Index({ blogs, filters }: BlogIndexProps) {
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] text-sm font-medium mb-6 text-gray-300"
+                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] text-sm font-medium mb-6 text-slate-700 dark:text-gray-300"
                         >
                             <BookOpen size={14} className="text-primary" />
                             <span>{t('blog.tag')}</span>
@@ -108,15 +108,15 @@ export default function Index({ blogs, filters }: BlogIndexProps) {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1 }}
-                            className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-6"
+                            className="text-4xl md:text-6xl font-bold tracking-tight text-slate-900 dark:text-white mb-6"
                         >
-                            {t('blog.title_1')} <span className="text-gray-500">{t('blog.title_2')}</span>
+                            {t('blog.title_1')} <span className="text-slate-400 dark:text-gray-500">{t('blog.title_2')}</span>
                         </motion.h1>
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
-                            className="text-gray-400 max-w-2xl mx-auto"
+                            className="text-slate-600 dark:text-gray-400 max-w-2xl mx-auto"
                         >
                             {t('blog.subtitle')}
                         </motion.p>
@@ -130,9 +130,9 @@ export default function Index({ blogs, filters }: BlogIndexProps) {
                                 placeholder={t('blog.search_placeholder')}
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
-                                className="w-full bg-white/[0.02] border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white focus:outline-none focus:border-primary/50 transition-all placeholder:text-gray-500"
+                                className="w-full bg-white dark:bg-white/[0.02] border border-black/10 dark:border-white/10 rounded-2xl py-4 pl-12 pr-4 text-slate-900 dark:text-white focus:outline-none focus:border-primary/50 transition-all placeholder:text-gray-400 dark:placeholder:text-gray-500 shadow-sm"
                             />
-                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-primary transition-colors" size={20} />
+                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 group-focus-within:text-primary transition-colors" size={20} />
                             <button type="submit" className="hidden">Search</button>
                         </form>
                     </div>
@@ -147,7 +147,7 @@ export default function Index({ blogs, filters }: BlogIndexProps) {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: i * 0.1 }}
                                     whileHover={{ y: -5 }}
-                                    className="group bg-white/[0.02] border border-white/5 rounded-3xl overflow-hidden transition-all duration-300 hover:bg-white/[0.04] hover:border-white/10 flex flex-col h-full"
+                                    className="group bg-white dark:bg-white/[0.02] border border-black/10 dark:border-white/5 rounded-3xl overflow-hidden transition-all duration-300 hover:bg-gray-50 dark:hover:bg-white/[0.04] hover:border-black/20 dark:hover:border-white/10 flex flex-col h-full shadow-sm dark:shadow-none"
                                 >
                                     <div className="relative h-56 overflow-hidden">
                                         <Image
@@ -156,15 +156,15 @@ export default function Index({ blogs, filters }: BlogIndexProps) {
                                             fill
                                             className="object-cover transition-transform duration-700 group-hover:scale-105"
                                         />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] to-transparent opacity-80"></div>
+                                        <div className="absolute inset-0 bg-gradient-to-t from-white/90 dark:from-[#0a0a0a] to-transparent opacity-80"></div>
                                     </div>
 
                                     <div className="p-8 flex flex-col flex-1 relative z-10 -mt-20">
                                         <div className="flex items-center gap-3 mb-4">
-                                            <span className="px-3 py-1 bg-white/10 backdrop-blur-md rounded-full text-xs font-semibold text-white">
+                                            <span className="px-3 py-1 bg-black/10 dark:bg-white/10 backdrop-blur-md rounded-full text-xs font-semibold text-slate-800 dark:text-white">
                                                 Article
                                             </span>
-                                            <span className="flex items-center gap-1.5 text-xs text-gray-300 font-medium bg-black/40 backdrop-blur-md px-3 py-1 rounded-full">
+                                            <span className="flex items-center gap-1.5 text-xs text-slate-700 dark:text-gray-300 font-medium bg-white/80 dark:bg-black/40 backdrop-blur-md px-3 py-1 rounded-full border border-black/5 dark:border-white/5">
                                                 <Clock size={12} />
                                                 {new Date(blog.published_at).toLocaleDateString(i18n.language?.startsWith('id') ? 'id-ID' : 'en-US', {
                                                     year: 'numeric',
@@ -172,26 +172,26 @@ export default function Index({ blogs, filters }: BlogIndexProps) {
                                                     day: 'numeric'
                                                 })}
                                             </span>
-                                            <span className="flex items-center gap-1.5 text-xs text-gray-300 font-medium bg-black/40 backdrop-blur-md px-3 py-1 rounded-full">
+                                            <span className="flex items-center gap-1.5 text-xs text-slate-700 dark:text-gray-300 font-medium bg-white/80 dark:bg-black/40 backdrop-blur-md px-3 py-1 rounded-full border border-black/5 dark:border-white/5">
                                                 <Eye size={12} className="text-primary" />
                                                 {blog.views}
                                             </span>
                                         </div>
 
-                                        <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-primary transition-colors tracking-tight line-clamp-2 mt-4">
+                                        <h3 className="text-2xl font-bold mb-3 text-slate-900 dark:text-white group-hover:text-primary transition-colors tracking-tight line-clamp-2 mt-4">
                                             {getLocalized(blog.title)}
                                         </h3>
                                         
-                                        <p className="text-gray-400 text-sm leading-relaxed line-clamp-3 mb-6">
+                                        <p className="text-slate-600 dark:text-gray-400 text-sm leading-relaxed line-clamp-3 mb-6">
                                             {getLocalized(blog.excerpt)}
                                         </p>
                                         
                                         <Link
                                             href={`/blog/${blog.slug}`}
-                                            className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between group/link"
+                                            className="mt-auto pt-6 border-t border-black/5 dark:border-white/5 flex items-center justify-between group/link"
                                         >
-                                            <span className="text-sm font-semibold text-white group-hover/link:text-primary transition-colors">{t('blog.read_article')}</span>
-                                            <ArrowRight size={18} className="transition-transform group-hover/link:translate-x-2 text-white group-hover/link:text-primary" />
+                                            <span className="text-sm font-semibold text-slate-900 dark:text-white group-hover/link:text-primary transition-colors">{t('blog.read_article')}</span>
+                                            <ArrowRight size={18} className="transition-transform group-hover/link:translate-x-2 text-slate-900 dark:text-white group-hover/link:text-primary" />
                                         </Link>
                                     </div>
                                 </motion.div>
@@ -199,7 +199,7 @@ export default function Index({ blogs, filters }: BlogIndexProps) {
                         </div>
                     ) : (
                         <div className="text-center py-24">
-                            <p className="text-gray-500 text-lg">{t('blog.no_articles')}</p>
+                            <p className="text-slate-500 dark:text-gray-500 text-lg">{t('blog.no_articles')}</p>
                         </div>
                     )}
 
@@ -213,7 +213,7 @@ export default function Index({ blogs, filters }: BlogIndexProps) {
                                         <Link
                                             key={i}
                                             href={link.url || '#'}
-                                            className={`p-2 rounded-full border border-white/10 transition-colors ${!link.url ? 'opacity-30 cursor-not-allowed' : 'hover:border-primary hover:text-primary'}`}
+                                            className={`p-2 rounded-full border border-black/10 dark:border-white/10 transition-colors ${!link.url ? 'opacity-30 cursor-not-allowed' : 'hover:border-primary hover:text-primary text-slate-700 dark:text-white'}`}
                                         >
                                             <ChevronLeft size={20} />
                                         </Link>
@@ -224,7 +224,7 @@ export default function Index({ blogs, filters }: BlogIndexProps) {
                                         <Link
                                             key={i}
                                             href={link.url || '#'}
-                                            className={`p-2 rounded-full border border-white/10 transition-colors ${!link.url ? 'opacity-30 cursor-not-allowed' : 'hover:border-primary hover:text-primary'}`}
+                                            className={`p-2 rounded-full border border-black/10 dark:border-white/10 transition-colors ${!link.url ? 'opacity-30 cursor-not-allowed' : 'hover:border-primary hover:text-primary text-slate-700 dark:text-white'}`}
                                         >
                                             <ChevronRight size={20} />
                                         </Link>
@@ -236,8 +236,8 @@ export default function Index({ blogs, filters }: BlogIndexProps) {
                                         href={link.url || '#'}
                                         className={`w-10 h-10 flex items-center justify-center rounded-full text-sm font-bold transition-all ${
                                             link.active
-                                                ? "bg-primary text-black shadow-lg shadow-primary/20"
-                                                : "bg-white/5 hover:bg-white/10 text-white"
+                                                ? "bg-primary text-white shadow-lg shadow-primary/20"
+                                                : "bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-slate-900 dark:text-white"
                                         }`}
                                         dangerouslySetInnerHTML={{ __html: link.label }}
                                     />

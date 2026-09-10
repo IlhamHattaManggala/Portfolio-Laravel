@@ -22,7 +22,7 @@ const ProjectCard = ({ project }: { project: TProject }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
-      className="group relative bg-white/[0.02] border border-white/5 rounded-3xl overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:bg-white/[0.04] hover:border-white/10"
+      className="group relative bg-white dark:bg-white/[0.02] border border-black/10 dark:border-white/5 rounded-3xl overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:bg-gray-50 dark:hover:bg-white/[0.04] hover:border-black/20 dark:hover:border-white/10 shadow-sm dark:shadow-none"
     >
       {/* Image Container */}
       <div className="relative h-60 overflow-hidden">
@@ -36,7 +36,7 @@ const ProjectCard = ({ project }: { project: TProject }) => {
         />
         
         {/* Subtle Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-80"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-white/90 dark:from-[#0a0a0a] via-transparent to-transparent opacity-80"></div>
 
         {/* Hover Action Overlay */}
         <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center backdrop-blur-sm">
@@ -68,7 +68,7 @@ const ProjectCard = ({ project }: { project: TProject }) => {
         
         {/* Category Badge */}
         <div className="absolute top-4 left-4">
-          <span className="px-4 py-1.5 bg-black/40 backdrop-blur-md border border-white/10 rounded-full text-xs font-semibold text-white">
+          <span className="px-4 py-1.5 bg-black/60 dark:bg-black/40 backdrop-blur-md border border-white/20 dark:border-white/10 rounded-full text-xs font-semibold text-white">
             {getLocalized(project.tipe)}
           </span>
         </div>
@@ -76,11 +76,11 @@ const ProjectCard = ({ project }: { project: TProject }) => {
 
       {/* Content */}
       <div className="p-8">
-        <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-primary transition-colors tracking-tight">
+        <h3 className="text-2xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-primary transition-colors tracking-tight">
           {getLocalized(project.name)}
         </h3>
         
-        <p className="text-white text-sm font-medium leading-relaxed line-clamp-2 mb-6">
+        <p className="text-gray-600 dark:text-gray-300 text-sm font-medium leading-relaxed line-clamp-2 mb-6">
           {getLocalized(project.descriptions)}
         </p>
 
@@ -89,13 +89,13 @@ const ProjectCard = ({ project }: { project: TProject }) => {
           {project.library.slice(0, 4).map((lib) => (
             <span
               key={lib}
-              className="text-xs font-semibold px-3 py-1.5 bg-white/10 border border-white/20 text-white rounded-full"
+              className="text-xs font-semibold px-3 py-1.5 bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/20 text-gray-700 dark:text-white rounded-full"
             >
               {lib}
             </span>
           ))}
           {project.library.length > 4 && (
-             <span className="text-xs font-semibold px-3 py-1.5 bg-white/10 border border-white/20 text-white rounded-full">
+             <span className="text-xs font-semibold px-3 py-1.5 bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/20 text-gray-700 dark:text-white rounded-full">
                +{project.library.length - 4}
              </span>
           )}

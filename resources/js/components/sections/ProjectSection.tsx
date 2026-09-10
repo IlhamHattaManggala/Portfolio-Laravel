@@ -57,7 +57,7 @@ const ProjectSection = ({ projects: initialProjects }: ProjectSectionProps) => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] text-sm font-medium mb-6 text-gray-300"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] text-sm font-medium mb-6 text-gray-700 dark:text-gray-300"
           >
             <LayoutGrid size={14} className="text-primary" />
             <span>{t('project.tag')}</span>
@@ -67,9 +67,9 @@ const ProjectSection = ({ projects: initialProjects }: ProjectSectionProps) => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4"
+            className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white mb-4"
           >
-            {t('project.title_1')} <span className="text-gray-500">{t('project.title_2')}</span>
+            {t('project.title_1')} <span className="text-gray-400 dark:text-gray-500">{t('project.title_2')}</span>
           </motion.h2>
         </div>
 
@@ -79,10 +79,10 @@ const ProjectSection = ({ projects: initialProjects }: ProjectSectionProps) => {
             <button
               key={cat}
               onClick={() => handleFilterChange(cat)}
-              className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 border ${
+              className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 border cursor-pointer ${
                 filter === cat
-                  ? "bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.1)] scale-105"
-                  : "bg-white/10 border-white/20 text-white hover:bg-white/20"
+                  ? "bg-gray-900 dark:bg-white text-white dark:text-black border-gray-900 dark:border-white shadow-md scale-105"
+                  : "bg-black/5 dark:bg-white/10 border-black/10 dark:border-white/20 text-gray-700 dark:text-white hover:bg-black/10 dark:hover:bg-white/20"
               }`}
             >
               {cat === "Semua" ? t('project.filter_all') : cat}

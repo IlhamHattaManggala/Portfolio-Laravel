@@ -8,20 +8,20 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative py-20 overflow-hidden border-t border-white/5 bg-[#000000]">
+    <footer className="relative py-20 overflow-hidden border-t border-slate-200 dark:border-white/5 bg-slate-100 dark:bg-[#000000] text-slate-900 dark:text-white">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
           <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-8 h-8 rounded-full overflow-hidden border border-white/10 relative">
+              <div className="w-8 h-8 rounded-full overflow-hidden border border-slate-300 dark:border-white/10 relative">
                 <Image src="/images/profile.webp" alt="Profile" fill sizes="32px" className="object-cover" />
 
               </div>
-              <span className="text-xl font-bold tracking-tight text-white">
+              <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
                 IHM.
               </span>
             </div>
-            <p className="text-gray-300 text-sm max-w-sm mb-8 leading-relaxed">
+            <p className="text-slate-600 dark:text-gray-300 text-sm max-w-sm mb-8 leading-relaxed">
               {t('footer.description')}
             </p>
             <div className="flex gap-4">
@@ -37,7 +37,7 @@ const Footer = () => {
                   target="_blank" 
                   rel="noopener noreferrer" 
                   aria-label={social.label}
-                  className="w-10 h-10 bg-white/[0.03] flex items-center justify-center rounded-full hover:bg-white hover:text-black transition-all duration-300 border border-white/5"
+                  className="w-10 h-10 bg-slate-200/60 dark:bg-white/[0.03] text-slate-700 dark:text-gray-300 flex items-center justify-center rounded-full hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300 border border-slate-300 dark:border-white/5"
                 >
                   <social.icon size={16} />
                 </a>
@@ -46,7 +46,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="font-semibold text-white mb-8">{t('footer.nav_title')}</h3>
+            <h3 className="font-semibold text-slate-900 dark:text-white mb-8">{t('footer.nav_title')}</h3>
             <ul className="space-y-4 text-sm">
               {[
                 { name: t('nav.home'), href: "#hero" },
@@ -55,7 +55,7 @@ const Footer = () => {
                 { name: t('nav.projects'), href: "#project" }
               ].map((link) => (
                 <li key={link.name}>
-                  <a href={toUrl(link.href)} className="text-gray-300 hover:text-white transition-colors">
+                  <a href={toUrl(link.href)} className="text-slate-600 dark:text-gray-300 hover:text-slate-900 dark:hover:text-white transition-colors">
                     {link.name}
                   </a>
                 </li>
@@ -64,7 +64,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="font-semibold text-white mb-8">{t('footer.links_title')}</h3>
+            <h3 className="font-semibold text-slate-900 dark:text-white mb-8">{t('footer.links_title')}</h3>
             <ul className="space-y-4 text-sm">
               {[
                 { name: t('nav.contact'), href: "#contact" },
@@ -73,7 +73,7 @@ const Footer = () => {
                 { name: t('nav.faq'), href: "/faq" }
               ].map((link) => (
                 <li key={link.name}>
-                  <a href={toUrl(link.href)} className="text-gray-300 hover:text-white transition-colors">
+                  <a href={toUrl(link.href)} className="text-slate-600 dark:text-gray-300 hover:text-slate-900 dark:hover:text-white transition-colors">
                     {link.name}
                   </a>
                 </li>
@@ -82,13 +82,13 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-sm text-gray-300 tracking-wide flex items-center gap-2">
+        <div className="pt-8 border-t border-slate-200 dark:border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-sm text-slate-600 dark:text-gray-300 tracking-wide flex items-center gap-2">
             © {currentYear} Ilham Hatta Manggala. All rights reserved.
           </p>
           <div className="flex gap-8 text-sm">
-            <a href="#" className="text-gray-300 hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="text-gray-300 hover:text-white transition-colors">Terms of Service</a>
+            <a href="#" className="text-slate-600 dark:text-gray-300 hover:text-slate-900 dark:hover:text-white transition-colors">Privacy Policy</a>
+            <a href="#" className="text-slate-600 dark:text-gray-300 hover:text-slate-900 dark:hover:text-white transition-colors">Terms of Service</a>
           </div>
         </div>
       </div>

@@ -66,12 +66,12 @@ const ContactSection = ({ contactEmail, location: contactLocation }: ContactSect
                 <span className="text-secondary">$</span>
                 <span>system.get_contact_info()</span>
               </div>
-              <h2 className="text-3xl md:text-6xl font-black mb-6 tracking-tight">
+              <h2 className="text-3xl md:text-6xl font-black mb-6 tracking-tight text-gray-900 dark:text-white">
 
                 {t('contact.title_1')} <br />
                 <span className="text-gradient">{t('contact.title_2')}</span>
               </h2>
-              <p className="text-gray-500 dark:text-gray-400 text-lg leading-relaxed max-w-md">
+              <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed max-w-md">
                 {t('contact.subtitle')}
               </p>
             </div>
@@ -83,12 +83,12 @@ const ContactSection = ({ contactEmail, location: contactLocation }: ContactSect
                 { label: "Availability", value: "Open for Projects", icon: MessageSquare }
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-4 group cursor-default">
-                  <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-primary/50 transition-colors">
+                  <div className="w-12 h-12 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center group-hover:border-primary/50 transition-colors">
                     <item.icon className="w-5 h-5 text-primary" />
                   </div>
                   <div>
                     <p className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">{item.label}</p>
-                    <p className="font-bold text-base md:text-lg break-all">{item.value}</p>
+                    <p className="font-bold text-base md:text-lg text-gray-900 dark:text-white break-all">{item.value}</p>
 
                   </div>
                 </div>
@@ -101,17 +101,17 @@ const ContactSection = ({ contactEmail, location: contactLocation }: ContactSect
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="bg-black/40 backdrop-blur-2xl rounded-3xl overflow-hidden border border-white/10 shadow-2xl"
+            className="bg-white dark:bg-black/40 backdrop-blur-2xl rounded-3xl overflow-hidden border border-black/10 dark:border-white/10 shadow-xl dark:shadow-2xl"
           >
             {/* Terminal Header */}
-            <div className="px-6 py-4 bg-white/5 border-b border-white/5 flex items-center justify-between">
+            <div className="px-6 py-4 bg-gray-100 dark:bg-white/5 border-b border-black/5 dark:border-white/5 flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="flex gap-2">
                   <div className="w-3 h-3 rounded-full bg-red-500/80 border border-red-500/50"></div>
                   <div className="w-3 h-3 rounded-full bg-yellow-500/80 border border-yellow-500/50"></div>
                   <div className="w-3 h-3 rounded-full bg-green-500/80 border border-green-500/50"></div>
                 </div>
-                <div className="flex items-center gap-2 text-gray-400">
+                <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
                   <Terminal size={14} />
                   <span className="text-[11px] font-mono tracking-wider">~/contact/send_message.sh</span>
                 </div>
@@ -131,7 +131,7 @@ const ContactSection = ({ contactEmail, location: contactLocation }: ContactSect
                       value={formData.name}
                       onChange={handleChange}
                       placeholder={t('contact.placeholder_name')}
-                      className="w-full pl-10 pr-4 py-4 bg-black/50 border border-white/10 rounded-xl focus:outline-none focus:border-primary/50 transition-all font-mono text-sm text-white placeholder-gray-600"
+                      className="w-full pl-10 pr-4 py-4 bg-gray-50 dark:bg-black/50 border border-black/10 dark:border-white/10 rounded-xl focus:outline-none focus:border-primary/50 transition-all font-mono text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600"
                     />
                   </div>
                 </div>
@@ -147,7 +147,7 @@ const ContactSection = ({ contactEmail, location: contactLocation }: ContactSect
                       value={formData.email}
                       onChange={handleChange}
                       placeholder={t('contact.placeholder_email')}
-                      className="w-full pl-10 pr-4 py-4 bg-black/50 border border-white/10 rounded-xl focus:outline-none focus:border-primary/50 transition-all font-mono text-sm text-white placeholder-gray-600"
+                      className="w-full pl-10 pr-4 py-4 bg-gray-50 dark:bg-black/50 border border-black/10 dark:border-white/10 rounded-xl focus:outline-none focus:border-primary/50 transition-all font-mono text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600"
                     />
                   </div>
                 </div>
@@ -163,7 +163,7 @@ const ContactSection = ({ contactEmail, location: contactLocation }: ContactSect
                       value={formData.message}
                       onChange={handleChange}
                       placeholder={t('contact.placeholder_message')}
-                      className="w-full pl-10 pr-4 py-4 bg-black/50 border border-white/10 rounded-xl focus:outline-none focus:border-primary/50 transition-all font-mono text-sm text-white placeholder-gray-600 resize-none"
+                      className="w-full pl-10 pr-4 py-4 bg-gray-50 dark:bg-black/50 border border-black/10 dark:border-white/10 rounded-xl focus:outline-none focus:border-primary/50 transition-all font-mono text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 resize-none"
                     ></textarea>
                   </div>
                 </div>
@@ -172,7 +172,7 @@ const ContactSection = ({ contactEmail, location: contactLocation }: ContactSect
               <button
                 type="submit"
                 disabled={formState === "loading"}
-                className="w-full group relative flex items-center justify-center gap-3 py-4 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 rounded-xl font-mono font-bold overflow-hidden transition-all disabled:opacity-50"
+                className="w-full group relative flex items-center justify-center gap-3 py-4 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 rounded-xl font-mono font-bold overflow-hidden transition-all disabled:opacity-50 cursor-pointer"
               >
                 {formState === "loading" ? (
                   <>

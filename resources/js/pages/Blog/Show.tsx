@@ -43,7 +43,7 @@ export default function Show({ blog }: BlogShowProps) {
     const shareImageUrl = blog.featured_image ? `${blog.featured_image}` : `${siteUrl}/images/profile.webp`;
 
     return (
-        <div className="flex flex-col min-h-screen bg-black text-white">
+        <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-[#0a0a0a] text-slate-900 dark:text-white">
             <Head title={`${titleLocalized} | Blog Ilham Hatta Manggala`}>
                 <meta name="description" content={excerptLocalized} />
                 <meta name="keywords" content={`${titleLocalized.split(' ').join(', ')}, Tech Article, Coding, Tutorial, Ilham Hatta Manggala`} />
@@ -84,11 +84,11 @@ export default function Show({ blog }: BlogShowProps) {
 
                     {/* Header */}
                     <header className="mb-12">
-                        <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight text-white">
+                        <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight text-slate-900 dark:text-white">
                             {titleLocalized}
                         </h1>
                         
-                        <div className="flex flex-wrap items-center gap-6 text-sm text-gray-400">
+                        <div className="flex flex-wrap items-center gap-6 text-sm text-slate-600 dark:text-gray-400">
                             <div className="flex items-center gap-2">
                                 <Calendar size={18} className="text-primary" />
                                 <span>{blog.published_at ? new Date(blog.published_at).toLocaleDateString(i18n.language?.startsWith('id') ? 'id-ID' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric' }) : 'Draft'}</span>
@@ -106,7 +106,7 @@ export default function Show({ blog }: BlogShowProps) {
 
                     {/* Featured Image */}
                     {blog.featured_image && (
-                        <div className="relative h-[300px] md:h-[500px] w-full rounded-3xl overflow-hidden mb-12 shadow-2xl border border-white/10">
+                        <div className="relative h-[300px] md:h-[500px] w-full rounded-3xl overflow-hidden mb-12 shadow-2xl border border-black/10 dark:border-white/10">
                             <Image
                                 src={blog.featured_image}
                                 alt={titleLocalized}
@@ -117,23 +117,23 @@ export default function Show({ blog }: BlogShowProps) {
                     )}
 
                     {/* Content */}
-                    <div className="max-w-none text-gray-300">
+                    <div className="max-w-none text-slate-700 dark:text-gray-300">
                         <ReactMarkdown 
                             remarkPlugins={[remarkGfm]}
                             components={{
-                                h1: ({ ...props }) => <h1 className="text-3xl md:text-4xl font-extrabold text-white mt-10 mb-6 border-b border-white/10 pb-3 leading-tight tracking-tight" {...props} />,
-                                h2: ({ ...props }) => <h2 className="text-2xl md:text-3xl font-bold text-white mt-8 mb-4 leading-tight tracking-tight flex items-center gap-3 border-l-4 border-primary pl-4" {...props} />,
-                                h3: ({ ...props }) => <h3 className="text-xl md:text-2xl font-bold text-white mt-6 mb-3 leading-tight" {...props} />,
-                                p: ({ ...props }) => <p className="text-gray-300 leading-relaxed text-base md:text-lg mb-6 text-justify" {...props} />,
-                                ul: ({ ...props }) => <ul className="list-disc list-inside text-gray-300 mb-6 pl-4 space-y-2.5" {...props} />,
-                                ol: ({ ...props }) => <ol className="list-decimal list-inside text-gray-300 mb-6 pl-4 space-y-2.5" {...props} />,
-                                li: ({ ...props }) => <li className="text-gray-300 text-base md:text-lg leading-relaxed pl-1" {...props} />,
+                                h1: ({ ...props }) => <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white mt-10 mb-6 border-b border-black/10 dark:border-white/10 pb-3 leading-tight tracking-tight" {...props} />,
+                                h2: ({ ...props }) => <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mt-8 mb-4 leading-tight tracking-tight flex items-center gap-3 border-l-4 border-primary pl-4" {...props} />,
+                                h3: ({ ...props }) => <h3 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mt-6 mb-3 leading-tight" {...props} />,
+                                p: ({ ...props }) => <p className="text-slate-700 dark:text-gray-300 leading-relaxed text-base md:text-lg mb-6 text-justify" {...props} />,
+                                ul: ({ ...props }) => <ul className="list-disc list-inside text-slate-700 dark:text-gray-300 mb-6 pl-4 space-y-2.5" {...props} />,
+                                ol: ({ ...props }) => <ol className="list-decimal list-inside text-slate-700 dark:text-gray-300 mb-6 pl-4 space-y-2.5" {...props} />,
+                                li: ({ ...props }) => <li className="text-slate-700 dark:text-gray-300 text-base md:text-lg leading-relaxed pl-1" {...props} />,
                                 strong: ({ ...props }) => <strong className="text-primary font-bold" {...props} />,
-                                code: ({ ...props }) => <code className="bg-white/10 px-2 py-0.5 rounded text-sm text-secondary font-mono border border-white/5" {...props} />,
-                                pre: ({ ...props }) => <pre className="bg-[#0d1117] border border-white/10 rounded-2xl p-5 my-6 overflow-x-auto text-sm text-gray-200 font-mono leading-relaxed shadow-xl" {...props} />,
-                                blockquote: ({ ...props }) => <blockquote className="border-l-4 border-primary bg-white/5 px-5 py-4 rounded-r-2xl italic my-6 text-gray-300 text-lg" {...props} />,
+                                code: ({ ...props }) => <code className="bg-slate-200 dark:bg-white/10 px-2 py-0.5 rounded text-sm text-secondary font-mono border border-black/5 dark:border-white/5" {...props} />,
+                                pre: ({ ...props }) => <pre className="bg-slate-900 dark:bg-[#0d1117] border border-slate-800 dark:border-white/10 rounded-2xl p-5 my-6 overflow-x-auto text-slate-100 dark:text-gray-200 font-mono leading-relaxed shadow-xl" {...props} />,
+                                blockquote: ({ ...props }) => <blockquote className="border-l-4 border-primary bg-slate-100 dark:bg-white/5 px-5 py-4 rounded-r-2xl italic my-6 text-slate-700 dark:text-gray-300 text-lg" {...props} />,
                                 a: ({ ...props }) => <a className="text-primary hover:underline hover:text-secondary font-semibold transition-colors duration-200" {...props} />,
-                                hr: ({ ...props }) => <hr className="border-white/10 my-10" {...props} />,
+                                hr: ({ ...props }) => <hr className="border-black/10 dark:border-white/10 my-10" {...props} />,
                             }}
                         >
                             {contentLocalized || ''}

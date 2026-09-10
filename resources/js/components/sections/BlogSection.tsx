@@ -30,7 +30,7 @@ const BlogSection = ({ blogs: initialBlogs }: BlogSectionProps) => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] text-sm font-medium mb-6 text-gray-300"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] text-sm font-medium mb-6 text-gray-700 dark:text-gray-300"
           >
             <BookOpen size={14} className="text-primary" />
             <span>{t('blog.tag')}</span>
@@ -40,9 +40,9 @@ const BlogSection = ({ blogs: initialBlogs }: BlogSectionProps) => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-6"
+            className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white mb-6"
           >
-            {t('blog.title_1')} <span className="text-gray-500">{t('blog.title_2')}</span>
+            {t('blog.title_1')} <span className="text-gray-400 dark:text-gray-500">{t('blog.title_2')}</span>
           </motion.h2>
         </div>
 
@@ -56,7 +56,7 @@ const BlogSection = ({ blogs: initialBlogs }: BlogSectionProps) => {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
                 whileHover={{ y: -5 }}
-                className="group bg-white/[0.02] border border-white/5 rounded-3xl overflow-hidden transition-all duration-300 hover:bg-white/[0.04] hover:border-white/10 flex flex-col h-full"
+                className="group bg-white dark:bg-white/[0.02] border border-black/10 dark:border-white/5 rounded-3xl overflow-hidden transition-all duration-300 hover:bg-gray-50 dark:hover:bg-white/[0.04] hover:border-black/20 dark:hover:border-white/10 shadow-sm dark:shadow-none flex flex-col h-full"
               >
                 <div className="relative h-56 overflow-hidden">
                   <Image
@@ -66,15 +66,15 @@ const BlogSection = ({ blogs: initialBlogs }: BlogSectionProps) => {
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] to-transparent opacity-80"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-white/90 dark:from-[#0a0a0a] to-transparent opacity-80"></div>
                 </div>
 
                 <div className="p-8 flex flex-col flex-1 relative z-10 -mt-20">
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="px-3 py-1 bg-white/10 backdrop-blur-md rounded-full text-xs font-semibold text-white">
+                    <span className="px-3 py-1 bg-black/10 dark:bg-white/10 backdrop-blur-md rounded-full text-xs font-semibold text-gray-900 dark:text-white">
                       Article
                     </span>
-                    <span className="flex items-center gap-1.5 text-xs text-gray-300 font-medium bg-black/40 backdrop-blur-md px-3 py-1 rounded-full">
+                    <span className="flex items-center gap-1.5 text-xs text-gray-700 dark:text-gray-300 font-medium bg-black/5 dark:bg-black/40 backdrop-blur-md px-3 py-1 rounded-full border border-black/5 dark:border-white/10">
                       <Clock size={12} />
                       {new Date(blog.published_at).toLocaleDateString(i18n.language?.startsWith('id') ? 'id-ID' : 'en-US', {
                         year: 'numeric',
@@ -82,27 +82,27 @@ const BlogSection = ({ blogs: initialBlogs }: BlogSectionProps) => {
                         day: 'numeric'
                       })}
                     </span>
-                    <span className="flex items-center gap-1.5 text-xs text-gray-300 font-medium bg-black/40 backdrop-blur-md px-3 py-1 rounded-full">
+                    <span className="flex items-center gap-1.5 text-xs text-gray-700 dark:text-gray-300 font-medium bg-black/5 dark:bg-black/40 backdrop-blur-md px-3 py-1 rounded-full border border-black/5 dark:border-white/10">
                       <Eye size={12} className="text-primary" />
                       {blog.views}
                     </span>
                   </div>
 
 
-                  <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-primary transition-colors tracking-tight line-clamp-2 mt-4">
+                  <h3 className="text-2xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-primary transition-colors tracking-tight line-clamp-2 mt-4">
                     {getLocalized(blog.title)}
                   </h3>
                   
-                  <p className="text-gray-400 text-sm leading-relaxed line-clamp-3 mb-6">
+                  <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed line-clamp-3 mb-6">
                     {getLocalized(blog.excerpt)}
                   </p>
                   
                   <Link
                     href={`/blog/${blog.slug}`}
-                    className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between group/link"
+                    className="mt-auto pt-6 border-t border-black/10 dark:border-white/5 flex items-center justify-between group/link"
                   >
-                    <span className="text-sm font-semibold text-white group-hover/link:text-primary transition-colors">{t('blog.read_article')}</span>
-                    <ArrowRight size={18} className="transition-transform group-hover/link:translate-x-2 text-white group-hover/link:text-primary" />
+                    <span className="text-sm font-semibold text-gray-900 dark:text-white group-hover/link:text-primary transition-colors">{t('blog.read_article')}</span>
+                    <ArrowRight size={18} className="transition-transform group-hover/link:translate-x-2 text-gray-900 dark:text-white group-hover/link:text-primary" />
                   </Link>
                 </div>
               </motion.div>
@@ -119,7 +119,7 @@ const BlogSection = ({ blogs: initialBlogs }: BlogSectionProps) => {
           >
             <Link
               href="/blog"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-white/[0.03] border border-white/10 rounded-2xl text-white font-semibold hover:bg-white/[0.08] hover:border-white/20 transition-all group"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-black/[0.03] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 rounded-2xl text-gray-900 dark:text-white font-semibold hover:bg-black/5 dark:hover:bg-white/[0.08] hover:border-black/20 dark:hover:border-white/20 transition-all group shadow-sm"
             >
               <span>{t('blog.view_all')}</span>
               <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />

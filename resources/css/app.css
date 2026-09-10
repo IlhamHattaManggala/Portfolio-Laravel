@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
   --color-primary: #6366f1;
@@ -53,7 +55,8 @@
 }
 
 .dark {
-  --background: #000000;
+  color-scheme: dark;
+  --background: #050505;
   --foreground: #f8fafc;
   --card: #0a0a0a;
   --card-foreground: #f8fafc;
@@ -82,16 +85,18 @@
 
   html {
     scroll-behavior: smooth;
+    color-scheme: light;
+    scrollbar-color: rgba(99, 102, 241, 0.3) #ffffff;
+    scrollbar-width: thin;
   }
 
-  html,
-  body {
-    height: auto;
-    min-height: 100%;
+  html.dark {
+    color-scheme: dark;
+    scrollbar-color: rgba(99, 102, 241, 0.3) #050505;
   }
 
   body {
-    background: var(--background);
+    background-color: var(--background);
     color: var(--foreground);
     overflow-x: hidden;
     overflow-y: auto;
@@ -122,16 +127,23 @@
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: #ffffff;
+}
+
+.dark ::-webkit-scrollbar-track,
+html.dark ::-webkit-scrollbar-track,
+html.dark ::-webkit-scrollbar {
+  background: #050505;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #6366f140;
-  border-radius: 10px;
+  background: rgba(99, 102, 241, 0.3);
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {

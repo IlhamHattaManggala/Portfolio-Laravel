@@ -70,7 +70,7 @@ const PackagesSection = ({ packages = defaultPackages }: PackagesSectionProps) =
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] text-sm font-medium mb-6 text-gray-300"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] text-sm font-medium mb-6 text-gray-700 dark:text-gray-300"
           >
             <Package size={14} className="text-primary" />
             <span>{t("packages.tag", "Open Source Packages")}</span>
@@ -81,9 +81,9 @@ const PackagesSection = ({ packages = defaultPackages }: PackagesSectionProps) =
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4"
+            className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white mb-4"
           >
-            {t("packages.title_1", "Open Source")} <span className="text-gray-500">{t("packages.title_2", "Packages.")}</span>
+            {t("packages.title_1", "Open Source")} <span className="text-gray-400 dark:text-gray-500">{t("packages.title_2", "Packages.")}</span>
           </motion.h2>
 
           <motion.p
@@ -91,7 +91,7 @@ const PackagesSection = ({ packages = defaultPackages }: PackagesSectionProps) =
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-gray-400 max-w-2xl mx-auto text-base mb-8"
+            className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-base mb-8"
           >
             {t("packages.subtitle", "Reusable open-source PHP/Laravel & NPM JavaScript packages published for developers.")}
           </motion.p>
@@ -112,10 +112,10 @@ const PackagesSection = ({ packages = defaultPackages }: PackagesSectionProps) =
               <button
                 key={tab.id}
                 onClick={() => handleFilterChange(tab.id as 'all' | 'composer' | 'npm')}
-                className={`px-5 py-2 rounded-full text-xs font-bold transition-all duration-300 border ${
+                className={`px-5 py-2 rounded-full text-xs font-bold transition-all duration-300 border cursor-pointer ${
                   activeFilter === tab.id
-                    ? "bg-white text-black border-white shadow-lg"
-                    : "bg-white/5 text-white hover:bg-white/10 border-white/20"
+                    ? "bg-gray-900 dark:bg-white text-white dark:text-black border-gray-900 dark:border-white shadow-md"
+                    : "bg-black/5 dark:bg-white/5 text-gray-700 dark:text-white hover:bg-black/10 dark:hover:bg-white/10 border-black/10 dark:border-white/20"
                 }`}
               >
                 {tab.label}
@@ -146,7 +146,7 @@ const PackagesSection = ({ packages = defaultPackages }: PackagesSectionProps) =
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className="group relative bg-[#0D0D0D] border border-white/10 rounded-3xl p-8 hover:border-white/20 transition-all duration-500 flex flex-col justify-between overflow-hidden shadow-xl"
+                    className="group relative bg-white dark:bg-[#0D0D0D] border border-black/10 dark:border-white/10 rounded-3xl p-8 hover:border-black/20 dark:hover:border-white/20 transition-all duration-500 flex flex-col justify-between overflow-hidden shadow-lg dark:shadow-xl"
                   >
                     {/* Ambient Glow */}
                     <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/10 rounded-full blur-3xl group-hover:bg-primary/20 transition-all duration-500 pointer-events-none" />
@@ -156,16 +156,16 @@ const PackagesSection = ({ packages = defaultPackages }: PackagesSectionProps) =
                       <div className="flex items-center justify-between gap-4 mb-6">
                         <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-mono font-semibold ${
                           isNpm 
-                            ? "bg-red-500/10 border-red-500/20 text-red-400"
-                            : "bg-blue-500/10 border-blue-500/20 text-blue-400"
+                            ? "bg-red-500/10 border-red-500/20 text-red-500 dark:text-red-400"
+                            : "bg-blue-500/10 border-blue-500/20 text-blue-500 dark:text-blue-400"
                         }`}>
-                          <Package size={12} className={isNpm ? "text-red-400" : "text-blue-400"} />
+                          <Package size={12} className={isNpm ? "text-red-500 dark:text-red-400" : "text-blue-500 dark:text-blue-400"} />
                           <span>{isNpm ? "NPM Registry" : "Packagist"}</span>
                         </div>
 
-                        <div className="flex items-center gap-4 text-xs font-mono text-gray-400">
+                        <div className="flex items-center gap-4 text-xs font-mono text-gray-500 dark:text-gray-400">
                           <div className="flex items-center gap-1.5" title="Total Downloads">
-                            <Download size={14} className="text-gray-500" />
+                            <Download size={14} className="text-gray-400 dark:text-gray-500" />
                             <span>{pkg.downloads ?? 0}</span>
                           </div>
                           {!isNpm && (
@@ -178,18 +178,18 @@ const PackagesSection = ({ packages = defaultPackages }: PackagesSectionProps) =
                       </div>
 
                       {/* Package Title & Description */}
-                      <h3 className="text-2xl font-bold text-white mb-3 tracking-tight group-hover:text-primary transition-colors font-mono">
+                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 tracking-tight group-hover:text-primary transition-colors font-mono">
                         {pkg.name}
                       </h3>
 
-                      <p className="text-gray-300 text-sm leading-relaxed mb-6">
+                      <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-6">
                         {pkg.description || t("packages.no_desc", "No description provided.")}
                       </p>
                     </div>
 
                     <div>
                       {/* Command Line Box */}
-                      <div className="mb-6 bg-black/60 border border-white/10 rounded-xl p-3.5 flex items-center justify-between gap-3 font-mono text-xs text-gray-300">
+                      <div className="mb-6 bg-gray-100 dark:bg-black/60 border border-black/10 dark:border-white/10 rounded-xl p-3.5 flex items-center justify-between gap-3 font-mono text-xs text-gray-800 dark:text-gray-300">
                         <div className="flex items-center gap-2 overflow-x-auto select-all">
                           <Terminal size={14} className="text-primary shrink-0" />
                           <span className="whitespace-nowrap">{installCmd}</span>
@@ -198,13 +198,13 @@ const PackagesSection = ({ packages = defaultPackages }: PackagesSectionProps) =
                         <button
                           onClick={() => handleCopy(pkg.name, isNpm)}
                           aria-label={`Copy install command for ${pkg.name}`}
-                          className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-colors shrink-0 flex items-center gap-1.5 text-[11px]"
+                          className="p-1.5 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors shrink-0 flex items-center gap-1.5 text-[11px]"
                           title="Copy install command"
                         >
                           {isCopied ? (
                             <>
-                              <Check size={14} className="text-emerald-400" />
-                              <span className="text-emerald-400 font-sans font-semibold">Copied</span>
+                              <Check size={14} className="text-emerald-500 dark:text-emerald-400" />
+                              <span className="text-emerald-600 dark:text-emerald-400 font-sans font-semibold">Copied</span>
                             </>
                           ) : (
                             <>
@@ -230,7 +230,7 @@ const PackagesSection = ({ packages = defaultPackages }: PackagesSectionProps) =
                             href={pkg.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex-1 py-2.5 px-4 rounded-xl bg-white/5 border border-white/10 text-gray-300 hover:text-white font-semibold text-xs flex items-center justify-center gap-2 hover:bg-white/10 transition-colors"
+                            className="flex-1 py-2.5 px-4 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/10 font-semibold text-xs flex items-center justify-center gap-2 transition-colors"
                           >
                             <ExternalLink size={14} />
                             {isNpm ? "NPM JS" : "Packagist"}
@@ -242,7 +242,7 @@ const PackagesSection = ({ packages = defaultPackages }: PackagesSectionProps) =
                             href={pkg.repository}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex-1 py-2.5 px-4 rounded-xl bg-white/5 border border-white/10 text-gray-300 hover:text-white font-semibold text-xs flex items-center justify-center gap-2 hover:bg-white/10 transition-colors"
+                            className="flex-1 py-2.5 px-4 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/10 font-semibold text-xs flex items-center justify-center gap-2 transition-colors"
                           >
                             <Github size={14} />
                             GitHub

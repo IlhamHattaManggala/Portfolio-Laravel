@@ -40,7 +40,7 @@ const GallerySection = ({ certificates: initialCertificates }: GallerySectionPro
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] text-sm font-medium mb-6 text-gray-300"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] text-sm font-medium mb-6 text-gray-700 dark:text-gray-300"
           >
             <Award size={14} className="text-primary" />
             <span>{t('gallery.tag')}</span>
@@ -50,9 +50,9 @@ const GallerySection = ({ certificates: initialCertificates }: GallerySectionPro
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-bold tracking-tight text-white"
+            className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white"
           >
-            {t('gallery.title_1')} <span className="text-gray-500">{t('gallery.title_2')}</span>
+            {t('gallery.title_1')} <span className="text-gray-400 dark:text-gray-500">{t('gallery.title_2')}</span>
           </motion.h2>
         </div>
 
@@ -70,16 +70,16 @@ const GallerySection = ({ certificates: initialCertificates }: GallerySectionPro
                 <motion.div
                   key={cert.id || i}
                   whileHover={{ y: -5 }}
-                  className="group relative bg-white/[0.02] border border-white/5 rounded-3xl overflow-hidden transition-all duration-300 hover:bg-white/[0.04] hover:border-white/10"
+                  className="group relative bg-white dark:bg-white/[0.02] border border-black/10 dark:border-white/5 rounded-3xl overflow-hidden transition-all duration-300 hover:bg-gray-50 dark:hover:bg-white/[0.04] hover:border-black/20 dark:hover:border-white/10 shadow-sm dark:shadow-none"
                 >
-                  <div className="relative h-64 overflow-hidden p-6 flex items-center justify-center bg-black/20">
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-50 z-10"></div>
+                  <div className="relative h-64 overflow-hidden p-6 flex items-center justify-center bg-black/5 dark:bg-black/20">
+                    <div className="absolute inset-0 bg-gradient-to-t from-white/80 dark:from-[#0a0a0a] via-transparent to-transparent opacity-50 z-10"></div>
                     <Image
                       src={cert.image}
                       alt={getLocalized(cert.title)}
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-contain p-8 filter brightness-90 group-hover:brightness-100 transition-all duration-500 group-hover:scale-105"
+                      className="object-contain p-8 filter brightness-95 dark:brightness-90 group-hover:brightness-100 transition-all duration-500 group-hover:scale-105"
                     />
 
                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center backdrop-blur-sm z-20">
@@ -92,9 +92,9 @@ const GallerySection = ({ certificates: initialCertificates }: GallerySectionPro
                       </button>
                     </div>
                   </div>
-                  <div className="p-8 relative z-30 bg-gradient-to-b from-transparent to-[#0a0a0a]">
+                  <div className="p-8 relative z-30 bg-white dark:bg-gradient-to-b dark:from-transparent dark:to-[#0a0a0a]">
                     <div className="mb-3 text-primary text-xs font-semibold tracking-wide uppercase">{getLocalized(cert.issuer)}</div>
-                    <h3 className="font-bold text-xl mb-2 text-white line-clamp-2 tracking-tight group-hover:text-primary transition-colors">{getLocalized(cert.title)}</h3>
+                    <h3 className="font-bold text-xl mb-2 text-gray-900 dark:text-white line-clamp-2 tracking-tight group-hover:text-primary transition-colors">{getLocalized(cert.title)}</h3>
                     <p className="text-gray-500 text-sm">{cert.date_issued}</p>
                   </div>
                 </motion.div>
@@ -123,24 +123,24 @@ const GallerySection = ({ certificates: initialCertificates }: GallerySectionPro
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedCert(null)}
-            className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-12 cursor-zoom-out"
+            className="fixed inset-0 z-[100] bg-black/80 dark:bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-12 cursor-zoom-out"
           >
             <motion.div
               initial={{ scale: 0.95, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative max-w-5xl w-full bg-[#0a0a0a] border border-white/10 rounded-3xl overflow-hidden shadow-2xl cursor-default flex flex-col lg:flex-row"
+              className="relative max-w-5xl w-full bg-white dark:bg-[#0a0a0a] border border-black/10 dark:border-white/10 rounded-3xl overflow-hidden shadow-2xl cursor-default flex flex-col lg:flex-row"
             >
               <button
                 onClick={() => setSelectedCert(null)}
                 aria-label="Close certificate lightbox"
-                className="absolute top-6 right-6 z-10 w-10 h-10 flex items-center justify-center bg-white/5 hover:bg-white/10 text-white rounded-full transition-colors backdrop-blur-md"
+                className="absolute top-6 right-6 z-10 w-10 h-10 flex items-center justify-center bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-gray-900 dark:text-white rounded-full transition-colors backdrop-blur-md"
               >
                 <X size={20} />
               </button>
 
-              <div className="relative w-full lg:w-[60%] h-[40vh] lg:h-[70vh] bg-black/50 p-8 flex items-center justify-center">
+              <div className="relative w-full lg:w-[60%] h-[40vh] lg:h-[70vh] bg-black/5 dark:bg-black/50 p-8 flex items-center justify-center">
                 <Image
                   src={selectedCert.image}
                   alt={getLocalized(selectedCert.title)}
@@ -150,20 +150,20 @@ const GallerySection = ({ certificates: initialCertificates }: GallerySectionPro
                 />
 
               </div>
-              <div className="p-8 md:p-12 lg:w-[40%] flex flex-col justify-center bg-gradient-to-b from-white/[0.02] to-transparent border-t lg:border-t-0 lg:border-l border-white/5">
+              <div className="p-8 md:p-12 lg:w-[40%] flex flex-col justify-center bg-gradient-to-b from-black/[0.01] dark:from-white/[0.02] to-transparent border-t lg:border-t-0 lg:border-l border-black/5 dark:border-white/5">
                 <span className="px-4 py-2 bg-primary/10 text-primary text-xs font-semibold rounded-full w-fit mb-6 uppercase tracking-wider">
                   {getLocalized(selectedCert.issuer)}
                 </span>
-                <h2 className="text-3xl font-bold mb-6 tracking-tight text-white leading-tight">
+                <h2 className="text-3xl font-bold mb-6 tracking-tight text-gray-900 dark:text-white leading-tight">
                   {getLocalized(selectedCert.title)}
                 </h2>
-                <div className="space-y-4 text-gray-400 text-sm leading-relaxed">
-                  <p>{t('gallery.official_cert')} <strong className="text-white">{getLocalized(selectedCert.issuer)}</strong>.</p>
-                  <p>{t('gallery.obtained_on')} <strong className="text-white">{selectedCert.date_issued}</strong>{t('gallery.validation')}</p>
+                <div className="space-y-4 text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                  <p>{t('gallery.official_cert')} <strong className="text-gray-900 dark:text-white">{getLocalized(selectedCert.issuer)}</strong>.</p>
+                  <p>{t('gallery.obtained_on')} <strong className="text-gray-900 dark:text-white">{selectedCert.date_issued}</strong>{t('gallery.validation')}</p>
                 </div>
                 <button
                   onClick={() => setSelectedCert(null)}
-                  className="mt-10 w-full py-4 bg-white text-black font-semibold rounded-full hover:scale-[1.02] transition-transform"
+                  className="mt-10 w-full py-4 bg-gray-900 dark:bg-white text-white dark:text-black font-semibold rounded-full hover:scale-[1.02] transition-transform shadow-md"
                 >
                   {t('gallery.close_view')}
                 </button>
