@@ -136,7 +136,7 @@ const HeroSection = ({
                </div>
                
                {/* Code Terminal */}
-               <div className="lg:col-span-3 p-0 md:p-4 bg-gray-900 dark:bg-black/20 text-white rounded-b-2xl lg:rounded-b-none">
+               <div className="lg:col-span-3 p-0 md:p-4 bg-slate-100/60 dark:bg-black/20 text-slate-900 dark:text-white rounded-b-2xl lg:rounded-b-none">
                   <Terminal />
                </div>
             </div>
