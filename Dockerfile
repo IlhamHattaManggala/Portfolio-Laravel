@@ -43,17 +43,23 @@ RUN apk add --no-cache \
     php83-curl \
     && ln -sf /usr/bin/php83 /usr/bin/php
 
-# Copy Node configuration files & Artisan
-COPY package.json package-lock.json* vite.config.ts tsconfig.json components.json artisan ./
+# Copy Node configuration files, Artisan & Environment template
+COPY package.json package-lock.json* vite.config.ts tsconfig.json components.json artisan .env.example ./
 COPY resources ./resources
 COPY public ./public
 
-# Copy Laravel files & composer vendor for Wayfinder
+# Copy Laravel application files & vendor for Wayfinder
 COPY app ./app
 COPY bootstrap ./bootstrap
 COPY config ./config
+COPY database ./database
 COPY routes ./routes
 COPY --from=composer-builder /app/vendor ./vendor
+
+# Setup storage structure & temporary .env with APP_KEY for Artisan commands
+RUN mkdir -p storage/framework/sessions storage/framework/views storage/framework/cache/data storage/logs bootstrap/cache \
+    && cp .env.example .env \
+    && php artisan key:generate
 
 RUN npm ci && npm run build
 
