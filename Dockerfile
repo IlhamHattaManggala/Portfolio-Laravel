@@ -1,5 +1,18 @@
 # ==========================================
-# STAGE 1: Composer Dependency Builder
+# STAGE 1: Frontend Asset Builder (Node.js)
+# ==========================================
+FROM node:20-alpine AS node-builder
+WORKDIR /app
+
+COPY package.json package-lock.json* vite.config.ts tsconfig.json components.json ./
+COPY resources ./resources
+COPY public ./public
+
+ENV WAYFINDER_DISABLE=true
+RUN npm ci && npm run build
+
+# ==========================================
+# STAGE 2: Composer Dependency Builder
 # ==========================================
 FROM composer:2 AS composer-builder
 WORKDIR /app
@@ -19,53 +32,6 @@ RUN composer install \
     --no-scripts \
     --prefer-dist \
     --optimize-autoloader
-
-# ==========================================
-# STAGE 2: Frontend Asset Builder (Node.js + PHP for Wayfinder)
-# ==========================================
-FROM node:20-alpine AS node-builder
-WORKDIR /app
-
-# Install PHP & extensions required for Wayfinder route generation during Vite build
-RUN apk add --no-cache \
-    php83 \
-    php83-cli \
-    php83-phar \
-    php83-openssl \
-    php83-mbstring \
-    php83-tokenizer \
-    php83-ctype \
-    php83-dom \
-    php83-fileinfo \
-    php83-xml \
-    php83-xmlwriter \
-    php83-session \
-    php83-curl \
-    php83-pdo \
-    php83-pdo_sqlite \
-    php83-sqlite3 \
-    php83-iconv \
-    && ln -sf /usr/bin/php83 /usr/bin/php
-
-# Copy Node configuration files, Artisan & Environment template
-COPY package.json package-lock.json* vite.config.ts tsconfig.json components.json artisan .env.example ./
-COPY resources ./resources
-COPY public ./public
-
-# Copy Laravel application files & vendor for Wayfinder
-COPY app ./app
-COPY bootstrap ./bootstrap
-COPY config ./config
-COPY database ./database
-COPY routes ./routes
-COPY --from=composer-builder /app/vendor ./vendor
-
-# Setup storage structure & dummy APP_KEY in temporary .env for Artisan commands
-RUN mkdir -p storage/framework/sessions storage/framework/views storage/framework/cache/data storage/logs bootstrap/cache \
-    && cp .env.example .env \
-    && sed -i 's/APP_KEY=/APP_KEY=base64:dummydummydummydummydummydummydummydum=/g' .env
-
-RUN npm ci && npm run build
 
 # ==========================================
 # STAGE 3: Production Runtime (PHP 8.3-FPM + Nginx)

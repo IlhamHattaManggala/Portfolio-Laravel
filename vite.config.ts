@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react';
 import laravel from 'laravel-vite-plugin';
 import { defineConfig } from 'vite';
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.tsx'],
@@ -18,10 +18,12 @@ export default defineConfig({
             },
         }),
         tailwindcss(),
-        wayfinder({
+        // Wayfinder route type generation runs during dev ('serve').
+        // In production build ('build') or when WAYFINDER_DISABLE is set, pre-committed routes in git are used.
+        (!process.env.WAYFINDER_DISABLE && command !== 'build') && wayfinder({
             formVariants: true,
         }),
-    ],
+    ].filter(Boolean),
     build: {
         chunkSizeWarningLimit: 600,
         rollupOptions: {
@@ -46,4 +48,4 @@ export default defineConfig({
             }
         }
     }
-});
+}));
