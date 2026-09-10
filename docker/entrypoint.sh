@@ -1,32 +1,29 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 
-# Generate app key if not set
-if [ -z "$APP_KEY" ]; then
-    echo "Generating Application Key..."
-    php artisan key:generate --force
+# Ensure required storage directories exist
+mkdir -p /var/www/html/storage/app/public \
+         /var/www/html/storage/framework/cache \
+         /var/www/html/storage/framework/sessions \
+         /var/www/html/storage/framework/views \
+         /var/www/html/storage/logs
+
+chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Execute storage link if not already present
+if [ ! -L /var/www/html/public/storage ]; then
+    echo "Creating storage link..."
+    php artisan storage:link --force || true
 fi
 
-# Run storage link
-echo "Creating storage link..."
-php artisan storage:link --force || true
-
-# Run database migrations & seeders
-echo "Running database migrations..."
-php artisan migrate --force
-
-if [ "$RUN_SEEDER" = "true" ]; then
-    echo "Seeding database..."
-    php artisan db:seed --force
+# Run optimization if running in production mode and APP_KEY is available
+if [ "$APP_ENV" = "production" ] && [ -n "$APP_KEY" ]; then
+    echo "Running production optimizations..."
+    php artisan config:cache || true
+    php artisan route:cache || true
+    php artisan view:cache || true
 fi
 
-# Optimize Laravel cache in production
-if [ "$APP_ENV" = "production" ]; then
-    echo "Caching configurations..."
-    php artisan config:cache
-    php artisan route:cache
-    php artisan view:cache
-fi
-
-echo "Starting Supervisor..."
-exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+# Execute passed command
+exec "$@"
