@@ -41,6 +41,10 @@ RUN apk add --no-cache \
     php83-xmlwriter \
     php83-session \
     php83-curl \
+    php83-pdo \
+    php83-pdo_sqlite \
+    php83-sqlite3 \
+    php83-iconv \
     && ln -sf /usr/bin/php83 /usr/bin/php
 
 # Copy Node configuration files, Artisan & Environment template
@@ -56,10 +60,10 @@ COPY database ./database
 COPY routes ./routes
 COPY --from=composer-builder /app/vendor ./vendor
 
-# Setup storage structure & temporary .env with APP_KEY for Artisan commands
+# Setup storage structure & dummy APP_KEY in temporary .env for Artisan commands
 RUN mkdir -p storage/framework/sessions storage/framework/views storage/framework/cache/data storage/logs bootstrap/cache \
     && cp .env.example .env \
-    && php artisan key:generate
+    && sed -i 's/APP_KEY=/APP_KEY=base64:dummydummydummydummydummydummydummydum=/g' .env
 
 RUN npm ci && npm run build
 
