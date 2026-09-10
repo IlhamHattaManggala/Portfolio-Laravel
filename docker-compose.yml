@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # ==========================================
   # 🌐 Portfolio Web Server (PHP-FPM + Nginx)
@@ -23,8 +21,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=proxy"
-      # Traefik Router configuration
-      - "traefik.http.routers.portfolio.rule=Host(`${PORTFOLIO_DOMAIN:-localhost}`)"
+      - "traefik.http.routers.portfolio.rule=Host(`ilhamhattamanggala.my.id`) || Host(`www.ilhamhattamanggala.my.id`)"
       - "traefik.http.routers.portfolio.entrypoints=websecure"
       - "traefik.http.routers.portfolio.tls=true"
       - "traefik.http.routers.portfolio.tls.certresolver=myresolver"
