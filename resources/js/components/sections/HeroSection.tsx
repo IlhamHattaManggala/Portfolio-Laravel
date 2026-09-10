@@ -1,12 +1,20 @@
 
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 import Terminal from "../Terminal";
 import { motion } from "framer-motion";
 import { Sparkles, ChevronRight } from "lucide-react";
 import Image from "@/components/Image";
 import { useTranslation } from "react-i18next";
 
-const HeroSection = () => {
+interface HeroSectionProps {
+  githubUrl?: string;
+  linkedinUrl?: string;
+}
+
+const HeroSection = ({
+  githubUrl = "https://github.com/IlhamHattaManggala",
+  linkedinUrl = "https://www.linkedin.com/in/ilham-hatta-manggala"
+}: HeroSectionProps) => {
   const { t } = useTranslation();
 
   return (
@@ -55,7 +63,7 @@ const HeroSection = () => {
         </motion.div>
 
         <motion.div
-          className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -66,15 +74,28 @@ const HeroSection = () => {
           >
             {t('hero.view_work')}
           </a>
-          <a
-            href="https://github.com/IlhamHattaManggala"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto px-8 py-4 bg-black/[0.03] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 text-gray-900 dark:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-full font-semibold transition-all flex items-center justify-center gap-2 backdrop-blur-md"
-          >
-            <FaGithub size={18} />
-            GitHub
-          </a>
+          {githubUrl && (
+            <a
+              href={githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto px-7 py-4 bg-black/[0.03] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 text-gray-900 dark:text-white hover:bg-black/5 dark:hover:bg-white/10 hover:border-black/20 dark:hover:border-white/20 rounded-full font-semibold transition-all flex items-center justify-center gap-2 backdrop-blur-md"
+            >
+              <FaGithub size={18} />
+              GitHub
+            </a>
+          )}
+          {linkedinUrl && (
+            <a
+              href={linkedinUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto px-7 py-4 bg-black/[0.03] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 text-gray-900 dark:text-white hover:bg-black/5 dark:hover:bg-white/10 hover:border-blue-500/30 rounded-full font-semibold transition-all flex items-center justify-center gap-2 backdrop-blur-md group"
+            >
+              <FaLinkedin size={18} className="text-[#0A66C2] group-hover:scale-110 transition-transform" />
+              LinkedIn
+            </a>
+          )}
         </motion.div>
 
         {/* Dashboard/Code Preview Mockup */}

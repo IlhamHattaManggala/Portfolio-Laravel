@@ -242,6 +242,9 @@ class PortfolioController extends Controller
                 'resumePath' => Setting::where('key', 'resume_path')->first()?->value ?? '#',
                 'contactEmail' => Setting::where('key', 'contact_email')->first()?->value ?? 'hello@ilhamhatta.com',
                 'location' => Setting::where('key', 'location')->first()?->value ?? 'Jakarta, Indonesia',
+                'githubUrl' => Setting::where('key', 'github_url')->first()?->value ?? 'https://github.com/IlhamHattaManggala',
+                'linkedinUrl' => Setting::where('key', 'linkedin_url')->first()?->value ?? 'https://www.linkedin.com/in/ilham-hatta-manggala',
+                'instagramUrl' => Setting::where('key', 'instagram_url')->first()?->value ?? 'https://www.instagram.com/runtahhhh__/',
                 'seo' => [
                     'title' => Setting::where('key', 'meta_title')->first()?->value ?? 'Ilham Hatta Manggala | Portofolio & Personal Website',
                     'description' => Setting::where('key', 'meta_description')->first()?->value ?? 'Portofolio profesional Ilham Hatta Manggala - Full Stack Web & Mobile Developer. Temukan proyek unggulan, riwayat pengalaman kerja, sertifikasi, dan blog artikel teknologi terbaru.',

@@ -29,6 +29,9 @@ interface WelcomeProps {
         resumePath: string;
         contactEmail: string;
         location: string;
+        githubUrl?: string;
+        linkedinUrl?: string;
+        instagramUrl?: string;
         seo?: {
             title?: string;
             description?: string;
@@ -83,7 +86,7 @@ export default function Welcome({ data }: WelcomeProps) {
                 />
 
                 <main className="flex-grow">
-                    <HeroSection />
+                    <HeroSection githubUrl={data.githubUrl} linkedinUrl={data.linkedinUrl} />
                     <AboutSection technologies={data.skills} projects={data.projects} />
 
                     {data.experiences && data.experiences.length > 0 && (
@@ -110,7 +113,7 @@ export default function Welcome({ data }: WelcomeProps) {
                     
                     <ContactSection contactEmail={data.contactEmail} location={data.location} />
                 </main>
-                <Footer />
+                <Footer githubUrl={data.githubUrl} linkedinUrl={data.linkedinUrl} instagramUrl={data.instagramUrl} />
                 
                 <ResumeModal 
                     isOpen={isResumeOpen}

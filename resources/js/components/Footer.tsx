@@ -3,7 +3,17 @@ import { FaGithub, FaLinkedin, FaInstagram, FaTwitter } from "react-icons/fa";
 import Image from "@/components/Image";
 import { useTranslation } from "react-i18next";
 
-const Footer = () => {
+interface FooterProps {
+  githubUrl?: string;
+  linkedinUrl?: string;
+  instagramUrl?: string;
+}
+
+const Footer = ({
+  githubUrl = "https://github.com/IlhamHattaManggala",
+  linkedinUrl = "https://www.linkedin.com/in/ilham-hatta-manggala",
+  instagramUrl = "https://www.instagram.com/runtahhhh__/"
+}: FooterProps) => {
   const { t } = useTranslation();
   const currentYear = new Date().getFullYear();
 
@@ -26,9 +36,9 @@ const Footer = () => {
             </p>
             <div className="flex gap-4">
               {[
-                { icon: FaGithub, href: "https://github.com/IlhamHattaManggala", label: "GitHub Profile" },
-                { icon: FaLinkedin, href: "https://www.linkedin.com/in/ilham-hatta-manggala", label: "LinkedIn Profile" },
-                { icon: FaInstagram, href: "https://www.instagram.com/runtahhhh__/", label: "Instagram Profile" },
+                { icon: FaGithub, href: githubUrl, label: "GitHub Profile" },
+                { icon: FaLinkedin, href: linkedinUrl, label: "LinkedIn Profile" },
+                { icon: FaInstagram, href: instagramUrl, label: "Instagram Profile" },
                 { icon: FaTwitter, href: "#", label: "Twitter Profile" }
               ].map((social, i) => (
                 <a 
