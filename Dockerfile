@@ -45,6 +45,7 @@ RUN apk add --no-cache \
     freetype-dev \
     libjpeg-turbo-dev \
     libpng-dev \
+    libwebp-dev \
     libzip-dev \
     icu-dev \
     oniguruma-dev \
@@ -52,7 +53,7 @@ RUN apk add --no-cache \
     curl \
     unzip \
     bash \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-install -j$(nproc) \
         pdo_mysql \
         gd \
