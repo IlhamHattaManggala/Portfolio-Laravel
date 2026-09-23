@@ -16,28 +16,41 @@ jobs:
           VPS_USERNAME: ${{ secrets.VPS_USERNAME }}
           VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
         run: |
-          if [ -z "$VPS_HOST" ]; then
-            echo "Error: VPS_HOST secret is not set!"
-            exit 1
-          fi
-          if [ -z "$VPS_USERNAME" ]; then
-            echo "Error: VPS_USERNAME secret is not set!"
-            exit 1
-          fi
-          if [ -z "$VPS_SSH_KEY" ]; then
-            echo "Error: VPS_SSH_KEY secret is not set!"
-            exit 1
-          fi
+          {
+            echo "Checking secrets..."
+            if [ -z "$VPS_HOST" ]; then
+              echo "VPS_HOST is EMPTY"
+            else
+              echo "VPS_HOST is set to: $VPS_HOST"
+            fi
+            if [ -z "$VPS_USERNAME" ]; then
+              echo "VPS_USERNAME is EMPTY"
+            else
+              echo "VPS_USERNAME is set to: $VPS_USERNAME"
+            fi
+            if [ -z "$VPS_SSH_KEY" ]; then
+              echo "VPS_SSH_KEY is EMPTY"
+            else
+              echo "VPS_SSH_KEY is present"
+            fi
 
-          mkdir -p ~/.ssh
-          printf "%s\n" "$VPS_SSH_KEY" > ~/.ssh/id_deploy
-          chmod 600 ~/.ssh/id_deploy
+            mkdir -p ~/.ssh
+            printf "%s\n" "$VPS_SSH_KEY" > ~/.ssh/id_deploy
+            chmod 600 ~/.ssh/id_deploy
 
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_deploy -p 22 "${VPS_USERNAME}@${VPS_HOST}" << 'EOF'
-            set -e
-            cd /opt/apps/Portfolio-Laravel
-            git pull origin main
-            docker compose build portfolio-web
-            docker compose up -d
-            docker compose exec -T portfolio-web php artisan optimize
+            echo "Connecting via SSH..."
+            ssh -vv -o ConnectTimeout=15 -o StrictHostKeyChecking=no -i ~/.ssh/id_deploy -p 22 "${VPS_USERNAME}@${VPS_HOST}" << 'EOF'
+              set -e
+              cd /opt/apps/Portfolio-Laravel
+              git pull origin main
+              docker compose build portfolio-web
+              docker compose up -d
+              docker compose exec -T portfolio-web php artisan optimize
           EOF
+          } 2>&1 | tee /tmp/output.log
+          STATUS=${PIPESTATUS[0]}
+          echo "### Deploy Output (Exit Code: $STATUS)" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat /tmp/output.log >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          exit $STATUS
