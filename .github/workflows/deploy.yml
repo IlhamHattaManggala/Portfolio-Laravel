@@ -12,31 +12,39 @@ jobs:
     steps:
       - name: Deploy via SSH
         env:
-          VPS_HOST: ${{ secrets.VPS_HOST }}
-          VPS_USERNAME: ${{ secrets.VPS_USERNAME }}
-          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          S_VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          S_SSH_KEY: ${{ secrets.SSH_KEY }}
+          S_VPS_KEY: ${{ secrets.VPS_KEY }}
+          S_DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          V_VPS_SSH_KEY: ${{ vars.VPS_SSH_KEY }}
+          S_VPS_HOST: ${{ secrets.VPS_HOST }}
+          V_VPS_HOST: ${{ vars.VPS_HOST }}
+          S_VPS_USER: ${{ secrets.VPS_USERNAME }}
+          V_VPS_USER: ${{ vars.VPS_USERNAME }}
         run: |
           set +e
-          echo "Host: ${VPS_HOST}"
-          echo "User: ${VPS_USERNAME}"
-          if [ -z "$VPS_SSH_KEY" ]; then
-            echo "::error::VPS_SSH_KEY is empty"
+          KEY="${S_VPS_SSH_KEY:-${S_SSH_KEY:-${S_VPS_KEY:-${S_DEPLOY_KEY:-$V_VPS_SSH_KEY}}}}"
+          HOST="${S_VPS_HOST:-$V_VPS_HOST}"
+          USER="${S_VPS_USER:-$V_VPS_USER}"
+
+          echo "::notice::Check: HOST=[$HOST] USER=[$USER] KEY_LEN=$(echo -n "$KEY" | wc -c) (S_VPS_SSH_KEY=$(echo -n "$S_VPS_SSH_KEY" | wc -c), V_VPS_SSH_KEY=$(echo -n "$V_VPS_SSH_KEY" | wc -c))"
+
+          if [ -z "$KEY" ]; then
+            echo "::error::Tidak ada SSH Key yang ditemukan di secrets maupun variables!"
             exit 1
           fi
 
           mkdir -p ~/.ssh
-          printf "%s\n" "$VPS_SSH_KEY" > ~/.ssh/id_deploy
+          printf "%s\n" "$KEY" > ~/.ssh/id_deploy
           chmod 600 ~/.ssh/id_deploy
 
           ssh-keygen -l -f ~/.ssh/id_deploy > /tmp/keycheck.log 2>&1
-          KEY_CHECK=$?
-          if [ $KEY_CHECK -ne 0 ]; then
-            MSG=$(cat /tmp/keycheck.log)
-            echo "::error::SSH Key Invalid: $MSG"
+          if [ $? -ne 0 ]; then
+            echo "::error::SSH Key Invalid: $(cat /tmp/keycheck.log)"
             exit 1
           fi
 
-          ssh -vv -o ConnectTimeout=15 -o StrictHostKeyChecking=no -i ~/.ssh/id_deploy -p 22 "${VPS_USERNAME}@${VPS_HOST}" "echo SSH SUCCESS" > /tmp/ssh.log 2>&1
+          ssh -vv -o ConnectTimeout=15 -o StrictHostKeyChecking=no -i ~/.ssh/id_deploy -p 22 "${USER}@${HOST}" "echo SSH SUCCESS" > /tmp/ssh.log 2>&1
           SSH_STATUS=$?
           if [ $SSH_STATUS -ne 0 ]; then
             MSG=$(tail -n 12 /tmp/ssh.log | tr '\n' ' | ')
@@ -44,7 +52,7 @@ jobs:
             exit $SSH_STATUS
           fi
 
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_deploy -p 22 "${VPS_USERNAME}@${VPS_HOST}" << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_deploy -p 22 "${USER}@${HOST}" << 'EOF'
             set -e
             cd /opt/apps/Portfolio-Laravel
             git pull origin main
