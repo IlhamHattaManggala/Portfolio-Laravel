@@ -14,5 +14,4 @@ storage/logs/*
 tests
 Dockerfile
 docker-compose.yml
-docker
 README.md

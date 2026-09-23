@@ -55,6 +55,32 @@ export default function Welcome({ data }: WelcomeProps) {
         ? (data.seo.ogImage.startsWith('http') ? data.seo.ogImage : `${siteUrl}${data.seo.ogImage}`) 
         : `${siteUrl}/images/profile.webp`;
 
+    const personSchema = {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": seoAuthor,
+        "url": siteUrl,
+        "image": ogImageUrl,
+        "jobTitle": "Full Stack Web & Mobile Developer",
+        "sameAs": [
+            data.githubUrl || "https://github.com/IlhamHattaManggala",
+            data.linkedinUrl || "https://www.linkedin.com/in/ilham-hatta-manggala",
+            data.instagramUrl || "https://www.instagram.com/runtahhhh__/"
+        ],
+        "knowsAbout": ["Laravel", "React", "TypeScript", "Flutter", "PHP", "Dart", "Tailwind CSS", "Web Development"]
+    };
+
+    const websiteSchema = {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Ilham Hatta Manggala Portfolio",
+        "url": siteUrl,
+        "author": {
+            "@type": "Person",
+            "name": seoAuthor
+        }
+    };
+
     return (
         <>
             <Head title={seoTitle}>
@@ -77,6 +103,16 @@ export default function Welcome({ data }: WelcomeProps) {
                 <meta name="twitter:title" content={seoTitle} />
                 <meta name="twitter:description" content={seoDescription} />
                 <meta name="twitter:image" content={ogImageUrl} />
+
+                {/* JSON-LD Schema Markup */}
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+                />
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+                />
             </Head>
             <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-[#050505] text-slate-900 dark:text-slate-100">
                 <Preloader />

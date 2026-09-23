@@ -452,9 +452,13 @@ class PortfolioController extends Controller
     public function sitemap()
     {
         $blogs = Blog::where('is_published', true)->orderBy('published_at', 'desc')->get();
+        $projects = Project::all();
+        $packages = Cache::get('all_public_packages', []);
         
         $content = view('sitemap', [
             'blogs' => $blogs,
+            'projects' => $projects,
+            'packages' => $packages,
         ]);
 
         return response($content, 200)

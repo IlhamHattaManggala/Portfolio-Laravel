@@ -68,6 +68,32 @@ export default function Show({ blog }: BlogShowProps) {
                 <meta name="twitter:title" content={`${titleLocalized} | Blog Ilham Hatta Manggala`} />
                 <meta name="twitter:description" content={excerptLocalized} />
                 <meta name="twitter:image" content={shareImageUrl} />
+
+                {/* JSON-LD BlogPosting Schema */}
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify({
+                            "@context": "https://schema.org",
+                            "@type": "BlogPosting",
+                            "headline": titleLocalized,
+                            "description": excerptLocalized,
+                            "image": shareImageUrl,
+                            "url": canonicalUrl,
+                            "datePublished": blog.published_at ? new Date(blog.published_at).toISOString() : undefined,
+                            "dateModified": blog.updated_at ? new Date(blog.updated_at).toISOString() : undefined,
+                            "author": {
+                                "@type": "Person",
+                                "name": "Ilham Hatta Manggala",
+                                "url": "https://ilhamhattamanggala.my.id"
+                            },
+                            "publisher": {
+                                "@type": "Person",
+                                "name": "Ilham Hatta Manggala"
+                            }
+                        })
+                    }}
+                />
             </Head>
             <Navbar />
 

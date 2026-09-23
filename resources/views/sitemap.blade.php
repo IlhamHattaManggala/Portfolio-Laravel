@@ -26,4 +26,14 @@
             <priority>0.7</priority>
         </url>
     @endforeach
+    @if(!empty($packages))
+    @foreach ($packages as $pkg)
+        <url>
+            <loc>{{ url('/packages/' . $pkg['name']) }}</loc>
+            <lastmod>{{ now()->startOfWeek()->format('Y-m-d') }}</lastmod>
+            <changefreq>weekly</changefreq>
+            <priority>0.7</priority>
+        </url>
+    @endforeach
+    @endif
 </urlset>

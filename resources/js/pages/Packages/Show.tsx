@@ -50,6 +50,26 @@ export default function Show({ package: pkg, resumePath }: PackageShowProps) {
         <meta name="twitter:url" content={canonicalUrl} />
         <meta name="twitter:title" content={`${pkg.name} | Package Documentation`} />
         <meta name="twitter:description" content={pkg.description || `Documentation for ${pkg.name} PHP/Laravel Package.`} />
+
+        {/* JSON-LD SoftwareSourceCode Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "SoftwareSourceCode",
+              "name": pkg.name,
+              "description": pkg.description,
+              "codeRepository": pkg.repository || `https://github.com/IlhamHattaManggala`,
+              "programmingLanguage": pkg.type === 'npm' ? 'TypeScript/JavaScript' : 'PHP',
+              "author": {
+                "@type": "Person",
+                "name": "Ilham Hatta Manggala",
+                "url": "https://ilhamhattamanggala.my.id"
+              }
+            })
+          }}
+        />
       </Head>
 
       <Navbar resumePath={resumePath} />
