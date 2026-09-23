@@ -16,42 +16,39 @@ jobs:
           VPS_USERNAME: ${{ secrets.VPS_USERNAME }}
           VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
         run: |
-          {
-            echo "Checking secrets..."
-            if [ -z "$VPS_HOST" ]; then
-              echo "VPS_HOST is EMPTY"
-            else
-              echo "VPS_HOST=$VPS_HOST"
-            fi
-            if [ -z "$VPS_USERNAME" ]; then
-              echo "VPS_USERNAME is EMPTY"
-            else
-              echo "VPS_USERNAME=$VPS_USERNAME"
-            fi
-            if [ -z "$VPS_SSH_KEY" ]; then
-              echo "VPS_SSH_KEY is EMPTY"
-            else
-              echo "VPS_SSH_KEY is present"
-            fi
-
-            mkdir -p ~/.ssh
-            printf "%s\n" "$VPS_SSH_KEY" > ~/.ssh/id_deploy
-            chmod 600 ~/.ssh/id_deploy
-
-            echo "Connecting via SSH..."
-            ssh -vv -o ConnectTimeout=15 -o StrictHostKeyChecking=no -i ~/.ssh/id_deploy -p 22 "${VPS_USERNAME}@${VPS_HOST}" << 'EOF'
-              set -e
-              cd /opt/apps/Portfolio-Laravel
-              git pull origin main
-              docker compose build portfolio-web
-              docker compose up -d
-              docker compose exec -T portfolio-web php artisan optimize
-          EOF
-          } > /tmp/output.log 2>&1
-          STATUS=$?
-          if [ $STATUS -ne 0 ]; then
-            cat /tmp/output.log
-            ERR_MSG=$(tail -n 15 /tmp/output.log | tr '\n' ' -- ')
-            echo "::error title=Deploy Failure::$ERR_MSG"
-            exit $STATUS
+          set +e
+          echo "Host: ${VPS_HOST}"
+          echo "User: ${VPS_USERNAME}"
+          if [ -z "$VPS_SSH_KEY" ]; then
+            echo "::error::VPS_SSH_KEY is empty"
+            exit 1
           fi
+
+          mkdir -p ~/.ssh
+          printf "%s\n" "$VPS_SSH_KEY" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+
+          ssh-keygen -l -f ~/.ssh/id_deploy > /tmp/keycheck.log 2>&1
+          KEY_CHECK=$?
+          if [ $KEY_CHECK -ne 0 ]; then
+            MSG=$(cat /tmp/keycheck.log)
+            echo "::error::SSH Key Invalid: $MSG"
+            exit 1
+          fi
+
+          ssh -vv -o ConnectTimeout=15 -o StrictHostKeyChecking=no -i ~/.ssh/id_deploy -p 22 "${VPS_USERNAME}@${VPS_HOST}" "echo SSH SUCCESS" > /tmp/ssh.log 2>&1
+          SSH_STATUS=$?
+          if [ $SSH_STATUS -ne 0 ]; then
+            MSG=$(tail -n 12 /tmp/ssh.log | tr '\n' ' | ')
+            echo "::error::SSH Connect Failed: $MSG"
+            exit $SSH_STATUS
+          fi
+
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_deploy -p 22 "${VPS_USERNAME}@${VPS_HOST}" << 'EOF'
+            set -e
+            cd /opt/apps/Portfolio-Laravel
+            git pull origin main
+            docker compose build portfolio-web
+            docker compose up -d
+            docker compose exec -T portfolio-web php artisan optimize
+          EOF
