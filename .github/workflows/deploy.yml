@@ -10,16 +10,34 @@ jobs:
     name: Deploy to Production
     runs-on: ubuntu-latest
     steps:
-      - name: SSH and Deploy
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USERNAME }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          port: 22
-          script: |
+      - name: Deploy via SSH
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USERNAME: ${{ secrets.VPS_USERNAME }}
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+        run: |
+          if [ -z "$VPS_HOST" ]; then
+            echo "Error: VPS_HOST secret is not set!"
+            exit 1
+          fi
+          if [ -z "$VPS_USERNAME" ]; then
+            echo "Error: VPS_USERNAME secret is not set!"
+            exit 1
+          fi
+          if [ -z "$VPS_SSH_KEY" ]; then
+            echo "Error: VPS_SSH_KEY secret is not set!"
+            exit 1
+          fi
+
+          mkdir -p ~/.ssh
+          printf "%s\n" "$VPS_SSH_KEY" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_deploy -p 22 "${VPS_USERNAME}@${VPS_HOST}" << 'EOF'
+            set -e
             cd /opt/apps/Portfolio-Laravel
             git pull origin main
             docker compose build portfolio-web
             docker compose up -d
             docker compose exec -T portfolio-web php artisan optimize
+          EOF
