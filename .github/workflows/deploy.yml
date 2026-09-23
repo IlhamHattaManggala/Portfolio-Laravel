@@ -21,12 +21,12 @@ jobs:
             if [ -z "$VPS_HOST" ]; then
               echo "VPS_HOST is EMPTY"
             else
-              echo "VPS_HOST is set to: $VPS_HOST"
+              echo "VPS_HOST=$VPS_HOST"
             fi
             if [ -z "$VPS_USERNAME" ]; then
               echo "VPS_USERNAME is EMPTY"
             else
-              echo "VPS_USERNAME is set to: $VPS_USERNAME"
+              echo "VPS_USERNAME=$VPS_USERNAME"
             fi
             if [ -z "$VPS_SSH_KEY" ]; then
               echo "VPS_SSH_KEY is EMPTY"
@@ -47,10 +47,11 @@ jobs:
               docker compose up -d
               docker compose exec -T portfolio-web php artisan optimize
           EOF
-          } 2>&1 | tee /tmp/output.log
-          STATUS=${PIPESTATUS[0]}
-          echo "### Deploy Output (Exit Code: $STATUS)" >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
-          cat /tmp/output.log >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
-          exit $STATUS
+          } > /tmp/output.log 2>&1
+          STATUS=$?
+          if [ $STATUS -ne 0 ]; then
+            cat /tmp/output.log
+            ERR_MSG=$(tail -n 15 /tmp/output.log | tr '\n' ' -- ')
+            echo "::error title=Deploy Failure::$ERR_MSG"
+            exit $STATUS
+          fi
