@@ -245,14 +245,24 @@ class PortfolioController extends Controller
                 'githubUrl' => Setting::where('key', 'github_url')->first()?->value ?? 'https://github.com/IlhamHattaManggala',
                 'linkedinUrl' => Setting::where('key', 'linkedin_url')->first()?->value ?? 'https://www.linkedin.com/in/ilham-hatta-manggala',
                 'instagramUrl' => Setting::where('key', 'instagram_url')->first()?->value ?? 'https://www.instagram.com/runtahhhh__/',
-                'seo' => [
+                'seo' => $seoData = [
                     'title' => Setting::where('key', 'meta_title')->first()?->value ?? 'Ilham Hatta Manggala | Portofolio & Personal Website',
                     'description' => Setting::where('key', 'meta_description')->first()?->value ?? 'Portofolio profesional Ilham Hatta Manggala - Full Stack Web & Mobile Developer. Temukan proyek unggulan, riwayat pengalaman kerja, sertifikasi, dan blog artikel teknologi terbaru.',
                     'keywords' => Setting::where('key', 'meta_keywords')->first()?->value ?? 'Ilham Hatta Manggala, IHM, Portofolio Ilham Hatta Manggala, Full Stack Developer, Flutter Developer, Laravel Developer, Web Developer, Mobile Developer, Indonesia',
                     'author' => Setting::where('key', 'meta_author')->first()?->value ?? 'Ilham Hatta Manggala',
                     'ogImage' => Setting::where('key', 'og_image')->first()?->value ?? null,
                 ],
-            ]
+            ],
+        ])->withViewData([
+            'seo' => [
+                'title' => $seoData['title'],
+                'description' => $seoData['description'],
+                'keywords' => $seoData['keywords'],
+                'author' => $seoData['author'],
+                'image' => $seoData['ogImage'],
+                'url' => route('home'),
+                'type' => 'website',
+            ],
         ]);
     }
 
@@ -262,25 +272,72 @@ class PortfolioController extends Controller
 
         if ($request->has('search')) {
             $search = $request->input('search');
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('title', 'like', "%{$search}%")
                   ->orWhere('excerpt', 'like', "%{$search}%");
             });
         }
 
+        $defaultOg = Setting::where('key', 'og_image')->first()?->value;
+        $seo = [
+            'title' => 'Blog & Artikel Teknologi | Ilham Hatta Manggala',
+            'description' => 'Kumpulan artikel teknologi, pemrograman web dan mobile, tutorial coding, tips software engineering, serta wawasan tech terupdate dari Ilham Hatta Manggala.',
+            'keywords' => 'Tech Blog, Blog Programmer Indonesia, Tutorial Flutter, Tips Laravel, React JS, Coding, Software Engineer Indonesia, Ilham Hatta Manggala',
+            'author' => 'Ilham Hatta Manggala',
+            'image' => $defaultOg ? url($defaultOg) : asset('images/profile.webp'),
+            'url' => route('blog.index'),
+            'type' => 'website',
+        ];
+
         return Inertia::render('Blog/Index', [
             'blogs' => $query->paginate(9)->withQueryString(),
-            'filters' => $request->only(['search'])
-        ]);
+            'filters' => $request->only(['search']),
+        ])->withViewData(['seo' => $seo]);
     }
 
     public function showBlog(Blog $blog)
     {
         $blog->increment('views');
-        
+
+        $title = is_array($blog->title) ? ($blog->title['id'] ?? $blog->title['en'] ?? reset($blog->title)) : $blog->title;
+        $excerpt = is_array($blog->excerpt) ? ($blog->excerpt['id'] ?? $blog->excerpt['en'] ?? reset($blog->excerpt)) : $blog->excerpt;
+        $keywords = is_array($blog->meta_keywords)
+            ? implode(', ', array_filter($blog->meta_keywords))
+            : ($blog->meta_keywords ?? "{$title}, Tech Article, Coding, Tutorial, Ilham Hatta Manggala");
+        $image = $blog->featured_image ? url($blog->featured_image) : asset('images/profile.webp');
+        $canonicalUrl = route('blog.show', $blog->slug);
+
+        $seo = [
+            'title' => "{$title} | Blog Ilham Hatta Manggala",
+            'description' => $excerpt ?: 'Artikel teknologi oleh Ilham Hatta Manggala.',
+            'keywords' => $keywords,
+            'author' => 'Ilham Hatta Manggala',
+            'image' => $image,
+            'url' => $canonicalUrl,
+            'type' => 'article',
+            'published_at' => $blog->published_at?->toIso8601String(),
+            'schema' => [
+                '@context' => 'https://schema.org',
+                '@type' => 'BlogPosting',
+                'headline' => $title,
+                'description' => $excerpt,
+                'image' => $image,
+                'author' => [
+                    '@type' => 'Person',
+                    'name' => 'Ilham Hatta Manggala',
+                    'url' => url('/'),
+                ],
+                'datePublished' => $blog->published_at?->toIso8601String(),
+                'mainEntityOfPage' => [
+                    '@type' => 'WebPage',
+                    '@id' => $canonicalUrl,
+                ],
+            ],
+        ];
+
         return Inertia::render('Blog/Show', [
-            'blog' => $blog
-        ]);
+            'blog' => $blog,
+        ])->withViewData(['seo' => $seo]);
     }
 
     public function showPackage(string $vendor, string $package)
@@ -390,10 +447,37 @@ class PortfolioController extends Controller
             return $info;
         });
 
+        $canonicalUrl = route('packages.show', ['vendor' => $vendor, 'package' => $package]);
+        $desc = !empty($packageDetails['description'])
+            ? $packageDetails['description']
+            : "Documentation for {$fullName} PHP/Laravel Package by Ilham Hatta Manggala.";
+
+        $seo = [
+            'title' => "{$fullName} | Package Documentation - Ilham Hatta Manggala",
+            'description' => $desc,
+            'keywords' => "{$fullName}, Laravel Package, Composer, Packagist, PHP Library, Ilham Hatta Manggala",
+            'author' => 'Ilham Hatta Manggala',
+            'image' => asset('images/profile.webp'),
+            'url' => $canonicalUrl,
+            'type' => 'article',
+            'schema' => [
+                '@context' => 'https://schema.org',
+                '@type' => 'SoftwareSourceCode',
+                'name' => $fullName,
+                'description' => $desc,
+                'codeRepository' => $packageDetails['repository'] ?? '',
+                'author' => [
+                    '@type' => 'Person',
+                    'name' => 'Ilham Hatta Manggala',
+                    'url' => url('/'),
+                ],
+            ],
+        ];
+
         return Inertia::render('Packages/Show', [
             'package' => $packageDetails,
             'resumePath' => Setting::where('key', 'resume_path')->first()?->value ?? '#',
-        ]);
+        ])->withViewData(['seo' => $seo]);
     }
 
     public function storeMessage(Request $request)
